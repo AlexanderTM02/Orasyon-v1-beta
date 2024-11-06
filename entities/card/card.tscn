@@ -1,0 +1,169 @@
+[gd_scene load_steps=11 format=3 uid="uid://dxl7qa6ldat68"]
+
+[ext_resource type="Texture2D" uid="uid://f8ihtn0lu3w8" path="res://assets/spritesheets/pixelCardAssest_V01 (1).png" id="1_c2ws7"]
+
+[sub_resource type="GDScript" id="GDScript_7a8rg"]
+resource_name = "card"
+script/source = "extends Container
+
+@onready var held_card = preload(\"res://entities/card/held_card.tscn\")
+
+enum CardState {
+	IDLE,
+	HOVER,
+	HELD,
+	DRAGGING,
+	ONBOARD,
+	ACTIVATING
+}
+
+var current_state = CardState.IDLE
+var is_highlighted = false
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+
+func _on_mouse_entered() -> void:
+	
+	current_state = CardState.HOVER
+	$AnimationPlayer.play(\"selected\")
+
+func _on_mouse_exited() -> void:
+	current_state = CardState.IDLE
+	$AnimationPlayer.play(\"deselect\")
+
+func _on_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.button_mask == 1:
+			if current_state == CardState.HOVER:
+				
+				current_state = CardState.DRAGGING
+				
+				var temp_card = held_card.instantiate()
+				get_tree().get_root().get_node(\"Arena/HeldCard\").add_child(temp_card)
+				self.get_child(0).hide()
+			
+		elif event.button_mask == 0:
+			
+			if get_tree().get_root().get_node(\"Arena\").mouse_on_placement == false:
+				current_state = CardState.IDLE
+				print(\"mouse not on placement\")
+				
+				if self.get_parent() == get_tree().get_root().get_node(\"Arena/UI/PlacementArea/CardPlacement\"):
+					print(\"reparented to hand\")
+					var new_parent = get_tree().get_root().get_node(\"Arena/UI/PlayerHand\")
+					self.reparent(new_parent)
+					current_state = CardState.IDLE
+				
+			else:
+				var new_parent = get_tree().get_root().get_node(\"Arena/UI/PlacementArea/CardPlacement\")
+				print(str(new_parent))
+				self.reparent(new_parent)
+				current_state = CardState.ONBOARD
+			
+			var held_card_node = get_tree().get_root().get_node(\"Arena/HeldCard\")
+			for child in held_card_node.get_children():
+				child.queue_free()
+			
+			self.get_child(0).show()
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nvlwr"]
+atlas = ExtResource("1_c2ws7")
+region = Rect2(250, 4, 100, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xxua3"]
+atlas = ExtResource("1_c2ws7")
+region = Rect2(241, 304, 77, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3lyhn"]
+atlas = ExtResource("1_c2ws7")
+region = Rect2(377, 184, 19, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b17hk"]
+atlas = ExtResource("1_c2ws7")
+region = Rect2(376, 218, 20, 20)
+
+[sub_resource type="Animation" id="Animation_4tpgx"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_53qpi"]
+resource_name = "deselect"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, -50), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_or0cf"]
+resource_name = "selected"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -50)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_smjrr"]
+_data = {
+"RESET": SubResource("Animation_4tpgx"),
+"deselect": SubResource("Animation_53qpi"),
+"selected": SubResource("Animation_or0cf")
+}
+
+[node name="Card" type="Container"]
+custom_minimum_size = Vector2(100, 128)
+offset_right = 102.0
+offset_bottom = 128.0
+script = SubResource("GDScript_7a8rg")
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="CardTexture" type="Sprite2D" parent="Node2D"]
+position = Vector2(49, 64)
+texture = SubResource("AtlasTexture_nvlwr")
+
+[node name="NamePlate" type="Sprite2D" parent="Node2D"]
+position = Vector2(48, 114)
+texture = SubResource("AtlasTexture_xxua3")
+
+[node name="AttackPlate" type="Sprite2D" parent="Node2D"]
+position = Vector2(92, 17)
+texture = SubResource("AtlasTexture_3lyhn")
+
+[node name="DefensePlate" type="Sprite2D" parent="Node2D"]
+position = Vector2(92, 37)
+texture = SubResource("AtlasTexture_b17hk")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_smjrr")
+}
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
