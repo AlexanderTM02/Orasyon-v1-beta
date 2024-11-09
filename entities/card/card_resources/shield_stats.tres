@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-[gd_resource type="Resource" script_class="CardStats" load_steps=2 format=3 uid="uid://0qiij3flb44u"]
-=======
 [gd_resource type="Resource" script_class="CardStats" load_steps=2 format=3 uid="uid://bi8op0u83eyou"]
->>>>>>> 704195fc9e050dfceb71f6a82829208dc49ba163
 
 [ext_resource type="Script" path="res://entities/card/card_resources/card_stats.gd" id="1_agieg"]
 
