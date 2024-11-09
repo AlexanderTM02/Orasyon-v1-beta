@@ -13,14 +13,12 @@ config_version=5
 config/name="Orasyon"
 run/main_scene="res://scenes/arena.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
+"<<<<<<<HEAD[gui]theme/custom_font"="res://assets/font/m5x7.ttf"
 
-<<<<<<< HEAD
 [gui]
 
 theme/custom_font="res://assets/font/m5x7.ttf"
 
-=======
->>>>>>> 704195fc9e050dfceb71f6a82829208dc49ba163
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
