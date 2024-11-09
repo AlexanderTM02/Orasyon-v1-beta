@@ -1,14 +1,23 @@
+<<<<<<< HEAD
 [gd_scene load_steps=14 format=3 uid="uid://dxl7qa6ldat68"]
 
 [ext_resource type="Texture2D" uid="uid://f8ihtn0lu3w8" path="res://assets/spritesheets/pixelCardAssest_V01 (1).png" id="1_c2ws7"]
 [ext_resource type="Theme" uid="uid://rehjcjkwnvtv" path="res://assets/font/font.tres" id="2_fqc34"]
+=======
+[gd_scene load_steps=11 format=3 uid="uid://dxl7qa6ldat68"]
+
+[ext_resource type="Texture2D" uid="uid://f8ihtn0lu3w8" path="res://assets/spritesheets/pixelCardAssest_V01 (1).png" id="1_c2ws7"]
+>>>>>>> 704195fc9e050dfceb71f6a82829208dc49ba163
 
 [sub_resource type="GDScript" id="GDScript_7a8rg"]
 resource_name = "card"
 script/source = "extends Container
 
 @onready var held_card = preload(\"res://entities/card/held_card.tscn\")
+<<<<<<< HEAD
 @onready var card_dict = CardDictionary.new()
+=======
+>>>>>>> 704195fc9e050dfceb71f6a82829208dc49ba163
 
 enum CardState {
 	IDLE,
@@ -22,8 +31,20 @@ enum CardState {
 var current_state = CardState.IDLE
 var is_highlighted = false
 
+<<<<<<< HEAD
 func _ready() -> void:
 	update_spell_stats_label(\"hi\")
+=======
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+>>>>>>> 704195fc9e050dfceb71f6a82829208dc49ba163
 
 
 func _on_mouse_entered() -> void:
@@ -50,6 +71,10 @@ func _on_gui_input(event: InputEvent) -> void:
 			
 			if get_tree().get_root().get_node(\"Arena\").mouse_on_placement == false:
 				current_state = CardState.IDLE
+<<<<<<< HEAD
+=======
+				print(\"mouse not on placement\")
+>>>>>>> 704195fc9e050dfceb71f6a82829208dc49ba163
 				
 				if self.get_parent() == get_tree().get_root().get_node(\"Arena/UI/PlacementArea/CardPlacement\"):
 					print(\"reparented to hand\")
@@ -59,6 +84,10 @@ func _on_gui_input(event: InputEvent) -> void:
 				
 			else:
 				var new_parent = get_tree().get_root().get_node(\"Arena/UI/PlacementArea/CardPlacement\")
+<<<<<<< HEAD
+=======
+				print(str(new_parent))
+>>>>>>> 704195fc9e050dfceb71f6a82829208dc49ba163
 				self.reparent(new_parent)
 				current_state = CardState.ONBOARD
 			
@@ -67,11 +96,14 @@ func _on_gui_input(event: InputEvent) -> void:
 				child.queue_free()
 			
 			self.get_child(0).show()
+<<<<<<< HEAD
 			
 
 func update_spell_stats_label(stats) -> void:
 	$StatLabels/AttackStatLabel.text = \"lol\"
 	pass
+=======
+>>>>>>> 704195fc9e050dfceb71f6a82829208dc49ba163
 "
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nvlwr"]
@@ -90,6 +122,7 @@ region = Rect2(377, 184, 19, 18)
 atlas = ExtResource("1_c2ws7")
 region = Rect2(376, 218, 20, 20)
 
+<<<<<<< HEAD
 [sub_resource type="AtlasTexture" id="AtlasTexture_ng3uj"]
 atlas = ExtResource("1_c2ws7")
 region = Rect2(425, 184, 19, 18)
@@ -98,6 +131,8 @@ region = Rect2(425, 184, 19, 18)
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
+=======
+>>>>>>> 704195fc9e050dfceb71f6a82829208dc49ba163
 [sub_resource type="Animation" id="Animation_4tpgx"]
 length = 0.001
 
@@ -106,7 +141,11 @@ resource_name = "deselect"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
+<<<<<<< HEAD
 tracks/0/path = NodePath("textures:position")
+=======
+tracks/0/path = NodePath("Node2D:position")
+>>>>>>> 704195fc9e050dfceb71f6a82829208dc49ba163
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -121,7 +160,11 @@ resource_name = "selected"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
+<<<<<<< HEAD
 tracks/0/path = NodePath("textures:position")
+=======
+tracks/0/path = NodePath("Node2D:position")
+>>>>>>> 704195fc9e050dfceb71f6a82829208dc49ba163
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -144,6 +187,7 @@ offset_right = 102.0
 offset_bottom = 128.0
 script = SubResource("GDScript_7a8rg")
 
+<<<<<<< HEAD
 [node name="textures" type="Node2D" parent="."]
 
 [node name="CardTexture" type="Sprite2D" parent="textures"]
@@ -214,6 +258,29 @@ label_settings = SubResource("LabelSettings_jsse0")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+=======
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="CardTexture" type="Sprite2D" parent="Node2D"]
+position = Vector2(49, 64)
+texture = SubResource("AtlasTexture_nvlwr")
+
+[node name="NamePlate" type="Sprite2D" parent="Node2D"]
+position = Vector2(48, 114)
+texture = SubResource("AtlasTexture_xxua3")
+
+[node name="AttackPlate" type="Sprite2D" parent="Node2D"]
+position = Vector2(92, 17)
+texture = SubResource("AtlasTexture_3lyhn")
+
+[node name="DefensePlate" type="Sprite2D" parent="Node2D"]
+position = Vector2(92, 37)
+texture = SubResource("AtlasTexture_b17hk")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 2
+
+>>>>>>> 704195fc9e050dfceb71f6a82829208dc49ba163
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_smjrr")
