@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CardStats" load_steps=2 format=3 uid="uid://bddswean58cs"]
+
+[ext_resource type="Script" path="res://entities/card/card_resources/card_stats.gd" id="1_aq1le"]
+
+[resource]
+script = ExtResource("1_aq1le")
+damage = 0
+shield = 0
+cast_time = 0.0
+area_radius = 0.0
+burn_chance = 0.0
+burn_damage = 0
+burn_duration = 0.0
+reflect_damage = 0.0
+effect_duration = 0.0

@@ -1,0 +1,8 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://rehjcjkwnvtv"]
+
+[ext_resource type="FontFile" uid="uid://bjitbo10uldnw" path="res://assets/font/m5x7.ttf" id="1_bx3hm"]
+
+[resource]
+default_font = ExtResource("1_bx3hm")
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/fonts/font = ExtResource("1_bx3hm")

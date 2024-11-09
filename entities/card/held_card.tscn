@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://fd3esx5k1cdd"]
+
+[ext_resource type="Texture2D" uid="uid://f8ihtn0lu3w8" path="res://assets/spritesheets/pixelCardAssest_V01 (1).png" id="1_qawiy"]
+
+[sub_resource type="GDScript" id="GDScript_7a8rg"]
+resource_name = "card"
+script/source = "extends Container
+
+func _process(delta: float) -> void:
+	self.global_position = get_global_mouse_position()
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vyio4"]
+atlas = ExtResource("1_qawiy")
+region = Rect2(250, 4, 100, 128)
+
+[node name="Card" type="Container"]
+custom_minimum_size = Vector2(96, 128)
+offset_right = 63.744
+offset_bottom = 79.4
+script = SubResource("GDScript_7a8rg")
+
+[node name="CardTexture" type="Sprite2D" parent="."]
+position = Vector2(-1, 1)
+texture = SubResource("AtlasTexture_vyio4")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
