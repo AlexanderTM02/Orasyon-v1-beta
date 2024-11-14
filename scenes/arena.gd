@@ -1,16 +1,10 @@
 extends Node
 
-var card_selected
-var mouse_on_placement = false
+@onready var player = get_tree().get_root().get_node("Board/Player/PlayerStats")
 
-
-func _on_placement_area_mouse_entered() -> void:
-	mouse_on_placement = true
-	print("inside")
+func _on_button_pressed() -> void:
+	while(true):
+		player.take_damage(50)
+		print(str(player.health))
 	pass # Replace with function body.
-
-
-func _on_placement_area_mouse_exited() -> void:
-	mouse_on_placement = false
-	print("outside")
-	pass # Replace with function body.
+	

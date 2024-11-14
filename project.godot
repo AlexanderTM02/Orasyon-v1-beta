@@ -15,6 +15,12 @@ run/main_scene="res://scenes/arena.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 "<<<<<<<HEAD[gui]theme/custom_font"="res://assets/font/m5x7.ttf"
 
+[display]
+
+window/size/viewport_width=1088
+window/size/viewport_height=640
+window/stretch/mode="viewport"
+
 [gui]
 
 theme/custom_font="res://assets/font/m5x7.ttf"

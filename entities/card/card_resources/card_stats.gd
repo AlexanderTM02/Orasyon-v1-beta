@@ -1,13 +1,17 @@
 extends Resource
 class_name CardStats
 
-@export var damage: int = 0
-@export var shield: int = 0
-@export var cast_time: float = 0.0
-@export var area_radius: float = 0.0
-@export_group("Status Effects")
-@export var burn_chance: float = 0.0
-@export var burn_damage: int = 0
-@export var burn_duration: float = 0.0
-@export var reflect_damage: float = 0.0
-@export var effect_duration: float = 0.0
+var card_stats = {
+	"fireball": {
+		"damage": 20,
+		"shield": 0,
+		"mana_cost": 2,
+		"cast_time": 2
+	},
+	"shield": {
+		"damage": 0,
+		"shield": 20,
+		"mana_cost": 2,
+		"cast_time": 2
+	}
+}
