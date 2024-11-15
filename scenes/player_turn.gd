@@ -4,7 +4,7 @@ extends BoardState
 
 var button_pressed: bool = false
 
-@onready var end_turn: Button = $"../../UI/EndTurn"
+@onready var end_turn = $"../../UI/EndTurn"
 
 
 func enter() -> void:
@@ -23,6 +23,6 @@ func process_frame(delta: float) -> BoardState:
 		return activating_state
 	return null
 
-func _on_end_turn_pressed() -> void:
+func _on_texture_button_pressed() -> void:
 	button_pressed = true
 	pass # Replace with function body.

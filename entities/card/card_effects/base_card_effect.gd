@@ -1,10 +1,15 @@
-extends Resource
+extends Node
 class_name BaseCardEffect
 
-var stats: CardStats
+var target_enemy
+var card: Card
 
-func _init(card_stats: CardStats):
-	stats = card_stats
+func set_card_target(spell_used: Card, target) -> void:
+	target = target
+	card = spell_used
 
-func execute(caster, target):
+func enter() -> void:
+	pass
+
+func exit() -> void:
 	pass

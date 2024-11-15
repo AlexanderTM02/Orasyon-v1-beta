@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://dul103a7w7dga"]
+[gd_scene load_steps=15 format=3 uid="uid://dul103a7w7dga"]
 
 [ext_resource type="Texture2D" uid="uid://dpu07rjwgfb33" path="res://assets/background/menu_backgriund/back.png" id="1_ecdn3"]
 [ext_resource type="FontFile" uid="uid://bjitbo10uldnw" path="res://assets/font/m5x7.ttf" id="1_efcke"]
 [ext_resource type="Texture2D" uid="uid://cn5ewrq16vbwj" path="res://assets/background/menu_backgriund/middle.png" id="2_l14jq"]
 [ext_resource type="Texture2D" uid="uid://6dw6mtxyh8uo" path="res://assets/background/menu_backgriund/front.png" id="3_w8et6"]
+[ext_resource type="Texture2D" uid="uid://d0217uwxhwkw0" path="res://assets/ui/buttons/button_spritesheet.png" id="5_ner0r"]
 [ext_resource type="Texture2D" uid="uid://b758qi2w12xpa" path="res://assets/ui/Logo/orasyon_logo.png" id="5_xwfn1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nqy7e"]
@@ -21,22 +22,27 @@ atlas = ExtResource("3_w8et6")
 default_font = ExtResource("1_efcke")
 default_font_size = 47
 
-[sub_resource type="GDScript" id="GDScript_hvrjb"]
-script/source = "extends Button
+[sub_resource type="AtlasTexture" id="AtlasTexture_17dvo"]
+atlas = ExtResource("5_ner0r")
+region = Rect2(22, 184, 70, 26)
 
+[sub_resource type="GDScript" id="GDScript_hvrjb"]
+script/source = "extends TextureButton
 
 
 func _on_pressed() -> void:
-	
+	print(\"galaw\")
 	get_tree().change_scene_to_file(\"res://scenes/arena.tscn\")
 "
 
-[sub_resource type="Theme" id="Theme_1bgn5"]
-default_font = ExtResource("1_efcke")
-default_font_size = 47
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7qjl"]
+atlas = ExtResource("5_ner0r")
+region = Rect2(97, 113, 70, 26)
 
-[sub_resource type="GDScript" id="GDScript_hgg4w"]
-script/source = "extends Button
+[sub_resource type="GDScript" id="GDScript_0d2si"]
+script/source = "extends TextureButton
+
+
 
 func _on_pressed() -> void:
 	get_tree().quit()
@@ -85,32 +91,32 @@ texture = SubResource("AtlasTexture_irfvr")
 [node name="MenuButtons" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 194.0
-offset_top = 418.0
-offset_right = 933.0
-offset_bottom = 500.0
+offset_left = 128.0
+offset_top = 405.0
+offset_right = 975.0
+offset_bottom = 544.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="GameStartButton" type="Button" parent="MenuButtons"]
-custom_minimum_size = Vector2(150, 50)
+[node name="GameStartButton" type="TextureButton" parent="MenuButtons"]
+custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 theme = SubResource("Theme_va5i0")
-text = "Start
-"
+texture_normal = SubResource("AtlasTexture_17dvo")
+stretch_mode = 5
 script = SubResource("GDScript_hvrjb")
 
 [node name="Seperator" type="Control" parent="MenuButtons"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
-[node name="QuitButton" type="Button" parent="MenuButtons"]
-custom_minimum_size = Vector2(150, 50)
+[node name="TextureButton" type="TextureButton" parent="MenuButtons"]
+custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-theme = SubResource("Theme_1bgn5")
-text = "Quit"
-script = SubResource("GDScript_hgg4w")
+texture_normal = SubResource("AtlasTexture_v7qjl")
+stretch_mode = 5
+script = SubResource("GDScript_0d2si")
 
 [node name="Logo" type="Control" parent="."]
 layout_mode = 1
@@ -131,4 +137,4 @@ texture = ExtResource("5_xwfn1")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [connection signal="pressed" from="MenuButtons/GameStartButton" to="MenuButtons/GameStartButton" method="_on_pressed"]
-[connection signal="pressed" from="MenuButtons/QuitButton" to="MenuButtons/QuitButton" method="_on_pressed"]
+[connection signal="pressed" from="MenuButtons/TextureButton" to="MenuButtons/TextureButton" method="_on_pressed"]
