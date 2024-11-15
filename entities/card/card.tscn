@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dxl7qa6ldat68"]
+[gd_scene load_steps=21 format=3 uid="uid://dxl7qa6ldat68"]
 
 [ext_resource type="Script" path="res://entities/card/card.gd" id="1_vh50i"]
 [ext_resource type="Texture2D" uid="uid://bc6e84kycn6xc" path="res://assets/card/card_base.png" id="2_r5ofr"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://entities/card/card_states/hover_state.gd" id="6_un3k2"]
 [ext_resource type="Script" path="res://entities/card/card_states/clicked_state.gd" id="7_edhwd"]
 [ext_resource type="Script" path="res://entities/card/card_states/activating_state.gd" id="8_ou8ae"]
+[ext_resource type="Texture2D" uid="uid://4qmfa1petrs8" path="res://assets/ui/icons/clock.png" id="12_8xng5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nvlwr"]
 atlas = ExtResource("2_r5ofr")
@@ -233,6 +234,10 @@ hover_state = NodePath("../Hover")
 
 [node name="Activating" type="Node" parent="StateMachine"]
 script = ExtResource("8_ou8ae")
+
+[node name="Clock" type="Sprite2D" parent="."]
+position = Vector2(13.5, 111)
+texture = ExtResource("12_8xng5")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

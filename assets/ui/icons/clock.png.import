@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdibhkqa6vqur"
-path="res://.godot/imported/mananangal.png-86860d434ce2fa2c4291446146059d89.ctex"
+uid="uid://4qmfa1petrs8"
+path="res://.godot/imported/clock.png-7e5ab1c00eacd4cb03c660f0abb4a562.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/enemy/mananangal.png"
-dest_files=["res://.godot/imported/mananangal.png-86860d434ce2fa2c4291446146059d89.ctex"]
+source_file="res://assets/ui/icons/clock.png"
+dest_files=["res://.godot/imported/clock.png-7e5ab1c00eacd4cb03c660f0abb4a562.ctex"]
 
 [params]
 
