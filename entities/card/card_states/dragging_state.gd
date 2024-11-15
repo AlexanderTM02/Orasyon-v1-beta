@@ -10,7 +10,6 @@ var drag_offset: Vector2
 
 func enter() -> void:
 	original_position =  parent.global_position
-	print("in dragging")
 	drag_offset = Vector2.ZERO
 	drag_offset = parent.get_global_mouse_position() - parent.global_position
 

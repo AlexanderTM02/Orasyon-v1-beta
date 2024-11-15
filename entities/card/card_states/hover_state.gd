@@ -4,7 +4,6 @@ extends State
 @export var clicked_state: State
 
 func enter() -> void:
-	print("hover")
 	parent.animation_player.play("select")
 
 func exit() -> void:
@@ -13,7 +12,6 @@ func exit() -> void:
 
 func process_input(event: InputEvent) -> State:
 	if event is InputEventMouseButton:
-		print("input")
 		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 			return clicked_state
 	return null

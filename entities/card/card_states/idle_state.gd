@@ -5,7 +5,6 @@ extends State
 @export var clicked_state: State
 
 func enter() -> void:
-	print("idle")
 	pass
 
 func exit() -> void:

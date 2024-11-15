@@ -113,6 +113,7 @@ _data = {
 
 [node name="Card" type="Container"]
 custom_minimum_size = Vector2(100, 128)
+scale = Vector2(2, 2)
 script = ExtResource("1_vh50i")
 
 [node name="Textures" type="Node2D" parent="."]

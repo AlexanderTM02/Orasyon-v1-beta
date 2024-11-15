@@ -1,10 +1,16 @@
 extends Node
 
-@onready var player = get_tree().get_root().get_node("Board/Player/PlayerStats")
+@onready var board_states: Node = $BoardStates
 
-func _on_button_pressed() -> void:
-	while(true):
-		player.take_damage(50)
-		print(str(player.health))
-	pass # Replace with function body.
-	
+
+func _ready() -> void:
+	board_states.init(self)
+
+func _unhandled_input(event: InputEvent) -> void:
+	board_states.process_input(event)
+
+func _physics_process(delta: float) -> void:
+	board_states.process_physics(delta)
+
+func _process(delta: float) -> void:
+	board_states.process_frame(delta)

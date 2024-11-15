@@ -7,7 +7,6 @@ var mouse_held: bool = false
 
 
 func enter() -> void:
-	print("clicked")
 	mouse_held = true
 	pass
 
