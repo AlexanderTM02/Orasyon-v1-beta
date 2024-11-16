@@ -1,0 +1,81 @@
+[gd_scene load_steps=4 format=3 uid="uid://cagiugc57tbdp"]
+
+[ext_resource type="Texture2D" uid="uid://d0kvp5diu82v2" path="res://assets/ui/buttons/buttons_spritesheet2.png" id="1_jadss"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mkxlw"]
+atlas = ExtResource("1_jadss")
+region = Rect2(146, 30, 99, 51)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_evm4l"]
+atlas = ExtResource("1_jadss")
+region = Rect2(262, 31, 89, 46)
+
+[node name="WinLossScreen" type="Node"]
+
+[node name="VictoryLossScreen" type="CanvasLayer" parent="."]
+
+[node name="Victory" type="Control" parent="VictoryLossScreen"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="VictoryLossScreen/Victory"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.768627)
+
+[node name="TextureRect" type="TextureRect" parent="VictoryLossScreen/Victory"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -337.0
+offset_top = -194.0
+offset_right = -238.0
+offset_bottom = -143.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(7, 7)
+texture = SubResource("AtlasTexture_mkxlw")
+
+[node name="Loss" type="Control" parent="VictoryLossScreen"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="VictoryLossScreen/Loss"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.768627)
+
+[node name="TextureRect" type="TextureRect" parent="VictoryLossScreen/Loss"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -319.0
+offset_top = -158.0
+offset_right = -230.0
+offset_bottom = -112.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(7, 7)
+texture = SubResource("AtlasTexture_evm4l")

@@ -5,12 +5,19 @@ extends BoardState
 var num_of_cards_drawn = 2
 var move_to_next_state: bool = false
 
+var mana_per_turn = 2
+
 @onready var new_card = preload("res://entities/card/card.tscn")
-@onready var player_hand = get_node("../../UI/PlayerHand")
+@onready var player_hand: HBoxContainer = $"../../UI/PlayerHand"
+@onready var player = $"../../Entities/Player"
 
 func enter() -> void:
+	var player_mana = player.add_mana(mana_per_turn)
+	
 	for card_num in num_of_cards_drawn:
-		add_card()
+		if player_hand.get_child_count() <= 4:
+			add_card()
+			
 	move_to_next_state = true
 	print("cards drawn")
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dxl7qa6ldat68"]
+[gd_scene load_steps=22 format=3 uid="uid://dxl7qa6ldat68"]
 
 [ext_resource type="Script" path="res://entities/card/card.gd" id="1_vh50i"]
 [ext_resource type="Texture2D" uid="uid://bc6e84kycn6xc" path="res://assets/card/card_base.png" id="2_r5ofr"]
@@ -54,6 +54,33 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_qv0wq"]
+resource_name = "activating"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 20), Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_xwcli"]
@@ -113,24 +140,25 @@ tracks/1/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_smjrr"]
 _data = {
 "RESET": SubResource("Animation_63i0w"),
+"activating": SubResource("Animation_qv0wq"),
 "deselect": SubResource("Animation_xwcli"),
 "select": SubResource("Animation_prjpx")
 }
 
 [node name="Card" type="Container"]
 custom_minimum_size = Vector2(110, 128)
+offset_right = 110.0
+offset_bottom = 128.0
 scale = Vector2(2, 2)
 script = ExtResource("1_vh50i")
 
 [node name="Textures" type="Node2D" parent="."]
 
-[node name="ColorRect" type="ColorRect" parent="Textures"]
+[node name="CardArt" type="TextureRect" parent="Textures"]
 offset_left = 2.0
 offset_top = 3.0
 offset_right = 98.0
 offset_bottom = 129.0
-mouse_filter = 1
-color = Color(0.334567, 0.499694, 0.617536, 1)
 
 [node name="CardTexture" type="Sprite2D" parent="Textures"]
 texture = SubResource("AtlasTexture_nvlwr")
@@ -143,6 +171,10 @@ texture = SubResource("AtlasTexture_wg7q0")
 [node name="Attack" type="Sprite2D" parent="Textures"]
 position = Vector2(50, 105)
 texture = ExtResource("4_enlfk")
+
+[node name="Clock" type="Sprite2D" parent="Textures"]
+position = Vector2(13.5, 111)
+texture = ExtResource("12_8xng5")
 
 [node name="Mana" type="Sprite2D" parent="Textures"]
 position = Vector2(99.5, 23.5)
@@ -235,9 +267,6 @@ hover_state = NodePath("../Hover")
 [node name="Activating" type="Node" parent="StateMachine"]
 script = ExtResource("8_ou8ae")
 
-[node name="Clock" type="Sprite2D" parent="."]
-position = Vector2(13.5, 111)
-texture = ExtResource("12_8xng5")
-
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -1,7 +1,7 @@
 class_name Enemy
 extends Node
 
-@export var max_health:int = 100
+@export var max_health:int = 60
 @export var max_mana:int = 20
 
 var current_health = max_health
@@ -34,6 +34,9 @@ func heal(amount):
 func add_shield(amount:int) -> void:
 	block_damage += amount
 
-func use_mana(amount) -> void:
+func use_mana(amount: int) -> void:
 	current_mana = clampi(current_mana - amount, min_mana, max_mana)
+
+func add_mana(amount: int) -> void:
+	current_mana = clampi(current_mana + amount, min_mana, max_mana)
 	

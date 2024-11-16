@@ -1,21 +1,23 @@
-[gd_scene load_steps=39 format=3 uid="uid://cftclvt23qxde"]
+[gd_scene load_steps=41 format=3 uid="uid://cftclvt23qxde"]
 
-[ext_resource type="Script" path="res://scenes/arena.gd" id="1_5mbsh"]
+[ext_resource type="Script" path="res://scenes/base_arena/arena.gd" id="1_5mbsh"]
 [ext_resource type="PackedScene" uid="uid://dxl7qa6ldat68" path="res://entities/card/card.tscn" id="1_b66h7"]
 [ext_resource type="Texture2D" uid="uid://he5aw72v7f5g" path="res://assets/background/board_background/Arena1.1.png" id="2_soucb"]
-[ext_resource type="Script" path="res://scenes/player.gd" id="3_lln5u"]
+[ext_resource type="Script" path="res://scenes/base_arena/player.gd" id="3_lln5u"]
 [ext_resource type="Texture2D" uid="uid://baiapntfeiwlg" path="res://assets/enemy/unano/idle (1).png" id="4_gd64y"]
-[ext_resource type="Script" path="res://scenes/board_states.gd" id="4_p6jpa"]
-[ext_resource type="Script" path="res://scenes/base_board_state.gd" id="5_pfa2w"]
+[ext_resource type="Script" path="res://scenes/base_arena/board_states.gd" id="4_p6jpa"]
+[ext_resource type="Script" path="res://scenes/base_arena/base_board_state.gd" id="5_pfa2w"]
 [ext_resource type="Texture2D" uid="uid://vi82wgf6n8jj" path="res://assets/player/attack.png" id="5_xx3ek"]
 [ext_resource type="Texture2D" uid="uid://bn01niodibjbs" path="res://assets/player/idle.png" id="6_b5l3b"]
-[ext_resource type="Script" path="res://scenes/drawing.gd" id="6_gjim0"]
-[ext_resource type="Script" path="res://scenes/player_turn.gd" id="7_uwote"]
-[ext_resource type="Script" path="res://scenes/activating.gd" id="8_k0l0s"]
+[ext_resource type="Script" path="res://scenes/base_arena/drawing.gd" id="6_gjim0"]
+[ext_resource type="Script" path="res://scenes/base_arena/player_turn.gd" id="7_uwote"]
+[ext_resource type="Script" path="res://scenes/base_arena/activating.gd" id="8_k0l0s"]
 [ext_resource type="Texture2D" uid="uid://d0kvp5diu82v2" path="res://assets/ui/buttons/buttons_spritesheet2.png" id="8_o5tfj"]
-[ext_resource type="Script" path="res://scenes/player_hud.gd" id="9_hsxxx"]
+[ext_resource type="Script" path="res://scenes/base_arena/player_hud.gd" id="9_hsxxx"]
 [ext_resource type="Texture2D" uid="uid://dpsix0h5olgtw" path="res://assets/card/mana.png" id="10_tdj54"]
 [ext_resource type="Texture2D" uid="uid://djluku2w60bxo" path="res://assets/ui/icons/heart.png" id="11_8at07"]
+[ext_resource type="Script" path="res://scenes/base_arena/enemy_turn.gd" id="16_r4uwt"]
+[ext_resource type="Script" path="res://scenes/base_arena/win_loss_check.gd" id="18_fbaq4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w0s2e"]
 atlas = ExtResource("5_xx3ek")
@@ -155,13 +157,13 @@ region = Rect2(435, 301, 70, 26)
 atlas = ExtResource("10_tdj54")
 region = Rect2(3, 2, 25, 42)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_auxms"]
+atlas = ExtResource("11_8at07")
+
 [sub_resource type="LabelSettings" id="LabelSettings_hvpr3"]
 font_size = 32
 outline_size = 9
 outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_auxms"]
-atlas = ExtResource("11_8at07")
 
 [node name="Board" type="Node"]
 script = ExtResource("1_5mbsh")
@@ -193,7 +195,7 @@ script = ExtResource("3_lln5u")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Entities/Player"]
 top_level = true
 position = Vector2(208, 362)
-scale = Vector2(2.5, 2.5)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_vsigk")
 
 [node name="enemy" type="Node2D" parent="Entities"]
@@ -203,8 +205,7 @@ script = ExtResource("3_lln5u")
 position = Vector2(845, 380)
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_yrdx2")
-frame = 3
-frame_progress = 0.121458
+frame_progress = 0.735446
 flip_h = true
 
 [node name="UI" type="CanvasLayer" parent="."]
@@ -286,36 +287,36 @@ offset_left = 22.0
 offset_top = 10.0
 offset_right = 47.0
 offset_bottom = 52.0
-scale = Vector2(2.5, 2.5)
+scale = Vector2(1.5, 1.5)
 texture = SubResource("AtlasTexture_5g1yg")
 stretch_mode = 2
 
-[node name="PlayerManaLabel" type="Label" parent="Status/PlayerHud/Mana"]
+[node name="ColorRect" type="TextureRect" parent="Status/PlayerHud"]
 layout_mode = 0
-offset_left = 33.6
-offset_top = -4.4
-offset_right = 81.6
-offset_bottom = 46.6
+offset_left = 17.0
+offset_top = 81.0
+offset_right = 49.0
+offset_bottom = 123.0
+scale = Vector2(1.5, 1.5)
+texture = SubResource("AtlasTexture_auxms")
+stretch_mode = 3
+
+[node name="PlayerManaLabel" type="Label" parent="Status/PlayerHud"]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 22.0
+offset_right = 121.0
+offset_bottom = 73.0
 text = "14"
 label_settings = SubResource("LabelSettings_hvpr3")
 vertical_alignment = 1
 
-[node name="ColorRect" type="TextureRect" parent="Status/PlayerHud"]
+[node name="PlayerHealthLabel" type="Label" parent="Status/PlayerHud"]
 layout_mode = 0
-offset_left = 14.0
-offset_top = 131.0
-offset_right = 39.0
-offset_bottom = 173.0
-scale = Vector2(2.5, 2.5)
-texture = SubResource("AtlasTexture_auxms")
-stretch_mode = 2
-
-[node name="PlayerHealthLabel" type="Label" parent="Status/PlayerHud/ColorRect"]
-layout_mode = 0
-offset_left = 37.4
-offset_top = -11.8
-offset_right = 85.4
-offset_bottom = 39.2
+offset_left = 73.0
+offset_top = 84.0
+offset_right = 121.0
+offset_bottom = 135.0
 text = "14"
 label_settings = SubResource("LabelSettings_hvpr3")
 vertical_alignment = 1
@@ -331,12 +332,23 @@ script = ExtResource("5_pfa2w")
 script = ExtResource("6_gjim0")
 player_turn_state = NodePath("../PlayerTurn")
 
-[node name="PlayerTurn" type="Node" parent="BoardStates" node_paths=PackedStringArray("activating_state")]
+[node name="PlayerTurn" type="Node" parent="BoardStates" node_paths=PackedStringArray("enemy_turn")]
 script = ExtResource("7_uwote")
+enemy_turn = NodePath("../EnemyTurn")
+
+[node name="EnemyTurn" type="Node" parent="BoardStates" node_paths=PackedStringArray("activating_state")]
+script = ExtResource("16_r4uwt")
 activating_state = NodePath("../Activating")
 
-[node name="Activating" type="Node" parent="BoardStates" node_paths=PackedStringArray("player_turn")]
+[node name="Activating" type="Node" parent="BoardStates" node_paths=PackedStringArray("player_turn", "win_loss_check_state")]
 script = ExtResource("8_k0l0s")
 player_turn = NodePath("../Drawing")
+win_loss_check_state = NodePath("../WinLossCheck")
+
+[node name="WinLossCheck" type="Node" parent="BoardStates" node_paths=PackedStringArray("Drawing_state")]
+script = ExtResource("18_fbaq4")
+Drawing_state = NodePath("../Drawing")
+
+[node name="WinLoss" type="CanvasLayer" parent="."]
 
 [connection signal="pressed" from="UI/EndTurn" to="BoardStates/PlayerTurn" method="_on_texture_button_pressed"]

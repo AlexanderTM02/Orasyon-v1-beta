@@ -1,36 +1,36 @@
 extends BoardState
 
 @export var player_turn: BoardState
+@export var win_loss_check_state: BoardState
 
 var next_state: bool = false
 
 @onready var card_placement = get_node("../../UI/PlacementArea/CardPlacement")
 @onready var player = $"../../Entities/Player"
 @onready var enemy = $"../../Entities/enemy"
+const WaitAnimation = preload("res://scenes/base_arena/wait_animation.gd")
+
 
 
 func enter() -> void:
 	print("in activating")
 	
 	activate_card_on_board()
+	print("bro")
 	next_state = true
 
 
 func exit() -> void:
 	clear_child_nodes(card_placement)
-	
-	print("player health: " + str(player.current_health))
-	print("player mana: " + str(player.current_mana))
-	print("enemy health: " + str(enemy.current_health))
-	print("enemy mana: " + str(enemy.current_mana))
 
 func process_frame(delta: float) -> BoardState:
 	if next_state:
-		return player_turn
+		return win_loss_check_state
 	return null
 
 func activate_card_on_board() -> void:
 	for card_to_activate in range(0, card_placement.get_child_count()):
+		
 		var card_playing = card_placement.get_child(card_to_activate)
 		
 		var spell_name = card_playing.spell_name
@@ -48,6 +48,9 @@ func activate_card_on_board() -> void:
 				player.use_mana(mana_cost)
 			_:
 				print("did not match")
+		
+		card_playing.animation_player.play("activating")
+
 
 func clear_child_nodes(node):
 	for child in node.get_children():

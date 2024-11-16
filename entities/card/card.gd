@@ -23,11 +23,14 @@ var spell_description
 @onready var cast_time_label = $StatLabels/CastTimeLabel
 @onready var defence_value_label = $StatLabels/DefenseValue
 
+@onready var card_art: TextureRect = $Textures/CardArt
 @onready var animation_player = $AnimationPlayer
 
 @onready var board = get_tree().get_root().get_node("Board")
 
 func _ready() -> void:
+	
+	card_art.texture = random_card["card_art"]
 	
 	spell_name = random_card["name"]
 	mana_cost = random_card["stats"]["mana_cost"]
@@ -59,3 +62,7 @@ func _on_mouse_entered() -> void:
 
 func _on_mouse_exited() -> void:
 	is_card_highlighted = false
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	pass # Replace with function body.

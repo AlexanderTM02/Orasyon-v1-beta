@@ -1,8 +1,8 @@
 extends Control
 
 @onready var player = $"../../Entities/Player"
-@onready var player_mana_label: Label = $Mana/PlayerManaLabel
-@onready var player_health_label: Label = $ColorRect/PlayerHealthLabel
+@onready var player_mana_label: Label = $PlayerManaLabel
+@onready var player_health_label: Label = $PlayerHealthLabel
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -10,7 +10,8 @@ var cards = {
 		"elemental_type": "fire",
 		"description": "Launches a powerful ball of fire that deals area damage to enemies",
 		"stats": card_stats_resource.card_stats["fireball"] ,
-		"effect_class": FireballEffect
+		"effect_class": FireballEffect,
+		"card_art": preload("res://assets/card/card_art/flare1.png")
 	},
 	"shield": {
 		"name": "Shield",
@@ -18,7 +19,8 @@ var cards = {
 		"elemental_type": "earth",
 		"description": "Creates a protective barrier that absorbs incoming damage",
 		"stats": card_stats_resource.card_stats["shield"],
-		"effect_class": ShieldEffect
+		"effect_class": ShieldEffect,
+		"card_art": preload("res://assets/card/card_art/flare.png")
 	}
 }
 

@@ -1,0 +1,109 @@
+[gd_scene load_steps=8 format=3 uid="uid://xl0or7kl0sfg"]
+
+[ext_resource type="Texture2D" uid="uid://d0kvp5diu82v2" path="res://assets/ui/buttons/buttons_spritesheet2.png" id="1_ccax5"]
+[ext_resource type="Script" path="res://menu/win_screen.gd" id="1_vm8k2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5aqvm"]
+atlas = ExtResource("1_ccax5")
+region = Rect2(146, 30, 99, 51)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8etc0"]
+atlas = ExtResource("1_ccax5")
+region = Rect2(96, 184, 70, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p1d4e"]
+atlas = ExtResource("1_ccax5")
+region = Rect2(274, 300, 70, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1jxi"]
+atlas = ExtResource("1_ccax5")
+region = Rect2(97, 113, 70, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3jmv"]
+atlas = ExtResource("1_ccax5")
+region = Rect2(275, 229, 70, 26)
+
+[node name="WinScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vm8k2")
+
+[node name="Loss" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Loss"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.768627)
+
+[node name="TextureRect" type="TextureRect" parent="Loss"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -319.0
+offset_top = -218.0
+offset_right = -230.0
+offset_bottom = -172.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(7, 7)
+texture = SubResource("AtlasTexture_5aqvm")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -277.0
+offset_top = -152.0
+offset_right = 277.0
+offset_bottom = -44.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureButton" type="TextureButton" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = SubResource("AtlasTexture_8etc0")
+texture_pressed = SubResource("AtlasTexture_p1d4e")
+stretch_mode = 1
+
+[node name="Control" type="Control" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="TextureButton2" type="TextureButton" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = SubResource("AtlasTexture_f1jxi")
+texture_pressed = SubResource("AtlasTexture_o3jmv")
+stretch_mode = 1
+
+[connection signal="pressed" from="Control/HBoxContainer/TextureButton" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="Control/HBoxContainer/TextureButton2" to="." method="_on_texture_button_2_pressed"]
