@@ -24,11 +24,11 @@ default_font_size = 47
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_17dvo"]
 atlas = ExtResource("5_cpqm2")
-region = Rect2(22, 184, 70, 26)
+region = Rect2(21, 147, 70, 26)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_slcjd"]
 atlas = ExtResource("5_cpqm2")
-region = Rect2(200, 300, 70, 26)
+region = Rect2(199, 263, 70, 26)
 
 [sub_resource type="GDScript" id="GDScript_hvrjb"]
 script/source = "extends TextureButton
@@ -63,8 +63,9 @@ offset_bottom = -8.0
 [node name="background" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 0
-offset_right = 272.0
-offset_bottom = 160.0
+offset_top = -22.0
+offset_right = 289.0
+offset_bottom = 147.0
 scale = Vector2(4, 4)
 
 [node name="TextureRect3" type="TextureRect" parent="background"]
@@ -94,33 +95,38 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_irfvr")
 
-[node name="MenuButtons" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 128.0
-offset_top = 405.0
-offset_right = 975.0
-offset_bottom = 544.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="GameStartButton" type="TextureButton" parent="MenuButtons"]
+[node name="GameStartButton" type="TextureButton" parent="."]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
+offset_left = 452.0
+offset_top = 349.0
+offset_right = 744.0
+offset_bottom = 552.0
 theme = SubResource("Theme_va5i0")
 texture_normal = SubResource("AtlasTexture_17dvo")
 texture_pressed = SubResource("AtlasTexture_slcjd")
 stretch_mode = 5
 script = SubResource("GDScript_hvrjb")
 
-[node name="Seperator" type="Control" parent="MenuButtons"]
-custom_minimum_size = Vector2(20, 0)
-layout_mode = 2
+[node name="CollectionButton" type="TextureButton" parent="."]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 0
+offset_left = 95.0
+offset_top = 450.0
+offset_right = 295.0
+offset_bottom = 589.0
+texture_normal = SubResource("AtlasTexture_v7qjl")
+texture_pressed = SubResource("AtlasTexture_bmx8n")
+stretch_mode = 5
+script = SubResource("GDScript_0d2si")
 
-[node name="TextureButton" type="TextureButton" parent="MenuButtons"]
+[node name="TextureButton" type="TextureButton" parent="."]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
+offset_left = 852.0
+offset_top = 449.0
+offset_right = 1052.0
+offset_bottom = 588.0
 texture_normal = SubResource("AtlasTexture_v7qjl")
 texture_pressed = SubResource("AtlasTexture_bmx8n")
 stretch_mode = 5
@@ -136,13 +142,14 @@ offset_bottom = 376.0
 
 [node name="TextureRect" type="TextureRect" parent="Logo"]
 layout_mode = 0
-offset_left = 105.0
-offset_top = 43.0
-offset_right = 704.0
-offset_bottom = 385.0
+offset_left = 189.0
+offset_top = 19.0
+offset_right = 662.0
+offset_bottom = 289.0
 texture = ExtResource("5_xwfn1")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
-[connection signal="pressed" from="MenuButtons/GameStartButton" to="MenuButtons/GameStartButton" method="_on_pressed"]
-[connection signal="pressed" from="MenuButtons/TextureButton" to="MenuButtons/TextureButton" method="_on_pressed"]
+[connection signal="pressed" from="GameStartButton" to="GameStartButton" method="_on_pressed"]
+[connection signal="pressed" from="CollectionButton" to="CollectionButton" method="_on_pressed"]
+[connection signal="pressed" from="TextureButton" to="TextureButton" method="_on_pressed"]

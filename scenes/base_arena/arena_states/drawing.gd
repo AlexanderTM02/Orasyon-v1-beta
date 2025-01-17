@@ -7,9 +7,10 @@ var move_to_next_state: bool = false
 
 var mana_per_turn = 2
 
-@onready var new_card = preload("res://entities/card/card.tscn")
-@onready var player_hand: HBoxContainer = $"../../UI/PlayerHand"
-@onready var player = $"../../Entities/Player"
+const new_card = preload("res://entities/card/card.tscn")
+
+@onready var player_hand: Container = $"../../UI/PlayerHand"
+@onready var player = $"../../Entities/PlayerCharacter"
 
 func enter() -> void:
 	var player_mana = player.add_mana(mana_per_turn)
@@ -35,3 +36,4 @@ func process_frame(delta: float) -> BoardState:
 func add_card() -> void:
 	var card_instance = new_card.instantiate()
 	player_hand.add_child(card_instance)
+	player_hand._update_cards()

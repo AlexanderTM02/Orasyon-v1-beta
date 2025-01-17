@@ -1,13 +1,14 @@
-[gd_scene load_steps=25 format=3 uid="uid://cftclvt23qxde"]
+[gd_scene load_steps=41 format=3 uid="uid://cftclvt23qxde"]
 
 [ext_resource type="Script" path="res://scenes/base_arena/arena.gd" id="1_5mbsh"]
 [ext_resource type="PackedScene" uid="uid://dxl7qa6ldat68" path="res://entities/card/card.tscn" id="1_b66h7"]
 [ext_resource type="Texture2D" uid="uid://he5aw72v7f5g" path="res://assets/background/board_background/Arena1.1.png" id="2_soucb"]
-[ext_resource type="PackedScene" uid="uid://dfdhuwxwei5u1" path="res://entities/player_character/PlayerCharacter.tscn" id="3_nnolm"]
+[ext_resource type="Script" path="res://scenes/base_arena/player.gd" id="3_lln5u"]
+[ext_resource type="Texture2D" uid="uid://baiapntfeiwlg" path="res://assets/enemy/unano/idle (1).png" id="4_gd64y"]
 [ext_resource type="Script" path="res://scenes/base_arena/arena_states/board_states.gd" id="4_p6jpa"]
-[ext_resource type="PackedScene" uid="uid://h8gvkfia88xk" path="res://entities/enemies/enemy_character.tscn" id="4_ydb1k"]
 [ext_resource type="Script" path="res://scenes/base_arena/arena_states/base_board_state.gd" id="5_pfa2w"]
-[ext_resource type="Script" path="res://scenes/base_arena/player_hand.gd" id="5_w0hku"]
+[ext_resource type="Texture2D" uid="uid://vi82wgf6n8jj" path="res://assets/player/attack.png" id="5_xx3ek"]
+[ext_resource type="Texture2D" uid="uid://bn01niodibjbs" path="res://assets/player/idle.png" id="6_b5l3b"]
 [ext_resource type="Script" path="res://scenes/base_arena/arena_states/drawing.gd" id="6_gjim0"]
 [ext_resource type="Script" path="res://scenes/base_arena/arena_states/player_turn.gd" id="7_uwote"]
 [ext_resource type="Script" path="res://scenes/base_arena/arena_states/activating.gd" id="8_k0l0s"]
@@ -18,15 +19,131 @@
 [ext_resource type="Script" path="res://scenes/base_arena/arena_states/enemy_turn.gd" id="16_r4uwt"]
 [ext_resource type="Script" path="res://scenes/base_arena/arena_states/win_loss_check.gd" id="18_fbaq4"]
 
-[sub_resource type="Curve" id="Curve_ofkg1"]
-min_value = -1.0
-_data = [Vector2(0, 1.49012e-08), 0.0, 6.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 1.49012e-08), -6.0, 0.0, 0, 0]
-point_count = 3
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0s2e"]
+atlas = ExtResource("5_xx3ek")
+region = Rect2(0, 0, 90, 68)
 
-[sub_resource type="Curve" id="Curve_63q0k"]
-min_value = -1.0
-_data = [Vector2(0, -1), 0.0, 6.0, 0, 0, Vector2(0.5, 1.49012e-08), 1.15682, 1.15682, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 3
+[sub_resource type="AtlasTexture" id="AtlasTexture_15774"]
+atlas = ExtResource("5_xx3ek")
+region = Rect2(90, 0, 90, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kmm6c"]
+atlas = ExtResource("5_xx3ek")
+region = Rect2(180, 0, 90, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rowqr"]
+atlas = ExtResource("6_b5l3b")
+region = Rect2(0, 0, 48, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l1p53"]
+atlas = ExtResource("6_b5l3b")
+region = Rect2(48, 0, 48, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wp8jk"]
+atlas = ExtResource("6_b5l3b")
+region = Rect2(96, 0, 48, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6bxl"]
+atlas = ExtResource("6_b5l3b")
+region = Rect2(144, 0, 48, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1tjlg"]
+atlas = ExtResource("6_b5l3b")
+region = Rect2(192, 0, 48, 68)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vsigk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w0s2e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_15774")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kmm6c")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rowqr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l1p53")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wp8jk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6bxl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1tjlg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t4i02"]
+atlas = ExtResource("4_gd64y")
+region = Rect2(0, 0, 80, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dm2tm"]
+atlas = ExtResource("4_gd64y")
+region = Rect2(80, 0, 80, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wax61"]
+atlas = ExtResource("4_gd64y")
+region = Rect2(160, 0, 80, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y0btt"]
+atlas = ExtResource("4_gd64y")
+region = Rect2(240, 0, 80, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wjdba"]
+atlas = ExtResource("4_gd64y")
+region = Rect2(320, 0, 80, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5vuk8"]
+atlas = ExtResource("4_gd64y")
+region = Rect2(400, 0, 80, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1v0an"]
+atlas = ExtResource("4_gd64y")
+region = Rect2(480, 0, 80, 73)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yrdx2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t4i02")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dm2tm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wax61")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y0btt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wjdba")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5vuk8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1v0an")
+}],
+"loop": true,
+"name": &"default",
+"speed": 9.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rmoqt"]
 atlas = ExtResource("8_o5tfj")
@@ -58,7 +175,6 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 85.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -67,19 +183,30 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -84.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_soucb")
 
 [node name="Entities" type="CanvasLayer" parent="."]
 
-[node name="PlayerCharacter" parent="Entities" instance=ExtResource("3_nnolm")]
-position = Vector2(210, 383)
-scale = Vector2(2, 2)
+[node name="Player" type="Node2D" parent="Entities"]
+script = ExtResource("3_lln5u")
 
-[node name="EnemyCharacter" parent="Entities" instance=ExtResource("4_ydb1k")]
-position = Vector2(879, 316)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Entities/Player"]
+top_level = true
+position = Vector2(208, 362)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_vsigk")
+
+[node name="enemy" type="Node2D" parent="Entities"]
+script = ExtResource("3_lln5u")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Entities/enemy"]
+position = Vector2(845, 380)
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_yrdx2")
+frame_progress = 0.735446
+flip_h = true
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -88,10 +215,9 @@ layout_mode = 3
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -357.0
-offset_top = -1.0
-offset_right = 353.0
-offset_bottom = 384.0
+offset_left = -355.0
+offset_right = 355.0
+offset_bottom = 385.0
 grow_horizontal = 2
 mouse_filter = 1
 
@@ -110,23 +236,21 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="PlayerHand" type="Container" parent="UI"]
+[node name="PlayerHand" type="HBoxContainer" parent="UI"]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -336.0
-offset_top = -167.0
-offset_right = 196.0
-offset_bottom = -39.0
+offset_left = -359.0
+offset_top = -162.0
+offset_right = 212.0
+offset_bottom = -34.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(1.25, 1.25)
 size_flags_vertical = 8
-script = ExtResource("5_w0hku")
-hand_curve = SubResource("Curve_ofkg1")
-rotation_curve = SubResource("Curve_63q0k")
+alignment = 1
 
 [node name="Card" parent="UI/PlayerHand" instance=ExtResource("1_b66h7")]
 layout_mode = 2
@@ -138,10 +262,10 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="EndTurn" type="TextureButton" parent="UI"]
-offset_left = 991.0
-offset_top = 562.0
-offset_right = 1061.0
-offset_bottom = 588.0
+offset_left = 906.0
+offset_top = 524.0
+offset_right = 976.0
+offset_bottom = 550.0
 scale = Vector2(2, 2)
 texture_normal = SubResource("AtlasTexture_rmoqt")
 texture_pressed = SubResource("AtlasTexture_xepgf")
@@ -152,10 +276,9 @@ stretch_mode = 3
 [node name="PlayerHud" type="Control" parent="Status"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 3.0
-offset_top = 506.0
-offset_right = 244.0
-offset_bottom = 626.0
+offset_top = 1.0
+offset_right = 241.0
+offset_bottom = 121.0
 script = ExtResource("9_hsxxx")
 
 [node name="Mana" type="TextureRect" parent="Status/PlayerHud"]

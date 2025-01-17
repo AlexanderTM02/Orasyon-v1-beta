@@ -18,8 +18,7 @@ boot_splash/show_image=false
 
 [display]
 
-window/size/viewport_width=1088
-window/size/viewport_height=640
+window/size/always_on_top=true
 window/stretch/mode="viewport"
 
 [gui]

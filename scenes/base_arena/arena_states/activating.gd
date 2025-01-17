@@ -6,17 +6,15 @@ extends BoardState
 var next_state: bool = false
 
 @onready var card_placement = get_node("../../UI/PlacementArea/CardPlacement")
-@onready var player = $"../../Entities/Player"
-@onready var enemy = $"../../Entities/enemy"
-const WaitAnimation = preload("res://scenes/base_arena/wait_animation.gd")
-
+@onready var player = $"../../Entities/PlayerCharacter"
+@onready var enemy = $"../../Entities/EnemyCharacter"
+const WaitAnimation = preload("res://scenes/base_arena/arena_states/wait_animation.gd")
 
 
 func enter() -> void:
 	print("in activating")
 	
 	activate_card_on_board()
-	print("bro")
 	next_state = true
 
 
@@ -50,7 +48,7 @@ func activate_card_on_board() -> void:
 				print("did not match")
 		
 		card_playing.animation_player.play("activating")
-
+		
 
 func clear_child_nodes(node):
 	for child in node.get_children():

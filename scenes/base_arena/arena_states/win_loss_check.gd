@@ -2,8 +2,8 @@ extends BoardState
 
 @export var Drawing_state: BoardState
 
-@onready var player: Enemy = $"../../Entities/Player"
-@onready var enemy: Enemy = $"../../Entities/enemy"
+@onready var player = $"../../Entities/PlayerCharacter"
+@onready var enemy = $"../../Entities/EnemyCharacter"
 @onready var win_loss: CanvasLayer = $"../../WinLoss"
 
 const WIN_SCREEN = preload("res://menu/win_screen.tscn")

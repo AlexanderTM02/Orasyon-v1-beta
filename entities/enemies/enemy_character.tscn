@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://h8gvkfia88xk"]
+
+[ext_resource type="Script" path="res://enemy_character.gd" id="1_eoh75"]
+[ext_resource type="Texture2D" uid="uid://cdibhkqa6vqur" path="res://assets/enemy/manananggal/mananangal.png" id="2_1a8m3"]
+[ext_resource type="Texture2D" uid="uid://djluku2w60bxo" path="res://assets/ui/icons/heart.png" id="3_wlk5b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_porcs"]
+atlas = ExtResource("2_1a8m3")
+region = Rect2(0, 0, 80, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_st0bd"]
+atlas = ExtResource("2_1a8m3")
+region = Rect2(80, 0, 80, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6gs0j"]
+atlas = ExtResource("2_1a8m3")
+region = Rect2(160, 0, 80, 73)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kn415"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_porcs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_st0bd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6gs0j")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3hn7a"]
+font_size = 32
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 3
+
+[node name="EnemyCharacter" type="Node2D"]
+script = ExtResource("1_eoh75")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_kn415")
+frame = 1
+frame_progress = 0.707867
+
+[node name="HealthIcon" type="TextureRect" parent="."]
+offset_left = -61.0
+offset_top = 107.0
+offset_right = -29.0
+offset_bottom = 139.0
+texture = ExtResource("3_wlk5b")
+
+[node name="HealthLabel" type="Label" parent="HealthIcon"]
+layout_mode = 0
+offset_left = 40.0
+offset_right = 64.0
+offset_bottom = 26.0
+text = "placeholder"
+label_settings = SubResource("LabelSettings_3hn7a")
+horizontal_alignment = 1
+vertical_alignment = 1

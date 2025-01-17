@@ -5,7 +5,6 @@ extends State
 
 var mouse_held: bool = false
 
-
 func enter() -> void:
 	mouse_held = true
 	pass
@@ -24,6 +23,7 @@ func process_input(event: InputEvent) -> State:
 func process_frame(delta: float) -> State:
 	if mouse_held:
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+			#check if mouse is moving, if moving move to dragginf state
 			var mouse_velocity = Input.get_last_mouse_velocity()
 			if mouse_velocity.length() > 20: 
 				return dragging_state

@@ -5,13 +5,15 @@ extends Node
 var current_state: State
 
 func init(parent:Card) -> void:
+	
+	#set Card as parent to all states under StateMachine
 	for child in get_children():
 		if child is State:
-			child.set_card_parent(parent)
-	
+			child.set_card_parent(parent) 
 	change_state(starting_state)
 
 func change_state(new_state: State) -> void:
+	#allow current state to enter exit function before changing states
 	if current_state:
 		current_state.exit()
 	

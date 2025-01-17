@@ -1,6 +1,6 @@
 extends Control
 
-@onready var player = $"../../Entities/Player"
+@onready var player = $"../../Entities/PlayerCharacter"
 @onready var player_mana_label: Label = $PlayerManaLabel
 @onready var player_health_label: Label = $PlayerHealthLabel
 

@@ -1,8 +1,7 @@
-class_name Enemy
-extends Node
+extends Node2D
 
-@export var max_health:int = 100
-@export var max_mana:int = 20
+@export var max_health:int = 60
+@export var max_mana:int = 100
 
 var current_health = max_health
 var min_health = 0
@@ -12,6 +11,12 @@ var current_mana = starting_mana
 var min_mana = 0
 
 @onready var block_damage = 0
+@onready var animation = $AnimatedSprite2D
+@onready var health_label = $HealthIcon/HealthLabel
+
+func _ready() -> void:
+	animation.play("default")
+	health_label.text = str(max_health)
 
 func take_damage(amount):
 	var remaining_damage = amount
@@ -27,6 +32,7 @@ func take_damage(amount):
 	
 	# Apply remaining damage to health
 	current_health = clampi(current_health - remaining_damage, min_health, max_health)
+	health_label.text = str(current_health)
 	print(current_health)
 
 func heal(amount):
@@ -40,4 +46,3 @@ func use_mana(amount: int) -> void:
 
 func add_mana(amount: int) -> void:
 	current_mana = clampi(current_mana + amount, min_mana, max_mana)
-	

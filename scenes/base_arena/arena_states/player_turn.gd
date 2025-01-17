@@ -5,7 +5,7 @@ extends BoardState
 var button_pressed: bool = false
 
 @onready var end_turn = $"../../UI/EndTurn"
-@onready var player: Enemy = $"../../Entities/Player"
+@onready var player = $"../../Entities/PlayerCharacter"
 @onready var card_placement: HBoxContainer = $"../../UI/PlacementArea/CardPlacement"
 
 

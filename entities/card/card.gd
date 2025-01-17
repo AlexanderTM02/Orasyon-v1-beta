@@ -3,6 +3,8 @@ extends Container
 
 var card_dictionary_resource = preload("res://entities/card/card_resources/card_dictionary.gd").new()
 
+const SIZE := Vector2(100, 130)
+
 var is_card_highlighted: bool = false
 
 var spell_name
@@ -12,6 +14,7 @@ var defense_value
 var cast_time
 var spell_description
 
+#get a random crad from the card dictionary
 @onready var random_card = card_dictionary_resource.get_random_card()
 
 #reference state_machine node
@@ -28,10 +31,13 @@ var spell_description
 
 @onready var board = get_tree().get_root().get_node("Board")
 
+
+
 func _ready() -> void:
 	
 	card_art.texture = random_card["card_art"]
 	
+	#get card values from the random card dictionary
 	spell_name = random_card["name"]
 	mana_cost = random_card["stats"]["mana_cost"]
 	attack_value = random_card["stats"]["damage"]
@@ -39,6 +45,7 @@ func _ready() -> void:
 	cast_time = random_card["stats"]["cast_time"]
 	
 	update_card_info()
+	
 	state_machine.init(self)
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -62,7 +69,6 @@ func _on_mouse_entered() -> void:
 
 func _on_mouse_exited() -> void:
 	is_card_highlighted = false
-
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	pass # Replace with function body.
