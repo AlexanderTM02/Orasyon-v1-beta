@@ -16,11 +16,8 @@ func enter() -> void:
 	var player_mana = player.add_mana(mana_per_turn)
 	
 	for card_num in num_of_cards_drawn:
-		if player_hand.get_child_count() <= 4:
-			add_card()
-			
+		add_card()
 	move_to_next_state = true
-	print("cards drawn")
 
 func exit() -> void:
 	pass

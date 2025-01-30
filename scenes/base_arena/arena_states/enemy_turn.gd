@@ -1,15 +1,15 @@
 extends BoardState
 
 @export var activating_state: BoardState
+@export var win_loss_check: BoardState
 
 @onready var next_state: bool = false
 @onready var player = $"../../Entities/PlayerCharacter"
+@onready var enemy = $"../../Entities/EnemyCharacter"
 
 
 func enter() -> void:
-	var random_damage = randi_range(1, 20)
-	player.take_damage(random_damage)
-	print(str(random_damage))
+	enemy.enemy_attack(player)
 	next_state = true
 
 func exit() -> void:

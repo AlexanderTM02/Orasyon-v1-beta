@@ -2,24 +2,27 @@ extends BoardState
 
 @export var player_turn: BoardState
 @export var win_loss_check_state: BoardState
+@export var enemy_turn: BoardState
 
 var next_state: bool = false
+var end_sequence: bool = false
 
-@onready var card_placement = get_node("../../UI/PlacementArea/CardPlacement")
+@onready var card_placement = $"../../UI/PlacementArea/CardPlacement"
+@onready var player_hand = $"../../UI/PlayerHand"
 @onready var player = $"../../Entities/PlayerCharacter"
 @onready var enemy = $"../../Entities/EnemyCharacter"
 const WaitAnimation = preload("res://scenes/base_arena/arena_states/wait_animation.gd")
 
 
 func enter() -> void:
-	print("in activating")
-	
+	disable_card_input()
 	activate_card_on_board()
-	next_state = true
-
 
 func exit() -> void:
+	print("exit activation state")
 	clear_child_nodes(card_placement)
+	enable_card_input()
+	next_state = false
 
 func process_frame(delta: float) -> BoardState:
 	if next_state:
@@ -27,30 +30,198 @@ func process_frame(delta: float) -> BoardState:
 	return null
 
 func activate_card_on_board() -> void:
-	for card_to_activate in range(0, card_placement.get_child_count()):
+	for current_card_index in range(card_placement.get_child_count()):
+		print("card index actvating: " + str(current_card_index))
 		
-		var card_playing = card_placement.get_child(card_to_activate)
+		var card_playing = card_placement.get_child(current_card_index)
 		
-		var spell_name = card_playing.spell_name
-		var mana_cost = card_playing.mana_cost
-		var attack_value = card_playing.attack_value
-		var defense_value = card_playing.defense_value
-		var cast_time = card_playing.cast_time
+		process_card_effects(card_playing, current_card_index)
 		
-		match spell_name:
-			"Fireball":
-				enemy.take_damage(attack_value)
-				player.use_mana(mana_cost)
-			"Shield":
-				player.add_shield(defense_value)
-				player.use_mana(mana_cost)
-			_:
-				print("did not match")
+		var tween = get_tree().create_tween()
+		tween.tween_property(
+			card_playing, "position:y", card_playing.global_position.y + 50, 0.25
+		).set_ease(Tween.EASE_OUT)
 		
-		card_playing.animation_player.play("activating")
+		process_card_effects(card_playing, current_card_index)
 		
+		tween.tween_property(
+			card_playing, "position:y", card_playing.global_position.y - 30, 0.25
+		).set_ease(Tween.EASE_IN).set_delay(0.50)
+		
+		await tween.finished
+		
+		if end_sequence:
+			break
+		
+	next_state = true
+
+func process_card_effects(card, current_card_index):
+	
+	match card.card_id:
+		"DAMAGE_BERNARDO":
+			enemy.take_damage(card.attack_value)
+			
+		"DAMAGE_BAKUNAWA":
+			enemy.take_damage(card.attack_value)
+			end_sequence = true
+			
+		"DAMAGE_MINOKAWA":
+			var previous_card_index = max(current_card_index - 1, 0)
+			var previous_card = card_placement.get_child(previous_card_index)
+			
+			if previous_card.spell_type == "Damage":
+				enemy.take_damage(5, true)
+			else:
+				enemy.take_damage(card.attack_value)
+			
+		"SHIELD_KAPRE":
+			player.add_shield(card.defense_value)
+			
+		"SHIELD_MARIANG_MAKILING":
+			player.add_shield(card.defense_value)
+			player_hand.draw()
+			
+			if current_card_index == 2:
+				player_hand.draw()
+			
+		"HEAL_BABAYLAN":
+			player.heal(card.heal_value)
+			
+		"HEAL_MAKILING":
+			player.heal(card.heal_value)
+			end_sequence = true
+			
+		"COPY_IBONG_ADARNA":
+			var previous_card_index = max(current_card_index - 1, 0)
+			var previous_card = card_placement.get_child(previous_card_index)
+			
+			previous_card.mana_cost -= 1
+			
+			if previous_card_index == 0 and previous_card.card_id == "COPY_IBONG_ADARNA":
+				pass
+			else:
+				var tween = get_tree().create_tween()
+				tween.tween_property(
+					card, "position:y", card.global_position.y + 50, 0.25
+				).set_ease(Tween.EASE_OUT)
+				
+				#make animation of turning into previous card
+				process_card_effects(previous_card, previous_card_index)
+				
+				tween.tween_property(
+					card, "position:y", card.global_position.y - 30, 0.25
+				).set_ease(Tween.EASE_IN).set_delay(0.50)
+				
+				await tween.finished
+			
+		"COPY_SARIMANOK":
+			var previous_card_index = max(current_card_index - 1, 0)
+			var previous_card = card_placement.get_child(previous_card_index)
+			
+			var last_damage_card = null
+			
+			for i in range(current_card_index - 1, -1, -1): #loop backwards
+				var looped_card = card_placement.get_child(i) 
+				if looped_card.spell_type =="Damage" and looped_card.card_id == "COPY_SARIMANOK":
+					last_damage_card = card
+					if last_damage_card != null:
+						
+						var tween = get_tree().create_tween()
+						tween.tween_property(
+							card, "position:y", card.global_position.y + 50, 0.25
+						).set_ease(Tween.EASE_OUT)
+						
+						process_card_effects(last_damage_card, i)
+						
+						tween.tween_property(
+							card, "position:y", card.global_position.y - 30, 0.25
+						).set_ease(Tween.EASE_IN).set_delay(0.50)
+						
+						await tween.finished
+						
+					else:
+						enemy.take_damage(2)
+					break
+			
+		"COMBO_LAKAN":
+			var previous_card_index = max(current_card_index - 1, 0)
+			var previous_card = card_placement.get_child(previous_card_index)
+			
+			enemy.take_damage(card.attack_value)
+			player.add_shield(card.defense_value)
+			
+			if previous_card.spell_type == "Shield":
+				player.add_shield(2)
+			
+		"UTILITY_BATHALA":
+			if current_card_index + 1 < card_placement.get_child_count():
+				var next_card_index = current_card_index + 1
+				var next_card = card_placement.get_child(next_card_index)
+				
+				# Set the next card's mana cost to 0
+				next_card.mana_cost = 0
+			else:
+				# Handle the case where there is no next card
+				print("No next card to modify.")
+				
+			# Draw a card for the player
+			player_hand.draw()
+			
+		"MULTI_SAMBAL":
+			# Loop through all the cards played in the current sequence
+			for i in range(current_card_index):
+				var looped_card = card_placement.get_child(i)
+			
+			# Check if the card is a damage card
+				if looped_card.spell_type == "Damage":
+				# Replay the damage card's effect
+					process_card_effects(looped_card, i)
+			
+		"SIMPLE_AGTA":
+			player.add_shield(card.defense_value)
+			enemy.take_damage(card.attack_value)
+			pass #put card effects here
+			
+		"SIMPLE_DIWATA":
+			player.heal(card.heal_value)
+			pass #put card effects here
+			
+		_:
+			print("did not match")
+			
+	player.use_mana(card.mana_cost)
+	
+	print("card " + str(current_card_index) + " activated")
+	
+
+func check_all_cards_processed():
+	next_state = true
 
 func clear_child_nodes(node):
 	for child in node.get_children():
-		node.remove_child(child)
 		child.queue_free()
+
+func disable_card_input():
+	for card in card_placement.get_children():
+		card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for card in player_hand.get_children():
+		card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+func enable_card_input():
+	for card in player_hand.get_children():
+		card.mouse_filter = Control.MOUSE_FILTER_PASS
+
+#func disable_card_input():
+	#for card_to_activate in range(card_placement.get_child_count()):
+		#var card_playing = card_placement.get_child(card_to_activate)
+		#
+		#card_playing.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		#
+	#for cards in range(player_hand.get_child_count()):
+		#var card = player_hand.get_child(cards)
+		#card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+#
+#func enable_card_input():
+	#for cards in range(player_hand.get_child_count()):
+		#var card = player_hand.get_child(cards)
+		#card.mouse_filter = Control.MOUSE_FILTER_PASS

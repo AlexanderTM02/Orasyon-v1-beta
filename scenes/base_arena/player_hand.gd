@@ -11,6 +11,9 @@ const CARD = preload("res://entities/card/card.tscn")
 @export var y_min := 50
 @export var y_max := -50
 
+func _process(delta: float) -> void:
+	_update_cards()
+
 
 func draw() -> void:
 	var new_card = CARD.instantiate()

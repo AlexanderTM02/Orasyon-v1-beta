@@ -1,0 +1,68 @@
+[gd_scene load_steps=8 format=3 uid="uid://dbp1ev7y2vctp"]
+
+[ext_resource type="Texture2D" uid="uid://rqrldmkua8q1" path="res://assets/ui/buttons/level_plate.png" id="1_2e3x2"]
+[ext_resource type="Script" path="res://menu/pop_ups/level_select.gd" id="1_eplr4"]
+[ext_resource type="Texture2D" uid="uid://ia3enmr0hr3e" path="res://assets/ui/buttons/level_button.png" id="3_vnrul"]
+[ext_resource type="Texture2D" uid="uid://q61d4cftlavb" path="res://assets/ui/buttons/difficulty_lvl1.png" id="4_j7iro"]
+[ext_resource type="Texture2D" uid="uid://c4yfacvf6wd0p" path="res://assets/ui/buttons/difficulty_lvl2.png" id="5_djk0q"]
+[ext_resource type="Texture2D" uid="uid://24gc0o0s0gso" path="res://assets/ui/buttons/difficulty_lvl3.png" id="6_8no8y"]
+[ext_resource type="Texture2D" uid="uid://b355sua0ovi8o" path="res://assets/ui/buttons/back1.png" id="7_x47hv"]
+
+[node name="LevelSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eplr4")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_2e3x2")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 179.0
+offset_top = 64.0
+offset_right = 284.0
+offset_bottom = 111.0
+texture = ExtResource("3_vnrul")
+
+[node name="DifficultyLvl1" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 119.0
+offset_right = 175.0
+offset_bottom = 219.0
+texture_normal = ExtResource("4_j7iro")
+
+[node name="DifficultyLvl2" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 161.0
+offset_top = 121.0
+offset_right = 291.0
+offset_bottom = 221.0
+texture = ExtResource("5_djk0q")
+
+[node name="DifficultyLvl3" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 117.0
+offset_right = 410.0
+offset_bottom = 217.0
+texture = ExtResource("6_8no8y")
+
+[node name="BackButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 221.0
+offset_right = 489.0
+offset_bottom = 541.0
+scale = Vector2(0.3, 0.3)
+texture_normal = ExtResource("7_x47hv")
+
+[connection signal="pressed" from="DifficultyLvl1" to="." method="_on_difficulty_lvl_1_pressed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

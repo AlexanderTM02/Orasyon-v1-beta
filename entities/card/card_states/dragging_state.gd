@@ -11,11 +11,14 @@ var drag_offset: Vector2
 
 func enter() -> void:
 	original_position =  parent.global_position
-	drag_offset = Vector2.ZERO
-	drag_offset = parent.get_global_mouse_position() - parent.global_position
+	var parent_size = parent.get_size()  # Assuming the parent has a size property
+	drag_offset = Vector2(parent_size.x / 2, parent_size.y / 2)
+	
+	parent.z_index = parent.z_index + 1
 
 func exit() -> void:
 	parent.is_card_highlighted = false
+	parent.z_index = parent.z_index - 1 #lol terrible code
 
 func process_input(event: InputEvent) -> State:
 	if event is InputEventMouseButton:
@@ -44,5 +47,6 @@ func process_input(event: InputEvent) -> State:
 	return null
 
 func process_frame(delta: float) -> State:
+	parent.rotation_degrees = 0
 	parent.global_position = parent.get_global_mouse_position() - drag_offset
 	return null

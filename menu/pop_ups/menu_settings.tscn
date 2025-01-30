@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=3 uid="uid://ccx8gk7shymjd"]
+
+[ext_resource type="Script" path="res://menu/pop_ups/menu_settings.gd" id="1_4wwfu"]
+[ext_resource type="Texture2D" uid="uid://rqrldmkua8q1" path="res://assets/ui/buttons/level_plate.png" id="1_ug2x6"]
+[ext_resource type="Texture2D" uid="uid://b355sua0ovi8o" path="res://assets/ui/buttons/back1.png" id="2_s45dm"]
+[ext_resource type="Texture2D" uid="uid://ib6xscx5n3mn" path="res://assets/ui/menu_icons/music_icon.png" id="3_3p1pk"]
+[ext_resource type="Texture2D" uid="uid://c0uo5tm36l02r" path="res://assets/ui/menu_icons/sound_icon.png" id="4_qpoh2"]
+
+[node name="MenuSettings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4wwfu")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_ug2x6")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 153.0
+offset_top = 202.0
+offset_right = 613.0
+offset_bottom = 522.0
+scale = Vector2(0.3, 0.3)
+texture_normal = ExtResource("2_s45dm")
+
+[node name="MusicIcon" type="Sprite2D" parent="."]
+position = Vector2(128, 92)
+texture = ExtResource("3_3p1pk")
+
+[node name="SoundIcon" type="Sprite2D" parent="."]
+position = Vector2(127, 144)
+texture = ExtResource("4_qpoh2")
+
+[node name="HSlider" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 155.0
+offset_top = 85.0
+offset_right = 355.0
+offset_bottom = 101.0
+value = 100.0
+
+[node name="HSlider2" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 155.0
+offset_top = 135.0
+offset_right = 355.0
+offset_bottom = 151.0
+value = 100.0
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]

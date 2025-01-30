@@ -1,11 +1,20 @@
-[gd_scene load_steps=17 format=3 uid="uid://dul103a7w7dga"]
+[gd_scene load_steps=26 format=3 uid="uid://dul103a7w7dga"]
 
 [ext_resource type="Texture2D" uid="uid://dpu07rjwgfb33" path="res://assets/background/menu_backgriund/back.png" id="1_ecdn3"]
 [ext_resource type="FontFile" uid="uid://bjitbo10uldnw" path="res://assets/font/m5x7.ttf" id="1_efcke"]
+[ext_resource type="Script" path="res://menu/main_menu.gd" id="1_whhni"]
 [ext_resource type="Texture2D" uid="uid://cn5ewrq16vbwj" path="res://assets/background/menu_backgriund/middle.png" id="2_l14jq"]
 [ext_resource type="Texture2D" uid="uid://6dw6mtxyh8uo" path="res://assets/background/menu_backgriund/front.png" id="3_w8et6"]
+[ext_resource type="PackedScene" uid="uid://ccx8gk7shymjd" path="res://menu/pop_ups/menu_settings.tscn" id="5_87cn3"]
 [ext_resource type="Texture2D" uid="uid://d0kvp5diu82v2" path="res://assets/ui/buttons/buttons_spritesheet2.png" id="5_cpqm2"]
 [ext_resource type="Texture2D" uid="uid://b758qi2w12xpa" path="res://assets/ui/Logo/orasyon_logo.png" id="5_xwfn1"]
+[ext_resource type="Texture2D" uid="uid://cy7ghlk1dbdnd" path="res://assets/ui/buttons/Collections.png" id="6_kn701"]
+[ext_resource type="Texture2D" uid="uid://ba5hhu8gjf35j" path="res://assets/ui/buttons/all buttons 02.png" id="6_q3nr6"]
+[ext_resource type="PackedScene" uid="uid://bcgqf6i4stuvg" path="res://menu/pop_ups/exit_pop_up.tscn" id="7_nu8e0"]
+[ext_resource type="Texture2D" uid="uid://bpvkv0at2wngi" path="res://assets/ui/menu_icons/setting_icon.png" id="10_234vi"]
+[ext_resource type="PackedScene" uid="uid://dbp1ev7y2vctp" path="res://menu/pop_ups/level_select.tscn" id="10_dw1or"]
+[ext_resource type="Script" path="res://menu/menu_settings_button.gd" id="12_o33s3"]
+[ext_resource type="AudioStream" uid="uid://b071gl3jkd78d" path="res://assets/audio/background_music/home_bgm.mp3" id="15_6ksn0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nqy7e"]
 atlas = ExtResource("1_ecdn3")
@@ -34,24 +43,28 @@ region = Rect2(199, 263, 70, 26)
 script/source = "extends TextureButton
 
 func _on_pressed() -> void:
-	get_tree().change_scene_to_file(\"res://scenes/base_arena/arena.tscn\")
+	$\"..\".hide()
+	$\"../../Logo\".hide()
+	$\"../../LevelSelect\".show()
 "
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_v7qjl"]
-atlas = ExtResource("5_cpqm2")
-region = Rect2(97, 113, 70, 26)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bmx8n"]
 atlas = ExtResource("5_cpqm2")
 region = Rect2(275, 229, 70, 26)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7qjl"]
+atlas = ExtResource("6_q3nr6")
+region = Rect2(97, 113, 70, 26)
+
 [sub_resource type="GDScript" id="GDScript_0d2si"]
 script/source = "extends TextureButton
 
-
+const EXIT_POP_UP = preload(\"res://menu/pop_ups/exit_pop_up.tscn\")
 
 func _on_pressed() -> void:
-	get_tree().quit()
+	$\"../../Logo\".hide()
+	$\"..\".hide()
+	$\"../../ExitPopUp\".show()
 "
 
 [node name="MainMenu" type="Control"]
@@ -59,6 +72,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = -64.0
 offset_bottom = -8.0
+script = ExtResource("1_whhni")
 
 [node name="background" type="Control" parent="."]
 layout_mode = 1
@@ -95,43 +109,6 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_irfvr")
 
-[node name="GameStartButton" type="TextureButton" parent="."]
-custom_minimum_size = Vector2(200, 50)
-layout_mode = 2
-offset_left = 452.0
-offset_top = 349.0
-offset_right = 744.0
-offset_bottom = 552.0
-theme = SubResource("Theme_va5i0")
-texture_normal = SubResource("AtlasTexture_17dvo")
-texture_pressed = SubResource("AtlasTexture_slcjd")
-stretch_mode = 5
-script = SubResource("GDScript_hvrjb")
-
-[node name="CollectionButton" type="TextureButton" parent="."]
-custom_minimum_size = Vector2(200, 50)
-layout_mode = 0
-offset_left = 95.0
-offset_top = 450.0
-offset_right = 295.0
-offset_bottom = 589.0
-texture_normal = SubResource("AtlasTexture_v7qjl")
-texture_pressed = SubResource("AtlasTexture_bmx8n")
-stretch_mode = 5
-script = SubResource("GDScript_0d2si")
-
-[node name="TextureButton" type="TextureButton" parent="."]
-custom_minimum_size = Vector2(200, 50)
-layout_mode = 2
-offset_left = 852.0
-offset_top = 449.0
-offset_right = 1052.0
-offset_bottom = 588.0
-texture_normal = SubResource("AtlasTexture_v7qjl")
-texture_pressed = SubResource("AtlasTexture_bmx8n")
-stretch_mode = 5
-script = SubResource("GDScript_0d2si")
-
 [node name="Logo" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 0
@@ -150,6 +127,100 @@ texture = ExtResource("5_xwfn1")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
-[connection signal="pressed" from="GameStartButton" to="GameStartButton" method="_on_pressed"]
-[connection signal="pressed" from="CollectionButton" to="CollectionButton" method="_on_pressed"]
-[connection signal="pressed" from="TextureButton" to="TextureButton" method="_on_pressed"]
+[node name="MenuSettings" parent="." instance=ExtResource("5_87cn3")]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = 223.0
+offset_top = 37.0
+offset_right = 223.0
+offset_bottom = 37.0
+grow_vertical = 1
+scale = Vector2(1.6, 1.6)
+
+[node name="ExitPopUp" parent="." instance=ExtResource("7_nu8e0")]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 562.0
+offset_top = 277.0
+offset_right = 562.0
+offset_bottom = 277.0
+
+[node name="MainButtons" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GameStartButton" type="TextureButton" parent="MainButtons"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+offset_left = 452.0
+offset_top = 349.0
+offset_right = 744.0
+offset_bottom = 552.0
+theme = SubResource("Theme_va5i0")
+texture_normal = SubResource("AtlasTexture_17dvo")
+texture_pressed = SubResource("AtlasTexture_slcjd")
+stretch_mode = 5
+script = SubResource("GDScript_hvrjb")
+
+[node name="CollectionButton" type="TextureButton" parent="MainButtons"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 0
+offset_left = 48.0
+offset_top = 464.0
+offset_right = 708.0
+offset_bottom = 824.0
+scale = Vector2(0.35, 0.35)
+texture_normal = ExtResource("6_kn701")
+texture_pressed = SubResource("AtlasTexture_bmx8n")
+stretch_mode = 5
+
+[node name="ExitButton" type="TextureButton" parent="MainButtons"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+offset_left = 852.0
+offset_top = 449.0
+offset_right = 1052.0
+offset_bottom = 588.0
+texture_normal = SubResource("AtlasTexture_v7qjl")
+texture_pressed = SubResource("AtlasTexture_bmx8n")
+stretch_mode = 5
+script = SubResource("GDScript_0d2si")
+
+[node name="MenuSettingsButton" type="TextureButton" parent="MainButtons"]
+layout_mode = 0
+offset_left = 1030.0
+offset_top = -19.0
+offset_right = 1430.0
+offset_bottom = 281.0
+scale = Vector2(0.3, 0.3)
+texture_normal = ExtResource("10_234vi")
+stretch_mode = 0
+script = ExtResource("12_o33s3")
+
+[node name="LevelSelect" parent="." instance=ExtResource("10_dw1or")]
+visible = false
+layout_mode = 1
+offset_left = 126.0
+offset_top = -12.0
+offset_right = 126.0
+offset_bottom = -12.0
+scale = Vector2(2, 2)
+
+[node name="AudioStreamBGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_6ksn0")
+volume_db = -17.802
+bus = &"Music"
+
+[connection signal="pressed" from="MainButtons/GameStartButton" to="MainButtons/GameStartButton" method="_on_pressed"]
+[connection signal="pressed" from="MainButtons/ExitButton" to="MainButtons/ExitButton" method="_on_pressed"]
+[connection signal="pressed" from="MainButtons/MenuSettingsButton" to="MainButtons/MenuSettingsButton" method="_on_pressed"]

@@ -1,9 +1,10 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://rehjcjkwnvtv"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://rehjcjkwnvtv"]
 
 [ext_resource type="FontFile" uid="uid://bjitbo10uldnw" path="res://assets/font/m5x7.ttf" id="1_bx3hm"]
+[ext_resource type="FontFile" uid="uid://qtfucntokbn8" path="res://assets/font/LoRes9OTNarrow-Bold.ttf" id="2_wodak"]
 
 [resource]
-default_font = ExtResource("1_bx3hm")
+default_font = ExtResource("2_wodak")
 Label/colors/font_outline_color = Color(0, 0, 0, 1)
 Label/font_sizes/font_size = 49
 Label/fonts/font = ExtResource("1_bx3hm")

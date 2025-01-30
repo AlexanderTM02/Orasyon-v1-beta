@@ -6,12 +6,11 @@ var button_pressed: bool = false
 
 @onready var end_turn = $"../../UI/EndTurn"
 @onready var player = $"../../Entities/PlayerCharacter"
-@onready var card_placement: HBoxContainer = $"../../UI/PlacementArea/CardPlacement"
+@onready var card_placement: Container = $"../../UI/PlacementArea/CardPlacement"
 
 
 func enter() -> void:
 	end_turn.show()
-	print("in playerturn")
 
 func exit() -> void:
 	end_turn.hide()

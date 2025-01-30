@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dxl7qa6ldat68"]
+[gd_scene load_steps=21 format=3 uid="uid://dxl7qa6ldat68"]
 
 [ext_resource type="Script" path="res://entities/card/card.gd" id="1_vh50i"]
 [ext_resource type="Texture2D" uid="uid://bc6e84kycn6xc" path="res://assets/card/card_base.png" id="2_r5ofr"]
@@ -11,7 +11,6 @@
 [ext_resource type="Script" path="res://entities/card/card_states/hover_state.gd" id="6_un3k2"]
 [ext_resource type="Script" path="res://entities/card/card_states/clicked_state.gd" id="7_edhwd"]
 [ext_resource type="Script" path="res://entities/card/card_states/activating_state.gd" id="8_ou8ae"]
-[ext_resource type="Texture2D" uid="uid://4qmfa1petrs8" path="res://assets/ui/icons/clock.png" id="12_8xng5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nvlwr"]
 atlas = ExtResource("2_r5ofr")
@@ -25,8 +24,15 @@ region = Rect2(1, 2, 86, 32)
 atlas = ExtResource("5_g4ifi")
 region = Rect2(3, 2, 25, 42)
 
+[sub_resource type="LabelSettings" id="LabelSettings_6dw23"]
+line_spacing = 1.0
+font_size = 9
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_e3xyu"]
-outline_size = 9
+font_size = 18
+outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_63i0w"]
@@ -66,21 +72,6 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_qv0wq"]
-resource_name = "activating"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 20), Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_xwcli"]
@@ -140,99 +131,89 @@ tracks/1/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_smjrr"]
 _data = {
 "RESET": SubResource("Animation_63i0w"),
-"activating": SubResource("Animation_qv0wq"),
 "deselect": SubResource("Animation_xwcli"),
 "select": SubResource("Animation_prjpx")
 }
 
 [node name="Card" type="Container"]
 custom_minimum_size = Vector2(110, 128)
-offset_right = 110.0
-offset_bottom = 128.0
-pivot_offset = Vector2(55, 64)
+anchors_preset = -1
+anchor_left = 0.059
+anchor_top = 0.137
+anchor_right = 0.059
+anchor_bottom = 0.137
+offset_left = -75.52
+offset_top = -98.64
+offset_right = 75.52
+offset_bottom = 98.64
+pivot_offset = Vector2(75, 96)
 script = ExtResource("1_vh50i")
 
 [node name="Textures" type="Node2D" parent="."]
+scale = Vector2(1.5, 1.5)
 
 [node name="CardArt" type="TextureRect" parent="Textures"]
 offset_left = 2.0
 offset_top = 3.0
-offset_right = 98.0
-offset_bottom = 129.0
+offset_right = 97.0
+offset_bottom = 128.0
+expand_mode = 1
 
 [node name="CardTexture" type="Sprite2D" parent="Textures"]
 texture = SubResource("AtlasTexture_nvlwr")
 centered = false
 
-[node name="CardSpellName" type="Sprite2D" parent="Textures"]
-position = Vector2(51, 5.5)
-texture = SubResource("AtlasTexture_wg7q0")
+[node name="EffectValueBackground" type="Polygon2D" parent="Textures"]
+position = Vector2(50, 105)
+polygon = PackedVector2Array(-0.666664, 20.3333, -10.6667, 7.66667, -10.6667, -2.33333, -0.666664, -15.6667, 10.6667, -1.66666, 10.6667, 8.33334, 0, 21)
 
-[node name="Attack" type="Sprite2D" parent="Textures"]
+[node name="EffectValuePlace" type="Sprite2D" parent="Textures"]
 position = Vector2(50, 105)
 texture = ExtResource("4_enlfk")
 
-[node name="Clock" type="Sprite2D" parent="Textures"]
-position = Vector2(13.5, 111)
-texture = ExtResource("12_8xng5")
+[node name="CardSpellName" type="Sprite2D" parent="Textures"]
+position = Vector2(51, 8.66667)
+scale = Vector2(1.21512, 1.21512)
+texture = SubResource("AtlasTexture_wg7q0")
 
 [node name="Mana" type="Sprite2D" parent="Textures"]
-position = Vector2(99.5, 23.5)
+position = Vector2(1.66667, 8.66667)
 scale = Vector2(0.820313, 0.820313)
 texture = SubResource("AtlasTexture_ihti1")
 
 [node name="StatLabels" type="Control" parent="."]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-size_flags_vertical = 4
 
 [node name="SpellNameLabel" type="Label" parent="StatLabels"]
 layout_mode = 2
 offset_left = 12.0
-offset_right = 91.0
-offset_bottom = 13.0
+offset_top = -2.0
+offset_right = 141.0
+offset_bottom = 29.0
 text = "Shield"
-label_settings = SubResource("LabelSettings_e3xyu")
+label_settings = SubResource("LabelSettings_6dw23")
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ManaCostLabel" type="Label" parent="StatLabels"]
 layout_mode = 2
-offset_left = 90.0
-offset_top = 21.0
-offset_right = 110.0
+offset_left = -10.0
+offset_top = 6.0
+offset_right = 16.0
 offset_bottom = 34.0
 text = "20
 "
 label_settings = SubResource("LabelSettings_e3xyu")
 horizontal_alignment = 1
 
-[node name="AttackValueLabel" type="Label" parent="StatLabels"]
+[node name="EffectValueLabel" type="Label" parent="StatLabels"]
 layout_mode = 2
-offset_left = 38.0
-offset_top = 101.0
-offset_right = 62.0
-offset_bottom = 114.0
-text = "12"
-label_settings = SubResource("LabelSettings_e3xyu")
-horizontal_alignment = 1
-
-[node name="CastTimeLabel" type="Label" parent="StatLabels"]
-layout_mode = 2
-offset_left = 20.0
-offset_top = 104.5
-offset_right = 34.0
-offset_bottom = 117.5
-text = "6"
-label_settings = SubResource("LabelSettings_e3xyu")
-horizontal_alignment = 1
-
-[node name="DefenseValue" type="Label" parent="StatLabels"]
-layout_mode = 2
-offset_left = 77.0
-offset_top = 105.0
-offset_right = 95.0
-offset_bottom = 118.0
-text = "14"
+offset_left = 63.0
+offset_top = 147.0
+offset_right = 87.0
+offset_bottom = 175.0
+text = "0"
 label_settings = SubResource("LabelSettings_e3xyu")
 horizontal_alignment = 1
 

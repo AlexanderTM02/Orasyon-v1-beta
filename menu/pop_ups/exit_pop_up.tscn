@@ -1,0 +1,55 @@
+[gd_scene load_steps=6 format=3 uid="uid://bcgqf6i4stuvg"]
+
+[ext_resource type="Script" path="res://menu/pop_ups/exit_pop_up.gd" id="1_gnbhh"]
+[ext_resource type="Texture2D" uid="uid://ba5hhu8gjf35j" path="res://assets/ui/buttons/all buttons 02.png" id="1_l1754"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1p14t"]
+atlas = ExtResource("1_l1754")
+region = Rect2(343, 10, 80, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dk6r5"]
+atlas = ExtResource("1_l1754")
+region = Rect2(256, 114, 70, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gcbfl"]
+atlas = ExtResource("1_l1754")
+region = Rect2(290, 71, 70, 26)
+
+[node name="ExitPopUp" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gnbhh")
+
+[node name="Box" type="TextureRect" parent="."]
+layout_mode = 1
+offset_right = 80.0
+offset_bottom = 42.0
+scale = Vector2(7, 7)
+pivot_offset = Vector2(40, 21)
+texture = SubResource("AtlasTexture_1p14t")
+stretch_mode = 1
+
+[node name="YesButton" type="TextureButton" parent="."]
+layout_mode = 1
+offset_left = -199.0
+offset_top = 38.0
+offset_right = -129.0
+offset_bottom = 78.0
+scale = Vector2(3, 3)
+texture_normal = SubResource("AtlasTexture_dk6r5")
+
+[node name="NoButton" type="TextureButton" parent="."]
+layout_mode = 1
+offset_left = 61.0
+offset_top = 38.0
+offset_right = 131.0
+offset_bottom = 78.0
+scale = Vector2(3, 3)
+texture_normal = SubResource("AtlasTexture_gcbfl")
+
+[connection signal="pressed" from="YesButton" to="." method="_on_yes_button_pressed"]
+[connection signal="pressed" from="NoButton" to="." method="_on_no_button_pressed"]

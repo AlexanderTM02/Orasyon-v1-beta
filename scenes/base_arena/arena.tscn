@@ -1,9 +1,10 @@
-[gd_scene load_steps=25 format=3 uid="uid://cftclvt23qxde"]
+[gd_scene load_steps=29 format=3 uid="uid://cftclvt23qxde"]
 
 [ext_resource type="Script" path="res://scenes/base_arena/arena.gd" id="1_5mbsh"]
 [ext_resource type="PackedScene" uid="uid://dxl7qa6ldat68" path="res://entities/card/card.tscn" id="1_b66h7"]
 [ext_resource type="Texture2D" uid="uid://he5aw72v7f5g" path="res://assets/background/board_background/Arena1.1.png" id="2_soucb"]
 [ext_resource type="PackedScene" uid="uid://dfdhuwxwei5u1" path="res://entities/player_character/PlayerCharacter.tscn" id="3_nnolm"]
+[ext_resource type="Script" path="res://scenes/base_arena/card_placement.gd" id="4_oynmr"]
 [ext_resource type="Script" path="res://scenes/base_arena/arena_states/board_states.gd" id="4_p6jpa"]
 [ext_resource type="PackedScene" uid="uid://h8gvkfia88xk" path="res://entities/enemies/enemy_character.tscn" id="4_ydb1k"]
 [ext_resource type="Script" path="res://scenes/base_arena/arena_states/base_board_state.gd" id="5_pfa2w"]
@@ -16,17 +17,26 @@
 [ext_resource type="Texture2D" uid="uid://dpsix0h5olgtw" path="res://assets/card/mana.png" id="10_tdj54"]
 [ext_resource type="Texture2D" uid="uid://djluku2w60bxo" path="res://assets/ui/icons/heart.png" id="11_8at07"]
 [ext_resource type="Script" path="res://scenes/base_arena/arena_states/enemy_turn.gd" id="16_r4uwt"]
+[ext_resource type="AudioStream" uid="uid://daj5bwr2fdbi8" path="res://assets/audio/background_music/battle_bgm.mp3" id="18_d10ao"]
 [ext_resource type="Script" path="res://scenes/base_arena/arena_states/win_loss_check.gd" id="18_fbaq4"]
+
+[sub_resource type="Curve" id="Curve_g2cbx"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_nebdm"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="Curve" id="Curve_ofkg1"]
 min_value = -1.0
 _data = [Vector2(0, 1.49012e-08), 0.0, 6.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 1.49012e-08), -6.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="Curve" id="Curve_63q0k"]
+[sub_resource type="Curve" id="Curve_qm41j"]
 min_value = -1.0
-_data = [Vector2(0, -1), 0.0, 6.0, 0, 0, Vector2(0.5, 1.49012e-08), 1.15682, 1.15682, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 3
+_data = [Vector2(0, -1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rmoqt"]
 atlas = ExtResource("8_o5tfj")
@@ -40,75 +50,58 @@ region = Rect2(435, 301, 70, 26)
 atlas = ExtResource("10_tdj54")
 region = Rect2(3, 2, 25, 42)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_auxms"]
-atlas = ExtResource("11_8at07")
-
 [sub_resource type="LabelSettings" id="LabelSettings_hvpr3"]
 font_size = 32
 outline_size = 9
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_auxms"]
+atlas = ExtResource("11_8at07")
+
 [node name="Board" type="Node"]
 script = ExtResource("1_5mbsh")
 
-[node name="Background" type="CanvasLayer" parent="."]
-
-[node name="Control" type="Control" parent="Background"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 85.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="Background/Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -84.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_soucb")
-
-[node name="Entities" type="CanvasLayer" parent="."]
+[node name="Entities" type="Node2D" parent="."]
 
 [node name="PlayerCharacter" parent="Entities" instance=ExtResource("3_nnolm")]
-position = Vector2(210, 383)
-scale = Vector2(2, 2)
+z_index = 1
+position = Vector2(247, 410)
 
 [node name="EnemyCharacter" parent="Entities" instance=ExtResource("4_ydb1k")]
-position = Vector2(879, 316)
+z_index = 1
+position = Vector2(1009, 351)
 
 [node name="UI" type="CanvasLayer" parent="."]
+layer = 3
 
 [node name="PlacementArea" type="Control" parent="UI"]
 layout_mode = 3
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -357.0
-offset_top = -1.0
-offset_right = 353.0
-offset_bottom = 384.0
+offset_left = -364.0
+offset_top = 1.0
+offset_right = 346.0
+offset_bottom = 386.0
 grow_horizontal = 2
 mouse_filter = 1
 
-[node name="CardPlacement" type="HBoxContainer" parent="UI/PlacementArea"]
+[node name="CardPlacement" type="Container" parent="UI/PlacementArea"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.166
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 0.166
 offset_left = -283.0
-offset_top = -180.5
+offset_top = -63.91
 offset_right = 283.0
-offset_bottom = -52.5
+offset_bottom = 64.09
 grow_horizontal = 2
 grow_vertical = 2
-alignment = 1
+script = ExtResource("4_oynmr")
+hand_curve = SubResource("Curve_g2cbx")
+rotation_curve = SubResource("Curve_nebdm")
 
 [node name="PlayerHand" type="Container" parent="UI"]
 anchors_preset = 7
@@ -116,20 +109,15 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -336.0
-offset_top = -167.0
-offset_right = 196.0
-offset_bottom = -39.0
+offset_left = -363.0
+offset_top = -214.0
+offset_right = 361.0
+offset_bottom = -18.0
 grow_horizontal = 2
 grow_vertical = 0
-scale = Vector2(1.25, 1.25)
-size_flags_vertical = 8
 script = ExtResource("5_w0hku")
 hand_curve = SubResource("Curve_ofkg1")
-rotation_curve = SubResource("Curve_63q0k")
-
-[node name="Card" parent="UI/PlayerHand" instance=ExtResource("1_b66h7")]
-layout_mode = 2
+rotation_curve = SubResource("Curve_qm41j")
 
 [node name="Card2" parent="UI/PlayerHand" instance=ExtResource("1_b66h7")]
 layout_mode = 2
@@ -137,11 +125,14 @@ layout_mode = 2
 [node name="Card3" parent="UI/PlayerHand" instance=ExtResource("1_b66h7")]
 layout_mode = 2
 
+[node name="Card4" parent="UI/PlayerHand" instance=ExtResource("1_b66h7")]
+layout_mode = 2
+
 [node name="EndTurn" type="TextureButton" parent="UI"]
-offset_left = 991.0
-offset_top = 562.0
-offset_right = 1061.0
-offset_bottom = 588.0
+offset_left = 1090.0
+offset_top = 599.0
+offset_right = 1160.0
+offset_bottom = 625.0
 scale = Vector2(2, 2)
 texture_normal = SubResource("AtlasTexture_rmoqt")
 texture_pressed = SubResource("AtlasTexture_xepgf")
@@ -152,13 +143,13 @@ stretch_mode = 3
 [node name="PlayerHud" type="Control" parent="Status"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 3.0
-offset_top = 506.0
-offset_right = 244.0
-offset_bottom = 626.0
+offset_left = -3.0
+offset_top = 114.0
+offset_right = 238.0
+offset_bottom = 366.0
 script = ExtResource("9_hsxxx")
 
-[node name="Mana" type="TextureRect" parent="Status/PlayerHud"]
+[node name="ManaIcon" type="TextureRect" parent="Status/PlayerHud"]
 layout_mode = 0
 offset_left = 22.0
 offset_top = 10.0
@@ -168,7 +159,17 @@ scale = Vector2(1.5, 1.5)
 texture = SubResource("AtlasTexture_5g1yg")
 stretch_mode = 2
 
-[node name="ColorRect" type="TextureRect" parent="Status/PlayerHud"]
+[node name="PlayerManaLabel" type="Label" parent="Status/PlayerHud/ManaIcon"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = -2.66667
+offset_right = 82.0
+offset_bottom = 48.3333
+text = "999"
+label_settings = SubResource("LabelSettings_hvpr3")
+vertical_alignment = 1
+
+[node name="HealthIcon" type="TextureRect" parent="Status/PlayerHud"]
 layout_mode = 0
 offset_left = 17.0
 offset_top = 81.0
@@ -178,25 +179,38 @@ scale = Vector2(1.5, 1.5)
 texture = SubResource("AtlasTexture_auxms")
 stretch_mode = 3
 
-[node name="PlayerManaLabel" type="Label" parent="Status/PlayerHud"]
+[node name="PlayerHealthLabel" type="Label" parent="Status/PlayerHud/HealthIcon"]
 layout_mode = 0
-offset_left = 73.0
-offset_top = 22.0
-offset_right = 121.0
-offset_bottom = 73.0
-text = "14"
+offset_left = 37.3333
+offset_top = -8.66667
+offset_right = 85.3333
+offset_bottom = 42.3333
+text = "999"
 label_settings = SubResource("LabelSettings_hvpr3")
 vertical_alignment = 1
 
-[node name="PlayerHealthLabel" type="Label" parent="Status/PlayerHud"]
+[node name="PlayerShieldLabel" type="Label" parent="Status/PlayerHud/HealthIcon"]
 layout_mode = 0
-offset_left = 73.0
-offset_top = 84.0
-offset_right = 121.0
-offset_bottom = 135.0
-text = "14"
+offset_left = 36.6667
+offset_top = 30.6667
+offset_right = 84.6667
+offset_bottom = 81.6667
+text = "999"
 label_settings = SubResource("LabelSettings_hvpr3")
 vertical_alignment = 1
+
+[node name="Background" type="Node" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -86.0
+offset_right = 1.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_soucb")
 
 [node name="BoardStates" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
 script = ExtResource("4_p6jpa")
@@ -213,19 +227,25 @@ player_turn_state = NodePath("../PlayerTurn")
 script = ExtResource("7_uwote")
 enemy_turn = NodePath("../EnemyTurn")
 
-[node name="EnemyTurn" type="Node" parent="BoardStates" node_paths=PackedStringArray("activating_state")]
-script = ExtResource("16_r4uwt")
-activating_state = NodePath("../Activating")
-
-[node name="Activating" type="Node" parent="BoardStates" node_paths=PackedStringArray("player_turn", "win_loss_check_state")]
+[node name="Activating" type="Node" parent="BoardStates" node_paths=PackedStringArray("player_turn", "win_loss_check_state", "enemy_turn")]
 script = ExtResource("8_k0l0s")
 player_turn = NodePath("../Drawing")
 win_loss_check_state = NodePath("../WinLossCheck")
+enemy_turn = NodePath("../EnemyTurn")
+
+[node name="EnemyTurn" type="Node" parent="BoardStates" node_paths=PackedStringArray("activating_state", "win_loss_check")]
+script = ExtResource("16_r4uwt")
+activating_state = NodePath("../Activating")
+win_loss_check = NodePath("../WinLossCheck")
 
 [node name="WinLossCheck" type="Node" parent="BoardStates" node_paths=PackedStringArray("Drawing_state")]
 script = ExtResource("18_fbaq4")
 Drawing_state = NodePath("../Drawing")
 
 [node name="WinLoss" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="AudioStreamPlayerBGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_d10ao")
 
 [connection signal="pressed" from="UI/EndTurn" to="BoardStates/PlayerTurn" method="_on_texture_button_pressed"]

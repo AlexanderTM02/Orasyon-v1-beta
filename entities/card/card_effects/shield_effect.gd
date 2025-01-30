@@ -1,2 +1,0 @@
-extends BaseCardEffect
-class_name ShieldEffect

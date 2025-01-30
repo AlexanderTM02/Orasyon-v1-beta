@@ -27,7 +27,6 @@ func process_frame(delta: float) -> State:
 			var mouse_velocity = Input.get_last_mouse_velocity()
 			if mouse_velocity.length() > 20: 
 				return dragging_state
-			pass
 	return null
 
 func process_physics(delta: float) -> State:
