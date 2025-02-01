@@ -2,8 +2,17 @@ class_name Card
 extends Container
 
 var card_dictionary_resource = preload("res://entities/card/card_resources/card_dictionary.gd").new()
+const red_background = preload("res://assets/card/card_base/bg_red.png")
+const blue_backround = preload("res://assets/card/card_base/bg_blue.png")
+const green_background = preload("res://assets/card/card_base/bg_green.png")
+const purple_background = preload("res://assets/card/card_base/bg_purple.png")
 
-const SIZE := Vector2(100, 130)
+const red_plate = preload("res://assets/card/card_base/little_red.png")
+const blue_plate = preload("res://assets/card/card_base/little_brown.png") #change this
+const green_plate = preload("res://assets/card/card_base/little_green.png")
+const purple_plate = preload("res://assets/card/card_base/tittle_purple.png")
+
+const SIZE := Vector2(125, 160)
 
 var is_card_highlighted: bool = false
 
@@ -24,11 +33,17 @@ var spell_description
 #reference label nodes
 @onready var spell_name_label = $StatLabels/SpellNameLabel
 @onready var mana_cost_label = $StatLabels/ManaCostLabel
-@onready var effect_value_label = $StatLabels/EffectValueLabel
+@onready var heal_value_label = $StatLabels/HealValueLabel
+@onready var attack_value_label = $StatLabels/AttackValueLabel
+@onready var shield_value_label = $StatLabels/ShieldValueLabel
 
+@onready var color_background: TextureRect = $Textures/ColorBG
 @onready var card_art: TextureRect = $Textures/CardArt
-@onready var effect_value_bg = $Textures/EffectValueBackground
+@onready var card_nameplate: TextureRect = $Textures/CardNamePlate
+
 @onready var animation_player = $AnimationPlayer
+@onready var sfx_player = $SFXAudioStreamPlayer
+
 
 @onready var board = get_tree().get_root().get_node("Board")
 
@@ -40,7 +55,6 @@ func _ready() -> void:
 	else:
 		card_art.texture = load("res://assets/card/card_art/missing.png")
 	
-	
 	#get card values from the random card dictionary
 	card_id = random_card["ID"]
 	spell_name = random_card["name"]
@@ -49,7 +63,9 @@ func _ready() -> void:
 	attack_value = random_card["stats"]["damage"]
 	defense_value = random_card["stats"]["shield"]
 	heal_value = random_card["stats"]["heal"]
+	spell_description = random_card["description"]
 	
+	update_card_colors()
 	update_card_info()
 	
 	state_machine.init(self)
@@ -64,21 +80,33 @@ func _process(delta: float) -> void:
 	state_machine.process_frame(delta)
 
 func update_card_info() -> void:
+	
 	spell_name_label.text = spell_name
 	mana_cost_label.text = str(mana_cost)
 	
 	if attack_value != 0:
-		effect_value_label.text = str(attack_value)
-		effect_value_bg.set_color(Color.DARK_RED)
-	elif defense_value != 0:
-		effect_value_label.text = str(defense_value)
-		effect_value_bg.set_color(Color.ROYAL_BLUE)
-	elif heal_value != 0:
-		effect_value_label.text = str(heal_value)
-		effect_value_bg.set_color(Color.LIME_GREEN)
+		attack_value_label.text = str(attack_value)		
+	if defense_value != 0:
+		shield_value_label.text = str(defense_value)
+	if heal_value != 0:
+		heal_value_label.text = str(heal_value)
 	else:
-		print("no effect")
-		effect_value_bg.set_color(Color.PURPLE)
+		pass
+
+func update_card_colors() -> void:
+	
+	if spell_type == "Damage":
+		color_background.texture = red_background
+		card_nameplate.texture = red_plate
+	elif spell_type == "Shield":
+		color_background.texture = blue_backround
+		card_nameplate.texture = blue_plate
+	elif spell_type == "Heal":
+		color_background.texture = green_background
+		card_nameplate.texture = green_plate
+	else:
+		color_background.texture = purple_background
+		card_nameplate.texture = purple_plate
 
 
 func _on_mouse_entered() -> void:

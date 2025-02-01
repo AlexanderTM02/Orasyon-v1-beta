@@ -1,9 +1,10 @@
 extends Node
 
 @onready var board_states: Node = $BoardStates
-@onready var audio_stream_bgm = $AudioStreamPlayerBGM
+@onready var audio_stream_bgm: AudioStreamPlayer = $AudioStreamPlayerBGM
+@onready var audio_stream_sfx: AudioStreamPlayer = $AudioStreamPlayerSFX
 
-var bgm_muted = true
+var bgm_muted = false
 
 func _ready() -> void:
 	board_states.init(self)

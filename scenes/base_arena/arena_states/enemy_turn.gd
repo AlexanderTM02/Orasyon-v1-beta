@@ -7,9 +7,13 @@ extends BoardState
 @onready var player = $"../../Entities/PlayerCharacter"
 @onready var enemy = $"../../Entities/EnemyCharacter"
 
+@onready var audio_stream_player_sfx: AudioStreamPlayer = $"../../AudioStreamPlayerSFX"
+const HIT_PUNCH_ = preload("res://assets/audio/sfx/hit(punch).wav")
 
 func enter() -> void:
 	enemy.enemy_attack(player)
+	audio_stream_player_sfx.stream = HIT_PUNCH_
+	audio_stream_player_sfx.play()
 	next_state = true
 
 func exit() -> void:
@@ -20,5 +24,5 @@ func process_input(event: InputEvent) -> BoardState:
 
 func process_frame(delta: float) -> BoardState:
 	if next_state:
-		return activating_state
+		return win_loss_check
 	return null

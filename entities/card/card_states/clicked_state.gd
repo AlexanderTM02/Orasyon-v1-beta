@@ -5,7 +5,13 @@ extends State
 
 var mouse_held: bool = false
 
+@onready var sfx_audio_stream_player: AudioStreamPlayer = $"../../SFXAudioStreamPlayer"
+
+const CLICKED_SFX = preload("res://assets/audio/sfx/click1.wav")
+
 func enter() -> void:
+	sfx_audio_stream_player.stream = CLICKED_SFX
+	sfx_audio_stream_player.play()
 	mouse_held = true
 	pass
 

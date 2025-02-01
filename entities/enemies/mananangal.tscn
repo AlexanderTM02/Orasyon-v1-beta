@@ -1,0 +1,193 @@
+[gd_scene load_steps=17 format=3 uid="uid://dbiqlou2bd4tx"]
+
+[ext_resource type="Texture2D" uid="uid://djluku2w60bxo" path="res://assets/ui/icons/heart.png" id="2_jjyo4"]
+[ext_resource type="Texture2D" uid="uid://no5qss63et0j" path="res://assets/enemy/manananggal/attack.png" id="3_0yusj"]
+[ext_resource type="Texture2D" uid="uid://cdibhkqa6vqur" path="res://assets/enemy/manananggal/mananangal.png" id="4_llrl1"]
+[ext_resource type="Texture2D" uid="uid://c8ms5x2ino3w7" path="res://assets/enemy/manananggal/hurt.png" id="5_8km76"]
+
+[sub_resource type="GDScript" id="GDScript_h3yuc"]
+script/source = "extends Node2D
+
+@export var max_health:int = 25
+
+var current_health = max_health
+var min_health = 0
+
+@onready var block_damage = 0
+@onready var animation = $AnimatedSprite2D
+@onready var health_label = $HealthIcon/HealthLabel
+@onready var damage_number_origin = $DamageNumberOrigin
+
+func _ready() -> void:
+	animation.set_autoplay(\"default\")
+	animation.play(\"default\")
+	health_label.text = str(max_health)
+
+func take_damage(amount, is_critical: bool = false):
+	var remaining_damage = amount
+	
+	# First apply damage to block
+	if block_damage > 0:
+		if block_damage >= remaining_damage:
+			block_damage -= remaining_damage
+			return  # All damage was blocked
+		else:
+			remaining_damage -= block_damage
+			block_damage = 0
+	
+	# Apply remaining damage to health
+	current_health = clampi(current_health - remaining_damage, min_health, max_health)
+	health_label.text = str(current_health)
+	
+	animation.play(\"hurt\")
+	
+	DamageNumbers.display_number(amount, damage_number_origin.global_position, is_critical)
+
+func heal(amount):
+	current_health = clampi(current_health + amount, min_health, max_health)
+
+func add_shield(amount:int) -> void:
+	block_damage += amount
+
+func enemy_attack(player):
+	var random_damage = randi_range(5, 15)
+	
+	var original_pos = self.global_position
+	
+	animation.play(\"attack\")
+	
+	
+	var tween = get_tree().create_tween()
+	tween.tween_property(self, \"position:x\", self.global_position.x - 30, 0.3
+	).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUINT)
+	
+	player.take_damage(random_damage)
+	
+	tween.tween_property(self, \"position\", original_pos, 0.1
+	).set_ease(Tween.EASE_OUT).set_delay(0.7)
+	
+	await tween.finished
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	animation.play(\"default\")
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_3hn7a"]
+font_size = 32
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 3
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1slqj"]
+atlas = ExtResource("3_0yusj")
+region = Rect2(0, 0, 80, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g3n7k"]
+atlas = ExtResource("3_0yusj")
+region = Rect2(80, 0, 80, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ogxow"]
+atlas = ExtResource("3_0yusj")
+region = Rect2(160, 0, 80, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_porcs"]
+atlas = ExtResource("4_llrl1")
+region = Rect2(0, 0, 80, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_st0bd"]
+atlas = ExtResource("4_llrl1")
+region = Rect2(80, 0, 80, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6gs0j"]
+atlas = ExtResource("4_llrl1")
+region = Rect2(160, 0, 80, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u7thb"]
+atlas = ExtResource("5_8km76")
+region = Rect2(0, 0, 80, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_08ftx"]
+atlas = ExtResource("5_8km76")
+region = Rect2(80, 0, 80, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nsg4b"]
+atlas = ExtResource("5_8km76")
+region = Rect2(160, 0, 80, 73)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kn415"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1slqj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g3n7k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ogxow")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_porcs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_st0bd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6gs0j")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u7thb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_08ftx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nsg4b")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 7.0
+}]
+
+[node name="EnemyCharacter" type="Node2D"]
+script = SubResource("GDScript_h3yuc")
+
+[node name="HealthIcon" type="TextureRect" parent="."]
+z_index = 1
+offset_top = -134.0
+offset_right = 32.0
+offset_bottom = -102.0
+texture = ExtResource("2_jjyo4")
+
+[node name="HealthLabel" type="Label" parent="HealthIcon"]
+z_index = 2
+layout_mode = 0
+offset_left = 40.0
+offset_top = -11.0
+offset_right = 282.0
+offset_bottom = 37.0
+text = "999"
+label_settings = SubResource("LabelSettings_3hn7a")
+vertical_alignment = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+show_behind_parent = true
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_kn415")
+
+[node name="DamageNumberOrigin" type="Node2D" parent="."]
+z_index = 8
+position = Vector2(-14, -5)
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

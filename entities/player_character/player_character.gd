@@ -6,7 +6,7 @@ extends Node2D
 var current_health = max_health
 var min_health = 0
 
-var starting_mana = 100
+var starting_mana = 5
 var current_mana = starting_mana
 var min_mana = 0
 
@@ -54,6 +54,20 @@ func use_mana(amount: int) -> void:
 
 func add_mana(amount: int) -> void:
 	current_mana = clampi(current_mana + amount, min_mana, max_mana)
+
+func attack_animation():
+	var original_pos = self.global_position
+	
+	var tween = get_tree().create_tween()
+	tween.tween_property(self, "position:x", self.global_position.x + 30, 0.2
+	).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUINT)
+	
+	animation.play("attack_animation")
+	
+	tween.tween_property(self, "position", original_pos, 0.1
+	).set_ease(Tween.EASE_IN).set_delay(0.2)
+	
+	await tween.finished
 
 func _on_player_effects_animation_animation_finished() -> void:
 	effect_animation.play("default")

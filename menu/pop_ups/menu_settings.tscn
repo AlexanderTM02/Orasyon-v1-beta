@@ -38,7 +38,7 @@ texture = ExtResource("3_3p1pk")
 position = Vector2(127, 144)
 texture = ExtResource("4_qpoh2")
 
-[node name="HSlider" type="HSlider" parent="."]
+[node name="MusicSlider" type="HSlider" parent="."]
 layout_mode = 0
 offset_left = 155.0
 offset_top = 85.0
@@ -46,7 +46,7 @@ offset_right = 355.0
 offset_bottom = 101.0
 value = 100.0
 
-[node name="HSlider2" type="HSlider" parent="."]
+[node name="SFXSlider" type="HSlider" parent="."]
 layout_mode = 0
 offset_left = 155.0
 offset_top = 135.0
@@ -55,3 +55,5 @@ offset_bottom = 151.0
 value = 100.0
 
 [connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
+[connection signal="value_changed" from="MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="SFXSlider" to="." method="_on_sfx_slider_value_changed"]

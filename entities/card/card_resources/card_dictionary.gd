@@ -13,7 +13,7 @@ var cards = {
 			"heal": 0,
 			"mana_cost": 2
 		},
-		"card_art": null
+		"card_art": load("res://assets/card/card_art/bernardo_punch.png")
 	},
 	
 	"DAMAGE_BAKUNAWA": {
@@ -27,7 +27,7 @@ var cards = {
 			"heal": 0,
 			"mana_cost": 3
 		},
-		"card_art": null
+		"card_art": load("res://assets/card/card_art/bakunawa_strike.png")
 	},
 
 	"DAMAGE_MINOKAWA": {
@@ -41,7 +41,7 @@ var cards = {
 			"heal": 0,
 			"mana_cost": 2
 		},
-		"card_art": null
+		"card_art": load("res://assets/card/card_art/minokawa_scratch.png")
 	},
 	
 	"SHIELD_KAPRE": {
@@ -55,7 +55,7 @@ var cards = {
 			"heal": 0,
 			"mana_cost": 2
 		},
-		"card_art": null
+		"card_art": load("res://assets/card/card_art/tabacco_mist.png")
 	},
 	
 	"SHIELD_MARIANG_MAKILING": {
@@ -83,7 +83,7 @@ var cards = {
 			"heal": 3,
 			"mana_cost": 2
 		},
-		"card_art": null
+		"card_art": load("res://assets/card/card_art/bathala_prayer.png")
 	},
 	
 	"HEAL_MAKILING": {
@@ -97,7 +97,7 @@ var cards = {
 			"heal": 6,
 			"mana_cost": 3
 		},
-		"card_art": null
+		"card_art": load("res://assets/card/card_art/makiling_touch.png")
 	},
 
 	"COPY_IBONG_ADARNA": {
@@ -111,27 +111,13 @@ var cards = {
 			"heal": 0,
 			"mana_cost": 0
 		},
-		"card_art": null
+		"card_art": load("res://assets/card/card_art/adarna_song.png")
 	},
 	
-	"COPY_SARIMANOK": {
-		"ID": "COPY_SARIMANOK",
-		"name": "Sarimanok's Echo",
-		"spell_type": "Copy",
-		"description": "Copy the last damage card played this sequence. If none was played, deal 2 damage.",
-		"stats": {
-			"damage": 2,
-			"shield": 0,
-			"heal": 0,
-			"mana_cost": 2
-		},
-		"card_art": null
-	},
-	
-	"COMBO_LAKAN": {
-		"ID": "COMBO_LAKAN",
-		"name": "Lakan's Blessing",
-		"spell_type": "Combo",
+	"COMBO_KAPRE_BREATHE": {
+		"ID": "COMBO_KAPRE_BREATH",
+		"name": "Kapre's Breath",
+		"spell_type": "Damage",
 		"description": "Deal 3 damage and gain 2 shield. If played after a shield card, gain 4 shield instead.",
 		"stats": {
 			"damage": 3,
@@ -139,7 +125,7 @@ var cards = {
 			"heal": 0,
 			"mana_cost": 3
 		},
-		"card_art": null
+		"card_art": load("res://assets/card/card_art/smoker_breathe.png")
 	},
 	
 	"UTILITY_BATHALA": {
@@ -153,7 +139,7 @@ var cards = {
 			"heal": 0,
 			"mana_cost": 1
 		},
-		"card_art": null
+		"card_art": load("res://assets/card/card_art/bathala_gift.png")
 	},
 	
 	"MULTI_SAMBAL": {
@@ -167,13 +153,13 @@ var cards = {
 			"heal": 0,
 			"mana_cost": 4
 		},
-		"card_art": null
+		"card_art": load("res://assets/card/card_art/sambal_dance.png")
 	},
 	
 	"SIMPLE_AGTA": {
 		"ID": "SIMPLE_AGTA",
 		"name": "Agta's Strength",
-		"spell_type": "Simple",
+		"spell_type": "Damage",
 		"description": "Deal 2 damage and gain 2 shield.",
 		"stats": {
 			"damage": 2,
@@ -187,7 +173,7 @@ var cards = {
 	"SIMPLE_DIWATA": {
 		"ID": "SIMPLE_DIWATA",
 		"name": "Diwata's Care",
-		"spell_type": "Simple",
+		"spell_type": "Heal",
 		"description": "Heal 2 health and draw 1 card.",
 		"stats": {
 			"damage": 0,
@@ -195,7 +181,7 @@ var cards = {
 			"heal": 2,
 			"mana_cost": 2
 		},
-		"card_art": null
+		"card_art": load("res://assets/card/card_art/magic.png") ### to be changed
 	},
 }
 

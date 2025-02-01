@@ -1,13 +1,16 @@
 extends BoardState
 
 @export var enemy_turn: BoardState
+@export var activation_state: BoardState
 
 var button_pressed: bool = false
 
 @onready var end_turn = $"../../UI/EndTurn"
 @onready var player = $"../../Entities/PlayerCharacter"
 @onready var card_placement: Container = $"../../UI/PlacementArea/CardPlacement"
+@onready var audio_stream_player_sfx: AudioStreamPlayer = $"../../AudioStreamPlayerSFX"
 
+const ERROR = preload("res://assets/audio/sfx/Error.wav")
 
 func enter() -> void:
 	end_turn.show()
@@ -21,13 +24,15 @@ func process_input(event: InputEvent) -> BoardState:
 func process_frame(delta: float) -> BoardState:
 	if button_pressed == true:
 		button_pressed = false
-		return enemy_turn
+		return activation_state
 	return null
 
 func _on_texture_button_pressed() -> void:
 	if check_mana():
 		button_pressed = true
 	else:
+		audio_stream_player_sfx.stream = ERROR
+		audio_stream_player_sfx.play()
 		print("not enough mana")
 
 func check_mana() -> bool:

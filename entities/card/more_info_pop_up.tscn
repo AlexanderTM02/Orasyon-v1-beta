@@ -1,0 +1,312 @@
+[gd_scene load_steps=17 format=3 uid="uid://dq5am7rn0725m"]
+
+[ext_resource type="Texture2D" uid="uid://d082w5p1ac2jy" path="res://assets/card/card_base/bg_red.png" id="1_lel6b"]
+[ext_resource type="Texture2D" uid="uid://xbh3yc658a4c" path="res://assets/card/card_base/border.png" id="2_g0l6h"]
+[ext_resource type="Texture2D" uid="uid://ba5hhu8gjf35j" path="res://assets/ui/buttons/all buttons 02.png" id="2_xp8aj"]
+[ext_resource type="Texture2D" uid="uid://e1vjm3f1uy76" path="res://assets/card/card_base/mana2.png" id="3_36veh"]
+[ext_resource type="Texture2D" uid="uid://ctl5gryev0bdq" path="res://assets/card/card_base/heal.png" id="4_u56gi"]
+[ext_resource type="Texture2D" uid="uid://dlriecyfm6q7d" path="res://assets/card/card_base/damage.png" id="5_udwlj"]
+[ext_resource type="Texture2D" uid="uid://b7k3u44l1es4g" path="res://assets/card/card_base/defense.png" id="6_bbieq"]
+[ext_resource type="Texture2D" uid="uid://ci5a6fre61n1m" path="res://assets/card/card_base/little_red.png" id="7_4uy7i"]
+
+[sub_resource type="GDScript" id="GDScript_tb5ke"]
+script/source = "extends Control
+
+@onready var card_container: Container = $CardContainer
+
+func enter(card):
+	card_container.update_dummy_info(card.random_card)
+
+func _on_button_pressed() -> void:
+	self.hide()
+	pass # Replace with function body.
+"
+
+[sub_resource type="GDScript" id="GDScript_xo6j3"]
+script/source = "extends Container
+
+var card_dictionary_resource = preload(\"res://entities/card/card_resources/card_dictionary.gd\").new()
+const red_background = preload(\"res://assets/card/card_base/bg_red.png\")
+const blue_backround = preload(\"res://assets/card/card_base/bg_blue.png\")
+const green_background = preload(\"res://assets/card/card_base/bg_green.png\")
+const purple_background = preload(\"res://assets/card/card_base/bg_purple.png\")
+
+const red_plate = preload(\"res://assets/card/card_base/little_red.png\")
+const blue_plate = preload(\"res://assets/card/card_base/little_brown.png\") #change this
+const green_plate = preload(\"res://assets/card/card_base/little_green.png\")
+const purple_plate = preload(\"res://assets/card/card_base/tittle_purple.png\")
+
+var card_id
+var spell_name
+var mana_cost
+var spell_type
+var attack_value
+var defense_value
+var heal_value
+var spell_description
+
+#reference label nodes
+@onready var spell_name_label = $StatLabels/SpellNameLabel
+@onready var mana_cost_label = $StatLabels/ManaCostLabel
+@onready var heal_value_label = $StatLabels/HealValueLabel
+@onready var attack_value_label = $StatLabels/AttackValueLabel
+@onready var shield_value_label = $StatLabels/ShieldValueLabel
+
+@onready var color_background: TextureRect = $Textures/ColorBG
+@onready var card_art: TextureRect = $Textures/CardArt
+@onready var card_nameplate: TextureRect = $Textures/CardNamePlate
+
+@onready var desc_label: Label = $\"../TextureRect/DescLabel\"
+
+
+func update_dummy_info(random_card) -> void:
+	
+	card_id = null
+	spell_name = null
+	mana_cost = null
+	spell_type = null
+	attack_value = null
+	defense_value = null
+	heal_value = null
+	spell_description = null
+	
+	if random_card[\"card_art\"] != null:
+		card_art.texture = random_card[\"card_art\"]
+	else:
+		card_art.texture = load(\"res://assets/card/card_art/missing.png\")
+	
+	#get card values from the random card dictionary
+	card_id = random_card[\"ID\"]
+	spell_name = random_card[\"name\"]
+	mana_cost = random_card[\"stats\"][\"mana_cost\"]
+	spell_type = random_card[\"spell_type\"]
+	attack_value = random_card[\"stats\"][\"damage\"]
+	defense_value = random_card[\"stats\"][\"shield\"]
+	heal_value = random_card[\"stats\"][\"heal\"]
+	
+	
+	
+	spell_description = random_card[\"description\"]
+	
+	print(str(spell_description))
+	update_description()
+	
+	update_card_colors()
+	update_card_info()
+
+func update_card_info() -> void:
+	
+	spell_name_label.text = spell_name
+	mana_cost_label.text = str(mana_cost)
+	
+	if attack_value != 0:
+		attack_value_label.text = str(attack_value)
+	if defense_value != 0:
+		shield_value_label.text = str(defense_value)
+	if heal_value != 0:
+		heal_value_label.text = str(heal_value)
+	else:
+		pass
+
+func update_card_colors() -> void:
+	
+	if spell_type == \"Damage\":
+		color_background.texture = red_background
+		card_nameplate.texture = red_plate
+	elif spell_type == \"Shield\":
+		color_background.texture = blue_backround
+		card_nameplate.texture = blue_plate
+	elif spell_type == \"Heal\":
+		color_background.texture = green_background
+		card_nameplate.texture = green_plate
+	else:
+		color_background.texture = purple_background
+		card_nameplate.texture = purple_plate
+
+func update_description():
+	desc_label.text = str(spell_description)
+"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_iwaqb"]
+load_path = "res://.godot/imported/missing.png-fa338c5449dc16bf40a6570d8fbe14b3.ctex"
+
+[sub_resource type="LabelSettings" id="LabelSettings_0r0s2"]
+line_spacing = -5.0
+font_size = 9
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dv6q8"]
+font_size = 18
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qe3v8"]
+font_size = 18
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3vb2v"]
+atlas = ExtResource("2_xp8aj")
+region = Rect2(17, 11, 108, 82)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jhfsk"]
+font_size = 27
+
+[node name="MoreInfoPopUp" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = SubResource("GDScript_tb5ke")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -12.0
+offset_top = -22.0
+offset_right = 1310.0
+offset_bottom = 747.0
+color = Color(0, 0, 0, 0.631373)
+metadata/_edit_group_ = true
+
+[node name="Button" type="Button" parent="ColorRect"]
+layout_mode = 0
+offset_right = 1326.0
+offset_bottom = 763.0
+button_mask = 7
+flat = true
+
+[node name="CardContainer" type="Container" parent="."]
+layout_mode = 0
+offset_left = 212.0
+offset_top = 179.0
+offset_right = 338.0
+offset_bottom = 340.0
+scale = Vector2(2, 2)
+script = SubResource("GDScript_xo6j3")
+
+[node name="Textures" type="Node2D" parent="CardContainer"]
+
+[node name="ColorBG" type="TextureRect" parent="CardContainer/Textures"]
+offset_right = 125.0
+offset_bottom = 160.0
+texture = ExtResource("1_lel6b")
+
+[node name="CardArt" type="TextureRect" parent="CardContainer/Textures"]
+offset_right = 125.0
+offset_bottom = 160.0
+texture = SubResource("CompressedTexture2D_iwaqb")
+
+[node name="Border" type="TextureRect" parent="CardContainer/Textures"]
+offset_right = 125.0
+offset_bottom = 160.0
+texture = ExtResource("2_g0l6h")
+
+[node name="ManaIcon" type="Sprite2D" parent="CardContainer/Textures"]
+position = Vector2(7.2, 8.6)
+texture = ExtResource("3_36veh")
+
+[node name="HealIcon" type="Sprite2D" parent="CardContainer/Textures"]
+position = Vector2(12.2, 46.6)
+texture = ExtResource("4_u56gi")
+
+[node name="DamageIcon" type="Sprite2D" parent="CardContainer/Textures"]
+position = Vector2(12.2, 62.6)
+texture = ExtResource("5_udwlj")
+
+[node name="DefenseIcon" type="Sprite2D" parent="CardContainer/Textures"]
+position = Vector2(12.2, 79.6)
+texture = ExtResource("6_bbieq")
+
+[node name="CardNamePlate" type="TextureRect" parent="CardContainer/Textures"]
+custom_minimum_size = Vector2(82, 23)
+offset_left = 31.72
+offset_top = 7.24
+offset_right = 113.72
+offset_bottom = 30.24
+texture = ExtResource("7_4uy7i")
+metadata/_edit_use_anchors_ = true
+
+[node name="StatLabels" type="Control" parent="CardContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="SpellNameLabel" type="Label" parent="CardContainer/StatLabels"]
+layout_mode = 2
+offset_left = 38.0
+offset_top = 10.0
+offset_right = 135.0
+offset_bottom = 33.0
+scale = Vector2(0.75, 0.75)
+text = "Bernardo Carpio's Punch"
+label_settings = SubResource("LabelSettings_0r0s2")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="ManaCostLabel" type="Label" parent="CardContainer/StatLabels"]
+layout_mode = 2
+offset_left = -6.0
+offset_top = 2.0
+offset_right = 22.0
+offset_bottom = 30.0
+text = "99
+"
+label_settings = SubResource("LabelSettings_dv6q8")
+horizontal_alignment = 1
+
+[node name="HealValueLabel" type="Label" parent="CardContainer/StatLabels"]
+layout_mode = 0
+offset_left = 16.8
+offset_top = 32.0
+offset_right = 30.8
+offset_bottom = 60.0
+text = "0"
+label_settings = SubResource("LabelSettings_qe3v8")
+
+[node name="AttackValueLabel" type="Label" parent="CardContainer/StatLabels"]
+layout_mode = 0
+offset_left = 16.8
+offset_top = 49.0
+offset_right = 30.8
+offset_bottom = 77.0
+text = "0"
+label_settings = SubResource("LabelSettings_qe3v8")
+
+[node name="ShieldValueLabel" type="Label" parent="CardContainer/StatLabels"]
+layout_mode = 0
+offset_left = 16.8
+offset_top = 65.0
+offset_right = 30.8
+offset_bottom = 93.0
+text = "0"
+label_settings = SubResource("LabelSettings_qe3v8")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 551.0
+offset_top = 177.0
+offset_right = 1108.0
+offset_bottom = 387.0
+texture = SubResource("AtlasTexture_3vb2v")
+
+[node name="DescLabel" type="Label" parent="TextureRect"]
+layout_mode = 0
+offset_left = 35.0
+offset_top = 20.0
+offset_right = 532.0
+offset_bottom = 189.0
+text = "description"
+label_settings = SubResource("LabelSettings_jhfsk")
+autowrap_mode = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 715.0
+offset_top = 394.0
+offset_right = 957.0
+offset_bottom = 438.0
+grow_horizontal = 2
+text = "(Tap Anywhere to Close)"
+
+[connection signal="pressed" from="ColorRect/Button" to="." method="_on_button_pressed"]

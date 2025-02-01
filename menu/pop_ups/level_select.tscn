@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dbp1ev7y2vctp"]
+[gd_scene load_steps=11 format=3 uid="uid://dbp1ev7y2vctp"]
 
 [ext_resource type="Texture2D" uid="uid://rqrldmkua8q1" path="res://assets/ui/buttons/level_plate.png" id="1_2e3x2"]
 [ext_resource type="Script" path="res://menu/pop_ups/level_select.gd" id="1_eplr4"]
@@ -7,6 +7,18 @@
 [ext_resource type="Texture2D" uid="uid://c4yfacvf6wd0p" path="res://assets/ui/buttons/difficulty_lvl2.png" id="5_djk0q"]
 [ext_resource type="Texture2D" uid="uid://24gc0o0s0gso" path="res://assets/ui/buttons/difficulty_lvl3.png" id="6_8no8y"]
 [ext_resource type="Texture2D" uid="uid://b355sua0ovi8o" path="res://assets/ui/buttons/back1.png" id="7_x47hv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i8spn"]
+atlas = ExtResource("4_j7iro")
+region = Rect2(35, 23, 58, 51)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8olnq"]
+atlas = ExtResource("5_djk0q")
+region = Rect2(35, 23, 58, 51)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_axoqj"]
+atlas = ExtResource("6_8no8y")
+region = Rect2(35, 23, 58, 51)
 
 [node name="LevelSelect" type="Control"]
 layout_mode = 3
@@ -33,27 +45,27 @@ texture = ExtResource("3_vnrul")
 
 [node name="DifficultyLvl1" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 45.0
-offset_top = 119.0
-offset_right = 175.0
-offset_bottom = 219.0
-texture_normal = ExtResource("4_j7iro")
+offset_left = 88.0
+offset_top = 134.0
+offset_right = 146.0
+offset_bottom = 185.0
+texture_normal = SubResource("AtlasTexture_i8spn")
 
-[node name="DifficultyLvl2" type="TextureRect" parent="."]
+[node name="DifficultyLvl2" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 161.0
-offset_top = 121.0
-offset_right = 291.0
-offset_bottom = 221.0
-texture = ExtResource("5_djk0q")
+offset_left = 198.0
+offset_top = 150.0
+offset_right = 256.0
+offset_bottom = 201.0
+texture_normal = SubResource("AtlasTexture_8olnq")
 
-[node name="DifficultyLvl3" type="TextureRect" parent="."]
+[node name="DifficultyLvl3" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 280.0
-offset_top = 117.0
-offset_right = 410.0
-offset_bottom = 217.0
-texture = ExtResource("6_8no8y")
+offset_left = 319.0
+offset_top = 133.0
+offset_right = 377.0
+offset_bottom = 184.0
+texture_normal = SubResource("AtlasTexture_axoqj")
 
 [node name="BackButton" type="TextureButton" parent="."]
 layout_mode = 0
@@ -65,4 +77,6 @@ scale = Vector2(0.3, 0.3)
 texture_normal = ExtResource("7_x47hv")
 
 [connection signal="pressed" from="DifficultyLvl1" to="." method="_on_difficulty_lvl_1_pressed"]
+[connection signal="pressed" from="DifficultyLvl2" to="." method="_on_difficulty_lvl_2_pressed"]
+[connection signal="pressed" from="DifficultyLvl3" to="." method="_on_difficulty_lvl_3_pressed"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

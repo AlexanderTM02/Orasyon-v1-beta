@@ -13,6 +13,9 @@ var end_sequence: bool = false
 @onready var enemy = $"../../Entities/EnemyCharacter"
 const WaitAnimation = preload("res://scenes/base_arena/arena_states/wait_animation.gd")
 
+@onready var audio_stream_player_sfx: AudioStreamPlayer = $"../../AudioStreamPlayerSFX"
+const HIT_PUNCH_ = preload("res://assets/audio/sfx/hit(punch).wav")
+
 
 func enter() -> void:
 	disable_card_input()
@@ -26,7 +29,7 @@ func exit() -> void:
 
 func process_frame(delta: float) -> BoardState:
 	if next_state:
-		return win_loss_check_state
+		return enemy_turn
 	return null
 
 func activate_card_on_board() -> void:
@@ -34,8 +37,6 @@ func activate_card_on_board() -> void:
 		print("card index actvating: " + str(current_card_index))
 		
 		var card_playing = card_placement.get_child(current_card_index)
-		
-		process_card_effects(card_playing, current_card_index)
 		
 		var tween = get_tree().create_tween()
 		tween.tween_property(
@@ -46,16 +47,19 @@ func activate_card_on_board() -> void:
 		
 		tween.tween_property(
 			card_playing, "position:y", card_playing.global_position.y - 30, 0.25
-		).set_ease(Tween.EASE_IN).set_delay(0.50)
+		).set_ease(Tween.EASE_IN)
 		
 		await tween.finished
 		
 		if end_sequence:
+			Utilities.wait_seconds(1)
 			break
 		
 	next_state = true
 
 func process_card_effects(card, current_card_index):
+	
+	player.attack_animation()
 	
 	match card.card_id:
 		"DAMAGE_BERNARDO":
@@ -69,8 +73,11 @@ func process_card_effects(card, current_card_index):
 			var previous_card_index = max(current_card_index - 1, 0)
 			var previous_card = card_placement.get_child(previous_card_index)
 			
-			if previous_card.spell_type == "Damage":
-				enemy.take_damage(5, true)
+			if current_card_index == previous_card_index:
+				if previous_card.spell_type == "Damage":
+					enemy.take_damage(5, true)
+				else:
+					enemy.take_damage(card.attack_value)
 			else:
 				enemy.take_damage(card.attack_value)
 			
@@ -137,13 +144,12 @@ func process_card_effects(card, current_card_index):
 							card, "position:y", card.global_position.y - 30, 0.25
 						).set_ease(Tween.EASE_IN).set_delay(0.50)
 						
-						await tween.finished
 						
 					else:
 						enemy.take_damage(2)
 					break
 			
-		"COMBO_LAKAN":
+		"COMBO_KAPRE_BREATH":
 			var previous_card_index = max(current_card_index - 1, 0)
 			var previous_card = card_placement.get_child(previous_card_index)
 			
@@ -174,8 +180,18 @@ func process_card_effects(card, current_card_index):
 			
 			# Check if the card is a damage card
 				if looped_card.spell_type == "Damage":
+					
+					var tween = get_tree().create_tween()
+					tween.tween_property(
+						looped_card, "position:y", looped_card.global_position.y + 50, 0.25
+					).set_ease(Tween.EASE_OUT)
 				# Replay the damage card's effect
 					process_card_effects(looped_card, i)
+					
+					tween.tween_property(
+						card, "position:y", card.global_position.y - 30, 0.25
+					).set_ease(Tween.EASE_IN).set_delay(0.50)
+						
 			
 		"SIMPLE_AGTA":
 			player.add_shield(card.defense_value)
@@ -187,9 +203,12 @@ func process_card_effects(card, current_card_index):
 			pass #put card effects here
 			
 		_:
+			print(str(card.card_id))
 			print("did not match")
 			
 	player.use_mana(card.mana_cost)
+	audio_stream_player_sfx.stream = HIT_PUNCH_
+	audio_stream_player_sfx.play()
 	
 	print("card " + str(current_card_index) + " activated")
 	

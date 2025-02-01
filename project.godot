@@ -13,13 +13,16 @@ config_version=5
 config/name="Orasyon"
 run/main_scene="res://menu/main_menu.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
-boot_splash/show_image=false
+boot_splash/image="res://assets/ui/Logo/orasyon_devs_logo.png"
+boot_splash/use_filter=false
+boot_splash/minimum_display_time=5000
 "<<<<<<<HEAD[gui]theme/custom_font"="res://assets/font/m5x7.ttf"
 
 [autoload]
 
 DamageNumbers="*res://globals/damage_numbers.gd"
 Utilities="*res://globals/utilities.gd"
+Settings="*res://globals/settings.gd"
 
 [display]
 

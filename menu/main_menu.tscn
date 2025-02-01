@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dul103a7w7dga"]
+[gd_scene load_steps=27 format=3 uid="uid://dul103a7w7dga"]
 
 [ext_resource type="Texture2D" uid="uid://dpu07rjwgfb33" path="res://assets/background/menu_backgriund/back.png" id="1_ecdn3"]
 [ext_resource type="FontFile" uid="uid://bjitbo10uldnw" path="res://assets/font/m5x7.ttf" id="1_efcke"]
@@ -67,19 +67,25 @@ func _on_pressed() -> void:
 	$\"../../ExitPopUp\".show()
 "
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_vbbn0"]
+atlas = ExtResource("10_234vi")
+region = Rect2(90, 65, 184, 150)
+
 [node name="MainMenu" type="Control"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = -64.0
-offset_bottom = -8.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
 script = ExtResource("1_whhni")
 
 [node name="background" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 0
-offset_top = -22.0
-offset_right = 289.0
-offset_bottom = 147.0
+offset_right = 321.0
+offset_bottom = 188.0
 scale = Vector2(4, 4)
 
 [node name="TextureRect3" type="TextureRect" parent="background"]
@@ -111,34 +117,37 @@ texture = SubResource("AtlasTexture_irfvr")
 
 [node name="Logo" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 0
-offset_left = 171.0
-offset_top = 40.0
-offset_right = 958.0
-offset_bottom = 376.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -325.0
+offset_top = 41.0
+offset_right = 462.0
+offset_bottom = 377.0
+grow_horizontal = 2
 
 [node name="TextureRect" type="TextureRect" parent="Logo"]
-layout_mode = 0
-offset_left = 189.0
-offset_top = 19.0
-offset_right = 662.0
-offset_bottom = 289.0
+layout_mode = 1
+offset_right = 473.0
+offset_bottom = 270.0
+scale = Vector2(1.5, 1.5)
 texture = ExtResource("5_xwfn1")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [node name="MenuSettings" parent="." instance=ExtResource("5_87cn3")]
 visible = false
+z_index = 12
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.0
-offset_left = 223.0
-offset_top = 37.0
-offset_right = 223.0
-offset_bottom = 37.0
-grow_vertical = 1
+anchor_bottom = 0.5
+offset_left = -372.0
+offset_top = -268.0
+offset_right = -372.0
+offset_bottom = -268.0
 scale = Vector2(1.6, 1.6)
 
 [node name="ExitPopUp" parent="." instance=ExtResource("7_nu8e0")]
@@ -149,23 +158,27 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 562.0
-offset_top = 277.0
-offset_right = 562.0
-offset_bottom = 277.0
+offset_left = -40.0
+offset_top = -21.0
+offset_right = -40.0
+offset_bottom = -21.0
 
 [node name="MainButtons" type="Control" parent="."]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 86.0
+offset_top = 119.0
+offset_right = 126.0
+offset_bottom = 159.0
 
 [node name="GameStartButton" type="TextureButton" parent="MainButtons"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-offset_left = 452.0
-offset_top = 349.0
-offset_right = 744.0
-offset_bottom = 552.0
+offset_left = 410.0
+offset_top = 329.0
+offset_right = 702.0
+offset_bottom = 532.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = SubResource("Theme_va5i0")
 texture_normal = SubResource("AtlasTexture_17dvo")
 texture_pressed = SubResource("AtlasTexture_slcjd")
@@ -173,12 +186,13 @@ stretch_mode = 5
 script = SubResource("GDScript_hvrjb")
 
 [node name="CollectionButton" type="TextureButton" parent="MainButtons"]
+visible = false
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 0
-offset_left = 48.0
-offset_top = 464.0
-offset_right = 708.0
-offset_bottom = 824.0
+offset_left = 42.0
+offset_top = 457.0
+offset_right = 702.0
+offset_bottom = 817.0
 scale = Vector2(0.35, 0.35)
 texture_normal = ExtResource("6_kn701")
 texture_pressed = SubResource("AtlasTexture_bmx8n")
@@ -187,9 +201,9 @@ stretch_mode = 5
 [node name="ExitButton" type="TextureButton" parent="MainButtons"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-offset_left = 852.0
+offset_left = 866.0
 offset_top = 449.0
-offset_right = 1052.0
+offset_right = 1066.0
 offset_bottom = 588.0
 texture_normal = SubResource("AtlasTexture_v7qjl")
 texture_pressed = SubResource("AtlasTexture_bmx8n")
@@ -198,13 +212,13 @@ script = SubResource("GDScript_0d2si")
 
 [node name="MenuSettingsButton" type="TextureButton" parent="MainButtons"]
 layout_mode = 0
-offset_left = 1030.0
-offset_top = -19.0
-offset_right = 1430.0
-offset_bottom = 281.0
+offset_left = 1069.0
+offset_top = -112.0
+offset_right = 1469.0
+offset_bottom = 188.0
 scale = Vector2(0.3, 0.3)
-texture_normal = ExtResource("10_234vi")
-stretch_mode = 0
+texture_normal = SubResource("AtlasTexture_vbbn0")
+stretch_mode = 1
 script = ExtResource("12_o33s3")
 
 [node name="LevelSelect" parent="." instance=ExtResource("10_dw1or")]

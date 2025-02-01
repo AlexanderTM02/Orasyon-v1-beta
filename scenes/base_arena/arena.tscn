@@ -1,8 +1,12 @@
-[gd_scene load_steps=29 format=3 uid="uid://cftclvt23qxde"]
+[gd_scene load_steps=35 format=3 uid="uid://cftclvt23qxde"]
 
 [ext_resource type="Script" path="res://scenes/base_arena/arena.gd" id="1_5mbsh"]
 [ext_resource type="PackedScene" uid="uid://dxl7qa6ldat68" path="res://entities/card/card.tscn" id="1_b66h7"]
+[ext_resource type="PackedScene" uid="uid://ccx8gk7shymjd" path="res://menu/pop_ups/menu_settings.tscn" id="2_h47ve"]
+[ext_resource type="PackedScene" uid="uid://dq5am7rn0725m" path="res://entities/card/more_info_pop_up.tscn" id="2_ijhiq"]
+[ext_resource type="Texture2D" uid="uid://bpvkv0at2wngi" path="res://assets/ui/menu_icons/setting_icon.png" id="2_m7ccp"]
 [ext_resource type="Texture2D" uid="uid://he5aw72v7f5g" path="res://assets/background/board_background/Arena1.1.png" id="2_soucb"]
+[ext_resource type="Script" path="res://menu/menu_settings_button.gd" id="3_f2jbd"]
 [ext_resource type="PackedScene" uid="uid://dfdhuwxwei5u1" path="res://entities/player_character/PlayerCharacter.tscn" id="3_nnolm"]
 [ext_resource type="Script" path="res://scenes/base_arena/card_placement.gd" id="4_oynmr"]
 [ext_resource type="Script" path="res://scenes/base_arena/arena_states/board_states.gd" id="4_p6jpa"]
@@ -16,9 +20,14 @@
 [ext_resource type="Script" path="res://scenes/base_arena/player_hud.gd" id="9_hsxxx"]
 [ext_resource type="Texture2D" uid="uid://dpsix0h5olgtw" path="res://assets/card/mana.png" id="10_tdj54"]
 [ext_resource type="Texture2D" uid="uid://djluku2w60bxo" path="res://assets/ui/icons/heart.png" id="11_8at07"]
+[ext_resource type="Texture2D" uid="uid://b7k3u44l1es4g" path="res://assets/card/card_base/defense.png" id="11_qmque"]
 [ext_resource type="Script" path="res://scenes/base_arena/arena_states/enemy_turn.gd" id="16_r4uwt"]
 [ext_resource type="AudioStream" uid="uid://daj5bwr2fdbi8" path="res://assets/audio/background_music/battle_bgm.mp3" id="18_d10ao"]
 [ext_resource type="Script" path="res://scenes/base_arena/arena_states/win_loss_check.gd" id="18_fbaq4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p207v"]
+atlas = ExtResource("2_m7ccp")
+region = Rect2(90, 65, 184, 150)
 
 [sub_resource type="Curve" id="Curve_g2cbx"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -60,6 +69,34 @@ atlas = ExtResource("11_8at07")
 
 [node name="Board" type="Node"]
 script = ExtResource("1_5mbsh")
+
+[node name="PopUps" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="MenuSettingsButton" type="TextureButton" parent="PopUps"]
+offset_left = 1189.0
+offset_top = 6.0
+offset_right = 1478.0
+offset_bottom = 223.0
+scale = Vector2(0.3, 0.3)
+texture_normal = SubResource("AtlasTexture_p207v")
+stretch_mode = 1
+script = ExtResource("3_f2jbd")
+
+[node name="MenuSettings" parent="PopUps" instance=ExtResource("2_h47ve")]
+visible = false
+z_index = 16
+offset_left = 169.0
+offset_top = 50.0
+offset_right = -655.0
+offset_bottom = -350.0
+scale = Vector2(2, 2)
+
+[node name="CardDescription" type="CanvasLayer" parent="."]
+layer = 6
+
+[node name="MoreInfoPopUp" parent="CardDescription" instance=ExtResource("2_ijhiq")]
+visible = false
 
 [node name="Entities" type="Node2D" parent="."]
 
@@ -199,18 +236,25 @@ text = "999"
 label_settings = SubResource("LabelSettings_hvpr3")
 vertical_alignment = 1
 
+[node name="Defense" type="Sprite2D" parent="Status/PlayerHud"]
+position = Vector2(41, 167)
+scale = Vector2(5.5, 5.5)
+texture = ExtResource("11_qmque")
+
 [node name="Background" type="Node" parent="."]
 
 [node name="TextureRect" type="TextureRect" parent="Background"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -86.0
-offset_right = 1.0
-offset_bottom = 15.0
+offset_left = -4.0
+offset_top = -96.0
+offset_right = -3.0
+offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_soucb")
+metadata/_edit_lock_ = true
 
 [node name="BoardStates" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
 script = ExtResource("4_p6jpa")
@@ -223,9 +267,10 @@ script = ExtResource("5_pfa2w")
 script = ExtResource("6_gjim0")
 player_turn_state = NodePath("../PlayerTurn")
 
-[node name="PlayerTurn" type="Node" parent="BoardStates" node_paths=PackedStringArray("enemy_turn")]
+[node name="PlayerTurn" type="Node" parent="BoardStates" node_paths=PackedStringArray("enemy_turn", "activation_state")]
 script = ExtResource("7_uwote")
 enemy_turn = NodePath("../EnemyTurn")
+activation_state = NodePath("../Activating")
 
 [node name="Activating" type="Node" parent="BoardStates" node_paths=PackedStringArray("player_turn", "win_loss_check_state", "enemy_turn")]
 script = ExtResource("8_k0l0s")
@@ -247,5 +292,10 @@ layer = 5
 
 [node name="AudioStreamPlayerBGM" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("18_d10ao")
+bus = &"Music"
 
+[node name="AudioStreamPlayerSFX" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"
+
+[connection signal="pressed" from="PopUps/MenuSettingsButton" to="PopUps/MenuSettingsButton" method="_on_pressed"]
 [connection signal="pressed" from="UI/EndTurn" to="BoardStates/PlayerTurn" method="_on_texture_button_pressed"]

@@ -1,31 +1,25 @@
-[gd_scene load_steps=21 format=3 uid="uid://dxl7qa6ldat68"]
+[gd_scene load_steps=23 format=3 uid="uid://dxl7qa6ldat68"]
 
 [ext_resource type="Script" path="res://entities/card/card.gd" id="1_vh50i"]
-[ext_resource type="Texture2D" uid="uid://bc6e84kycn6xc" path="res://assets/card/card_base.png" id="2_r5ofr"]
+[ext_resource type="Texture2D" uid="uid://d082w5p1ac2jy" path="res://assets/card/card_base/bg_red.png" id="2_dkg42"]
+[ext_resource type="Texture2D" uid="uid://xbh3yc658a4c" path="res://assets/card/card_base/border.png" id="3_kmntr"]
 [ext_resource type="PackedScene" uid="uid://c2q6m6j28xlli" path="res://entities/state_machine/state_machine.tscn" id="3_mryd3"]
-[ext_resource type="Texture2D" uid="uid://cdxk2xrh3ofew" path="res://assets/card/spell_name_plate.png" id="3_xkuyo"]
 [ext_resource type="Script" path="res://entities/card/card_states/idle_state.gd" id="4_bwv7u"]
-[ext_resource type="Texture2D" uid="uid://bcy7ynwcaq1rl" path="res://assets/card/attack.png" id="4_enlfk"]
+[ext_resource type="Texture2D" uid="uid://e1vjm3f1uy76" path="res://assets/card/card_base/mana2.png" id="4_hqqdl"]
 [ext_resource type="Script" path="res://entities/card/card_states/dragging_state.gd" id="5_3rl7b"]
-[ext_resource type="Texture2D" uid="uid://dpsix0h5olgtw" path="res://assets/card/mana.png" id="5_g4ifi"]
+[ext_resource type="Texture2D" uid="uid://ctl5gryev0bdq" path="res://assets/card/card_base/heal.png" id="5_xgccv"]
+[ext_resource type="Texture2D" uid="uid://dlriecyfm6q7d" path="res://assets/card/card_base/damage.png" id="6_ev756"]
 [ext_resource type="Script" path="res://entities/card/card_states/hover_state.gd" id="6_un3k2"]
+[ext_resource type="Texture2D" uid="uid://b7k3u44l1es4g" path="res://assets/card/card_base/defense.png" id="7_25mhd"]
 [ext_resource type="Script" path="res://entities/card/card_states/clicked_state.gd" id="7_edhwd"]
 [ext_resource type="Script" path="res://entities/card/card_states/activating_state.gd" id="8_ou8ae"]
+[ext_resource type="Texture2D" uid="uid://ci5a6fre61n1m" path="res://assets/card/card_base/little_red.png" id="8_x3e5k"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nvlwr"]
-atlas = ExtResource("2_r5ofr")
-region = Rect2(0, 0, 100, 130)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wg7q0"]
-atlas = ExtResource("3_xkuyo")
-region = Rect2(1, 2, 86, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ihti1"]
-atlas = ExtResource("5_g4ifi")
-region = Rect2(3, 2, 25, 42)
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_llsq4"]
+load_path = "res://.godot/imported/missing.png-fa338c5449dc16bf40a6570d8fbe14b3.ctex"
 
 [sub_resource type="LabelSettings" id="LabelSettings_6dw23"]
-line_spacing = 1.0
+line_spacing = -5.0
 font_size = 9
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
@@ -34,6 +28,10 @@ outline_color = Color(0, 0, 0, 1)
 font_size = 18
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_mgml7"]
+font_size = 18
+font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_63i0w"]
 length = 0.001
@@ -52,26 +50,62 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("StatLabels:position")
+tracks/1/path = NodePath("StatLabels/SpellNameLabel:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(38, 10)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".:position")
+tracks/2/path = NodePath("StatLabels/ManaCostLabel:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(-6, 2)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("StatLabels/HealValueLabel:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(16.8, 32)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("StatLabels/AttackValueLabel:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(16.8, 49)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("StatLabels/ShieldValueLabel:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(16.8, 65)]
 }
 
 [sub_resource type="Animation" id="Animation_xwcli"]
@@ -91,14 +125,62 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("StatLabels:position")
+tracks/1/path = NodePath("StatLabels/SpellNameLabel:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0, -50), Vector2(0, 0)]
+"values": [Vector2(38, -40), Vector2(38, 10)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("StatLabels/ManaCostLabel:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-6, -48), Vector2(-6, 2)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("StatLabels/HealValueLabel:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(16.8, -18), Vector2(16.8, 32)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("StatLabels/AttackValueLabel:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(16.8, -1), Vector2(16.8, 49)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("StatLabels/ShieldValueLabel:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(16.8, 15), Vector2(16.8, 65)]
 }
 
 [sub_resource type="Animation" id="Animation_prjpx"]
@@ -118,14 +200,62 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("StatLabels:position")
+tracks/1/path = NodePath("StatLabels/SpellNameLabel:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(0, -50)]
+"values": [Vector2(38, 10), Vector2(38, -40)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("StatLabels/ManaCostLabel:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-6, 2), Vector2(-6, -48)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("StatLabels/HealValueLabel:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(16.8, 32), Vector2(16.8, -18)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("StatLabels/AttackValueLabel:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(16.8, 49), Vector2(16.8, -1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("StatLabels/ShieldValueLabel:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(16.8, 65), Vector2(16.8, 15)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_smjrr"]
@@ -136,50 +266,53 @@ _data = {
 }
 
 [node name="Card" type="Container"]
-custom_minimum_size = Vector2(110, 128)
-anchors_preset = -1
-anchor_left = 0.059
-anchor_top = 0.137
-anchor_right = 0.059
-anchor_bottom = 0.137
-offset_left = -75.52
-offset_top = -98.64
-offset_right = 75.52
-offset_bottom = 98.64
-pivot_offset = Vector2(75, 96)
+custom_minimum_size = Vector2(125, 160)
+offset_right = 125.0
+offset_bottom = 160.0
+scale = Vector2(1.5, 1.5)
 script = ExtResource("1_vh50i")
 
 [node name="Textures" type="Node2D" parent="."]
-scale = Vector2(1.5, 1.5)
+
+[node name="ColorBG" type="TextureRect" parent="Textures"]
+offset_right = 125.0
+offset_bottom = 160.0
+texture = ExtResource("2_dkg42")
 
 [node name="CardArt" type="TextureRect" parent="Textures"]
-offset_left = 2.0
-offset_top = 3.0
-offset_right = 97.0
-offset_bottom = 128.0
-expand_mode = 1
+offset_right = 125.0
+offset_bottom = 160.0
+texture = SubResource("CompressedTexture2D_llsq4")
 
-[node name="CardTexture" type="Sprite2D" parent="Textures"]
-texture = SubResource("AtlasTexture_nvlwr")
-centered = false
+[node name="Border" type="TextureRect" parent="Textures"]
+offset_right = 125.0
+offset_bottom = 160.0
+texture = ExtResource("3_kmntr")
 
-[node name="EffectValueBackground" type="Polygon2D" parent="Textures"]
-position = Vector2(50, 105)
-polygon = PackedVector2Array(-0.666664, 20.3333, -10.6667, 7.66667, -10.6667, -2.33333, -0.666664, -15.6667, 10.6667, -1.66666, 10.6667, 8.33334, 0, 21)
+[node name="ManaIcon" type="Sprite2D" parent="Textures"]
+position = Vector2(7.2, 8.6)
+texture = ExtResource("4_hqqdl")
 
-[node name="EffectValuePlace" type="Sprite2D" parent="Textures"]
-position = Vector2(50, 105)
-texture = ExtResource("4_enlfk")
+[node name="HealIcon" type="Sprite2D" parent="Textures"]
+position = Vector2(12.2, 46.6)
+texture = ExtResource("5_xgccv")
 
-[node name="CardSpellName" type="Sprite2D" parent="Textures"]
-position = Vector2(51, 8.66667)
-scale = Vector2(1.21512, 1.21512)
-texture = SubResource("AtlasTexture_wg7q0")
+[node name="DamageIcon" type="Sprite2D" parent="Textures"]
+position = Vector2(12.2, 62.6)
+texture = ExtResource("6_ev756")
 
-[node name="Mana" type="Sprite2D" parent="Textures"]
-position = Vector2(1.66667, 8.66667)
-scale = Vector2(0.820313, 0.820313)
-texture = SubResource("AtlasTexture_ihti1")
+[node name="DefenseIcon" type="Sprite2D" parent="Textures"]
+position = Vector2(12.2, 79.6)
+texture = ExtResource("7_25mhd")
+
+[node name="CardNamePlate" type="TextureRect" parent="Textures"]
+custom_minimum_size = Vector2(82, 23)
+offset_left = 31.72
+offset_top = 7.24
+offset_right = 113.72
+offset_bottom = 30.24
+texture = ExtResource("8_x3e5k")
+metadata/_edit_use_anchors_ = true
 
 [node name="StatLabels" type="Control" parent="."]
 custom_minimum_size = Vector2(100, 0)
@@ -187,35 +320,54 @@ layout_mode = 2
 
 [node name="SpellNameLabel" type="Label" parent="StatLabels"]
 layout_mode = 2
-offset_left = 12.0
-offset_top = -2.0
-offset_right = 141.0
-offset_bottom = 29.0
-text = "Shield"
+offset_left = 38.0
+offset_top = 10.0
+offset_right = 135.0
+offset_bottom = 33.0
+scale = Vector2(0.75, 0.75)
+text = "Bernardo Carpio's Punch"
 label_settings = SubResource("LabelSettings_6dw23")
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="ManaCostLabel" type="Label" parent="StatLabels"]
 layout_mode = 2
-offset_left = -10.0
-offset_top = 6.0
-offset_right = 16.0
-offset_bottom = 34.0
-text = "20
+offset_left = -6.0
+offset_top = 2.0
+offset_right = 22.0
+offset_bottom = 30.0
+text = "99
 "
 label_settings = SubResource("LabelSettings_e3xyu")
 horizontal_alignment = 1
 
-[node name="EffectValueLabel" type="Label" parent="StatLabels"]
-layout_mode = 2
-offset_left = 63.0
-offset_top = 147.0
-offset_right = 87.0
-offset_bottom = 175.0
+[node name="HealValueLabel" type="Label" parent="StatLabels"]
+layout_mode = 0
+offset_left = 16.8
+offset_top = 32.0
+offset_right = 30.8
+offset_bottom = 60.0
 text = "0"
-label_settings = SubResource("LabelSettings_e3xyu")
-horizontal_alignment = 1
+label_settings = SubResource("LabelSettings_mgml7")
+
+[node name="AttackValueLabel" type="Label" parent="StatLabels"]
+layout_mode = 0
+offset_left = 16.8
+offset_top = 49.0
+offset_right = 30.8
+offset_bottom = 77.0
+text = "0"
+label_settings = SubResource("LabelSettings_mgml7")
+
+[node name="ShieldValueLabel" type="Label" parent="StatLabels"]
+layout_mode = 0
+offset_left = 16.8
+offset_top = 65.0
+offset_right = 30.8
+offset_bottom = 93.0
+text = "0"
+label_settings = SubResource("LabelSettings_mgml7")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -247,6 +399,8 @@ hover_state = NodePath("../Hover")
 
 [node name="Activating" type="Node" parent="StateMachine"]
 script = ExtResource("8_ou8ae")
+
+[node name="SFXAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
