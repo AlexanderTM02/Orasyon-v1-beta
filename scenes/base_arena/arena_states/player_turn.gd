@@ -1,7 +1,6 @@
 extends BoardState
 
-@export var enemy_turn: BoardState
-@export var activation_state: BoardState
+@export var enemy_decision: BoardState
 
 var button_pressed: bool = false
 
@@ -9,6 +8,8 @@ var button_pressed: bool = false
 @onready var player = $"../../Entities/PlayerCharacter"
 @onready var card_placement: Container = $"../../UI/PlacementArea/CardPlacement"
 @onready var audio_stream_player_sfx: AudioStreamPlayer = $"../../AudioStreamPlayerSFX"
+@onready var not_enough_mana_label: Label = $"../../PlayerHud/NotEnoughManaLabel"
+
 
 const ERROR = preload("res://assets/audio/sfx/Error.wav")
 
@@ -24,7 +25,7 @@ func process_input(event: InputEvent) -> BoardState:
 func process_frame(delta: float) -> BoardState:
 	if button_pressed == true:
 		button_pressed = false
-		return activation_state
+		return enemy_decision
 	return null
 
 func _on_texture_button_pressed() -> void:
@@ -34,6 +35,9 @@ func _on_texture_button_pressed() -> void:
 		audio_stream_player_sfx.stream = ERROR
 		audio_stream_player_sfx.play()
 		print("not enough mana")
+		not_enough_mana_label.show()
+		await Utilities.wait_seconds(0.5)
+		not_enough_mana_label.hide()
 
 func check_mana() -> bool:
 	var player_mana = player.current_mana

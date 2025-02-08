@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dxl7qa6ldat68"]
+[gd_scene load_steps=24 format=3 uid="uid://dxl7qa6ldat68"]
 
 [ext_resource type="Script" path="res://entities/card/card.gd" id="1_vh50i"]
 [ext_resource type="Texture2D" uid="uid://d082w5p1ac2jy" path="res://assets/card/card_base/bg_red.png" id="2_dkg42"]
@@ -14,15 +14,18 @@
 [ext_resource type="Script" path="res://entities/card/card_states/clicked_state.gd" id="7_edhwd"]
 [ext_resource type="Script" path="res://entities/card/card_states/activating_state.gd" id="8_ou8ae"]
 [ext_resource type="Texture2D" uid="uid://ci5a6fre61n1m" path="res://assets/card/card_base/little_red.png" id="8_x3e5k"]
+[ext_resource type="FontFile" uid="uid://bor8eavv2ciua" path="res://assets/font/LoRes9OTWide-Regular.ttf" id="9_un8pf"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_llsq4"]
 load_path = "res://.godot/imported/missing.png-fa338c5449dc16bf40a6570d8fbe14b3.ctex"
 
 [sub_resource type="LabelSettings" id="LabelSettings_6dw23"]
 line_spacing = -5.0
+font = ExtResource("9_un8pf")
 font_size = 9
-outline_size = 4
 outline_color = Color(0, 0, 0, 1)
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_e3xyu"]
 font_size = 18
@@ -269,7 +272,7 @@ _data = {
 custom_minimum_size = Vector2(125, 160)
 offset_right = 125.0
 offset_bottom = 160.0
-scale = Vector2(1.5, 1.5)
+scale = Vector2(1.25, 1.25)
 script = ExtResource("1_vh50i")
 
 [node name="Textures" type="Node2D" parent="."]

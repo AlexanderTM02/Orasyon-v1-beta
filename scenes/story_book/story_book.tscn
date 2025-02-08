@@ -1,0 +1,209 @@
+[gd_scene load_steps=21 format=3 uid="uid://dxnmo8nebbnk2"]
+
+[ext_resource type="Script" path="res://scenes/story_book/story_book.gd" id="1_lt04s"]
+[ext_resource type="Texture2D" uid="uid://dn673b0r5ol3y" path="res://scenes/story_book/assets/book_sprite_map.png" id="1_uijau"]
+[ext_resource type="Texture2D" uid="uid://ync1joi73fnu" path="res://scenes/story_book/assets/prolouge_cover.png" id="3_4lkxc"]
+[ext_resource type="Texture2D" uid="uid://ck4f2wtdva2xm" path="res://scenes/story_book/assets/duwende_lore.png" id="3_ujk4t"]
+[ext_resource type="Texture2D" uid="uid://it7fogtej2qv" path="res://scenes/story_book/assets/page1.png" id="4_7412o"]
+[ext_resource type="Texture2D" uid="uid://jruiql2ig0h3" path="res://scenes/story_book/assets/manananggal_lore.png" id="4_d2cbp"]
+[ext_resource type="Texture2D" uid="uid://ds2rb8ijq5flt" path="res://scenes/story_book/assets/page2.png" id="5_3h6pl"]
+[ext_resource type="Texture2D" uid="uid://divxwx75nhxdm" path="res://scenes/story_book/assets/page3.png" id="5_gqupn"]
+[ext_resource type="Texture2D" uid="uid://bu10ytnl11bxi" path="res://scenes/story_book/assets/kapre_lore.png" id="5_lcm5u"]
+[ext_resource type="Texture2D" uid="uid://ckobjbsa65qbc" path="res://scenes/story_book/assets/page4.png" id="6_npgt5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u3g48"]
+atlas = ExtResource("1_uijau")
+region = Rect2(9, 7, 479, 259)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_npof0"]
+atlas = ExtResource("1_uijau")
+region = Rect2(529, 81, 60, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b2cyp"]
+atlas = ExtResource("1_uijau")
+region = Rect2(529, 122, 60, 29)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5s7eb"]
+line_spacing = 0.0
+font_size = 18
+font_color = Color(0.4, 0.223529, 0.192157, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0bqwr"]
+font_size = 36
+font_color = Color(0.4, 0.223529, 0.192157, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qy5ir"]
+atlas = ExtResource("1_uijau")
+region = Rect2(605, 25, 59, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jjemk"]
+atlas = ExtResource("1_uijau")
+region = Rect2(527, 25, 59, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_27cvj"]
+atlas = ExtResource("1_uijau")
+region = Rect2(605, 52, 59, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pvcra"]
+atlas = ExtResource("1_uijau")
+region = Rect2(528, 52, 59, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lvuwg"]
+atlas = ExtResource("1_uijau")
+region = Rect2(555, 162, 15, 13)
+
+[node name="StoryBook" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lt04s")
+
+[node name="Book" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 130.814
+offset_top = 69.4117
+offset_right = 1186.81
+offset_bottom = 661.412
+texture = SubResource("AtlasTexture_u3g48")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="StoryButton" type="TextureButton" parent="Book"]
+layout_mode = 2
+offset_left = 992.0
+offset_top = 64.0
+offset_right = 1052.0
+offset_bottom = 93.0
+scale = Vector2(2, 2)
+texture_normal = SubResource("AtlasTexture_npof0")
+
+[node name="LoreButton" type="TextureButton" parent="Book"]
+layout_mode = 0
+offset_left = 992.0
+offset_top = 136.0
+offset_right = 1052.0
+offset_bottom = 165.0
+scale = Vector2(2, 2)
+texture_normal = SubResource("AtlasTexture_b2cyp")
+
+[node name="Story" type="Control" parent="Book"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CoverContainer" type="AspectRatioContainer" parent="Book/Story"]
+layout_mode = 0
+offset_left = 125.477
+offset_top = 41.2728
+offset_right = 493.477
+offset_bottom = 505.273
+
+[node name="MonsterPage1" type="Sprite2D" parent="Book/Story/CoverContainer"]
+visible = false
+position = Vector2(190, 236)
+scale = Vector2(2.16503, 2.21222)
+texture = ExtResource("3_ujk4t")
+
+[node name="MonsterPage2" type="Sprite2D" parent="Book/Story/CoverContainer"]
+visible = false
+position = Vector2(191.7, 239.447)
+scale = Vector2(2.19164, 2.19164)
+texture = ExtResource("4_d2cbp")
+
+[node name="MonsterPage3" type="Sprite2D" parent="Book/Story/CoverContainer"]
+visible = false
+position = Vector2(191.39, 240.839)
+scale = Vector2(2.15667, 2.15667)
+texture = ExtResource("5_lcm5u")
+
+[node name="Page0" type="Sprite2D" parent="Book/Story/CoverContainer"]
+visible = false
+position = Vector2(189.5, 240)
+scale = Vector2(2.19412, 2.18182)
+texture = ExtResource("3_4lkxc")
+
+[node name="Page1" type="Sprite2D" parent="Book/Story/CoverContainer"]
+visible = false
+position = Vector2(189.5, 236)
+scale = Vector2(2.19412, 2.21818)
+texture = ExtResource("4_7412o")
+
+[node name="Page2" type="Sprite2D" parent="Book/Story/CoverContainer"]
+visible = false
+position = Vector2(189.5, 234.353)
+scale = Vector2(2.19412, 2.20321)
+texture = ExtResource("5_3h6pl")
+
+[node name="Page3" type="Sprite2D" parent="Book/Story/CoverContainer"]
+visible = false
+position = Vector2(189.5, 238.353)
+scale = Vector2(2.19412, 2.23957)
+texture = ExtResource("5_gqupn")
+
+[node name="Page4" type="Sprite2D" parent="Book/Story/CoverContainer"]
+visible = false
+position = Vector2(189.5, 243.353)
+scale = Vector2(2.19412, 2.19412)
+texture = ExtResource("6_npgt5")
+
+[node name="BookContent" type="Label" parent="Book/Story"]
+layout_mode = 0
+offset_left = 552.0
+offset_top = 48.0
+offset_right = 920.0
+offset_bottom = 440.0
+label_settings = SubResource("LabelSettings_5s7eb")
+autowrap_mode = 3
+
+[node name="BookTitle" type="Label" parent="Book/Story"]
+layout_mode = 0
+offset_left = 560.0
+offset_top = 136.0
+offset_right = 904.0
+offset_bottom = 328.0
+text = "The World of Orasyon"
+label_settings = SubResource("LabelSettings_0bqwr")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="NextButton" type="TextureButton" parent="Book/Story"]
+layout_mode = 0
+offset_left = 792.0
+offset_top = 472.0
+offset_right = 851.0
+offset_bottom = 493.0
+scale = Vector2(2, 2)
+texture_normal = SubResource("AtlasTexture_qy5ir")
+texture_pressed = SubResource("AtlasTexture_jjemk")
+
+[node name="BackButton" type="TextureButton" parent="Book/Story"]
+layout_mode = 0
+offset_left = 568.0
+offset_top = 472.0
+offset_right = 627.0
+offset_bottom = 493.0
+scale = Vector2(2, 2)
+texture_normal = SubResource("AtlasTexture_27cvj")
+texture_pressed = SubResource("AtlasTexture_pvcra")
+
+[node name="CloseButton" type="TextureButton" parent="Book"]
+layout_mode = 0
+offset_left = 1011.57
+offset_top = 11.3585
+offset_right = 1026.57
+offset_bottom = 24.3585
+scale = Vector2(2.5, 2.5)
+texture_normal = SubResource("AtlasTexture_lvuwg")
+
+[connection signal="pressed" from="Book/StoryButton" to="." method="_on_story_button_pressed"]
+[connection signal="pressed" from="Book/LoreButton" to="." method="_on_lore_button_pressed"]
+[connection signal="pressed" from="Book/Story/NextButton" to="." method="_on_next_button_pressed"]
+[connection signal="pressed" from="Book/Story/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="Book/CloseButton" to="." method="_on_close_button_pressed"]

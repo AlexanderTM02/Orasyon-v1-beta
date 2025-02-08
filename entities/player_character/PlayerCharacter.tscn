@@ -82,7 +82,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"hurt",
-"speed": 3.0
+"speed": 7.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8n7ox"]
@@ -216,9 +216,7 @@ script = ExtResource("1_je83g")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_o6a7b")
-animation = &"attack_animation"
-frame = 1
-frame_progress = 1.0
+animation = &"hurt"
 
 [node name="DamageNumberOrigin" type="Node2D" parent="."]
 position = Vector2(0, -63)

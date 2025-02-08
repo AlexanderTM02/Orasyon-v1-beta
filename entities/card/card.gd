@@ -26,7 +26,7 @@ var heal_value
 var spell_description
 
 #get a random crad from the card dictionary
-@onready var random_card = card_dictionary_resource.get_random_card()
+@onready var card = card_dictionary_resource.get_random_card()
 
 #reference state_machine node
 @onready var state_machine = $StateMachine
@@ -44,26 +44,23 @@ var spell_description
 @onready var animation_player = $AnimationPlayer
 @onready var sfx_player = $SFXAudioStreamPlayer
 
-
-@onready var board = get_tree().get_root().get_node("Board")
-
+@export var board: Node
 
 func _ready() -> void:
 	
-	if random_card["card_art"] != null:
-		card_art.texture = random_card["card_art"]
+	if card["card_art"] != null:
+		card_art.texture = card["card_art"]
 	else:
 		card_art.texture = load("res://assets/card/card_art/missing.png")
-	
-	#get card values from the random card dictionary
-	card_id = random_card["ID"]
-	spell_name = random_card["name"]
-	mana_cost = random_card["stats"]["mana_cost"]
-	spell_type = random_card["spell_type"]
-	attack_value = random_card["stats"]["damage"]
-	defense_value = random_card["stats"]["shield"]
-	heal_value = random_card["stats"]["heal"]
-	spell_description = random_card["description"]
+		
+	card_id = card["ID"]
+	spell_name = card["name"]
+	mana_cost = card["stats"]["mana_cost"]
+	spell_type = card["spell_type"]
+	attack_value = card["stats"]["damage"]
+	defense_value = card["stats"]["shield"]
+	heal_value = card["stats"]["heal"]
+	spell_description = card["description"]
 	
 	update_card_colors()
 	update_card_info()
@@ -81,7 +78,7 @@ func _process(delta: float) -> void:
 
 func update_card_info() -> void:
 	
-	spell_name_label.text = spell_name
+	spell_name_label.text = str(spell_name)
 	mana_cost_label.text = str(mana_cost)
 	
 	if attack_value != 0:

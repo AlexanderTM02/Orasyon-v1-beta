@@ -4,6 +4,8 @@ func _on_back_button_pressed() -> void:
 	$".".hide()
 	$"../Logo".show()
 	$"../MainButtons".show()
+	$"../MainButtons/ExitButton".show()
+	$"../MainButtons/MenuSettingsButton".show()
 	pass # Replace with function body.
 
 

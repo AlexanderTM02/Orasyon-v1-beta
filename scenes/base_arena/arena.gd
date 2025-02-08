@@ -4,6 +4,8 @@ extends Node
 @onready var audio_stream_bgm: AudioStreamPlayer = $AudioStreamPlayerBGM
 @onready var audio_stream_sfx: AudioStreamPlayer = $AudioStreamPlayerSFX
 
+@onready var current_round: int = 0
+
 var bgm_muted = false
 
 func _ready() -> void:

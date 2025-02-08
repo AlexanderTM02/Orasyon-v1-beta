@@ -12,16 +12,8 @@ var previous_child_count = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	var current_child_count = get_child_count()
 	
-	if current_child_count > previous_child_count:
-		# A new child was added
-		var new_child = get_child(current_child_count - 1)  # Get the latest child
-		print("New child detected:", new_child.name)
-		
-		_update_cards()
-		
-	previous_child_count = current_child_count
+	_update_cards()
 
 func _update_cards() -> void:
 	var cards := get_child_count()

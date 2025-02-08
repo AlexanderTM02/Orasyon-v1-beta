@@ -13,7 +13,7 @@ const LOSE_SCREEN = preload("res://menu/lose_screen.tscn")
 var next_state: bool
 
 func enter() -> void:
-	print("entered")
+	print("win loss: entered")
 	
 	if player.current_health <= 0:
 		show_screen(LOSE_SCREEN)

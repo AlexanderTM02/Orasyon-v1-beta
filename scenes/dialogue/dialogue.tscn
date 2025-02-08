@@ -1,0 +1,162 @@
+[gd_scene load_steps=18 format=3 uid="uid://bq1c5xyfakxe4"]
+
+[ext_resource type="Script" path="res://dialogue.gd" id="1_ocq8e"]
+[ext_resource type="FontFile" uid="uid://bor8eavv2ciua" path="res://assets/font/LoRes9OTWide-Regular.ttf" id="2_gmpxr"]
+[ext_resource type="Texture2D" uid="uid://cdibhkqa6vqur" path="res://assets/enemy/manananggal/mananangal.png" id="3_gtrgt"]
+[ext_resource type="Texture2D" uid="uid://b5prst73yct2y" path="res://assets/player/new_player/idle-Sheet.png" id="3_qtlhc"]
+[ext_resource type="Texture2D" uid="uid://mhbt3e4sm2ce" path="res://scenes/dialogue/dialog_box.png" id="3_sk8ay"]
+[ext_resource type="Texture2D" uid="uid://8g8os3gdoxbt" path="res://assets/enemy/kapre/idle-Sheet.png" id="4_oplqa"]
+[ext_resource type="Texture2D" uid="uid://g8x43ktmfcyv" path="res://scenes/dialogue/dialog_name.png" id="5_kkltp"]
+[ext_resource type="Texture2D" uid="uid://bd4d7gdb88pve" path="res://assets/enemy/duwende/idle.png" id="5_yeyt0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b5glc"]
+atlas = ExtResource("3_qtlhc")
+region = Rect2(1, 9, 41, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fiiti"]
+atlas = ExtResource("3_gtrgt")
+region = Rect2(15, 4, 53, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8hhw2"]
+atlas = ExtResource("4_oplqa")
+region = Rect2(3, 2, 65, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_snsnw"]
+atlas = ExtResource("5_yeyt0")
+region = Rect2(17, 7, 54, 61)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_it5te"]
+atlas = ExtResource("3_sk8ay")
+region = Rect2(0, 5, 144, 36)
+
+[sub_resource type="LabelSettings" id="LabelSettings_55u7e"]
+font_size = 24
+font_color = Color(0.4, 0.223529, 0.192157, 1)
+outline_size = 4
+outline_color = Color(0.894118, 0.698039, 0.513726, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_i5orl"]
+font = ExtResource("2_gmpxr")
+font_size = 18
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4dqtg"]
+atlas = ExtResource("5_kkltp")
+region = Rect2(7, 0, 40, 12)
+
+[sub_resource type="LabelSettings" id="LabelSettings_12lbr"]
+font_size = 27
+font_color = Color(0.4, 0.223529, 0.192157, 1)
+
+[node name="Dialogue" type="Control" node_paths=PackedStringArray("dialogue_label", "name_label", "click_label", "character_sprite")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ocq8e")
+dialogue_label = NodePath("DialogueBox/DialogueLabel")
+name_label = NodePath("NameBox/NameLabel")
+click_label = NodePath("DialogueBox/ClickLabel")
+reveal_spead = 0.02
+character_sprite = NodePath("CharacterBox")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -58.0
+offset_top = -39.0
+offset_right = 1314.0
+offset_bottom = 771.0
+color = Color(0, 0, 0, 0.231373)
+metadata/_edit_lock_ = true
+
+[node name="CharacterBox" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 23.0
+offset_right = 58.0
+offset_bottom = 78.0
+scale = Vector2(7.7, 11.7)
+texture = SubResource("AtlasTexture_b5glc")
+stretch_mode = 5
+
+[node name="MananangalSprite" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 942.0
+offset_top = -265.0
+offset_right = 996.0
+offset_bottom = -201.0
+scale = Vector2(7.7, 11.7)
+texture = SubResource("AtlasTexture_fiiti")
+stretch_mode = 5
+
+[node name="KapreSprite" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 837.0
+offset_top = 7.0
+offset_right = 902.0
+offset_bottom = 72.0
+scale = Vector2(7.7, 11.7)
+texture = SubResource("AtlasTexture_8hhw2")
+stretch_mode = 5
+flip_h = true
+
+[node name="DuwendeSprite" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 1032.0
+offset_top = 265.0
+offset_right = 1065.0
+offset_bottom = 284.0
+scale = Vector2(7.7, 11.7)
+texture = SubResource("AtlasTexture_snsnw")
+expand_mode = 1
+stretch_mode = 5
+flip_h = true
+
+[node name="DialogueBox" type="TextureRect" parent="."]
+layout_mode = 0
+offset_top = 430.0
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = SubResource("AtlasTexture_it5te")
+
+[node name="DialogueLabel" type="Label" parent="DialogueBox"]
+layout_mode = 0
+offset_left = 126.0
+offset_top = 106.0
+offset_right = 1201.0
+offset_bottom = 218.0
+text = "text"
+label_settings = SubResource("LabelSettings_55u7e")
+autowrap_mode = 2
+
+[node name="ClickLabel" type="Label" parent="DialogueBox"]
+layout_mode = 0
+offset_left = 988.0
+offset_top = 237.0
+offset_right = 1256.0
+offset_bottom = 273.0
+text = "(Click to skip)"
+label_settings = SubResource("LabelSettings_i5orl")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NameBox" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 404.0
+offset_right = 329.0
+offset_bottom = 488.0
+texture = SubResource("AtlasTexture_4dqtg")
+
+[node name="NameLabel" type="Label" parent="NameBox"]
+layout_mode = 0
+offset_right = 317.0
+offset_bottom = 72.0
+text = "Name"
+label_settings = SubResource("LabelSettings_12lbr")
+horizontal_alignment = 1
+vertical_alignment = 1

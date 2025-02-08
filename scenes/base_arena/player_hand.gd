@@ -11,25 +11,12 @@ const CARD = preload("res://entities/card/card.tscn")
 @export var y_min := 50
 @export var y_max := -50
 
+
 func _process(delta: float) -> void:
 	_update_cards()
 
-
-func draw() -> void:
-	var new_card = CARD.instantiate()
-	add_child(new_card)
-	_update_cards()
-
-
 func discard() -> void:
-	if get_child_count() < 1:
-		return
-		
-	var child := get_child(-1)
-	child.reparent(get_tree().root)
-	child.queue_free()
-	_update_cards()
-
+	pass
 
 func _update_cards() -> void:
 	var cards := get_child_count()

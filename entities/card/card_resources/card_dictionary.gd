@@ -1,5 +1,4 @@
 extends Resource
-class_name CardDictionary
 
 var cards = {
 	"DAMAGE_BERNARDO": {
@@ -20,7 +19,7 @@ var cards = {
 		"ID": "DAMAGE_BAKUNAWA",
 		"name": "Bakunawa's Bite",
 		"spell_type": "Damage",
-		"description": "Deal 7 damage. After this card resolves, end your sequence.",
+		"description": "Deal 7 damage.",
 		"stats": {
 			"damage": 7,
 			"shield": 0,
@@ -69,7 +68,7 @@ var cards = {
 			"heal": 0,
 			"mana_cost": 2
 		},
-		"card_art": null
+		"card_art": load("res://assets/card/card_art/mariamakiling_veil.png")
 	},
 	
 	"HEAL_BABAYLAN": {
@@ -90,7 +89,7 @@ var cards = {
 		"ID": "HEAL_MAKILING",
 		"name": "Makiling's Touch",
 		"spell_type": "Heal",
-		"description": "Heal 6 health. After this card resolves, end your sequence.",
+		"description": "Heal 6 health.",
 		"stats": {
 			"damage": 0,
 			"shield": 0,
@@ -142,23 +141,9 @@ var cards = {
 		"card_art": load("res://assets/card/card_art/bathala_gift.png")
 	},
 	
-	"MULTI_SAMBAL": {
-		"ID": "MULTI_SAMBAL",
-		"name": "Sambals' Dance",
-		"spell_type": "Multi",
-		"description": "Play a copy of each damage card played this sequence, in order.",
-		"stats": {
-			"damage": 0,
-			"shield": 0,
-			"heal": 0,
-			"mana_cost": 4
-		},
-		"card_art": load("res://assets/card/card_art/sambal_dance.png")
-	},
-	
 	"SIMPLE_AGTA": {
 		"ID": "SIMPLE_AGTA",
-		"name": "Agta's Strength",
+		"name": "Sambal's Strength",
 		"spell_type": "Damage",
 		"description": "Deal 2 damage and gain 2 shield.",
 		"stats": {
@@ -167,7 +152,7 @@ var cards = {
 			"heal": 0,
 			"mana_cost": 2
 		},
-		"card_art": null
+		"card_art": load("res://assets/card/card_art/sambal_dance.png")
 	},
 	
 	"SIMPLE_DIWATA": {
@@ -183,7 +168,25 @@ var cards = {
 		},
 		"card_art": load("res://assets/card/card_art/magic.png") ### to be changed
 	},
+	
+	"DUMB_DRAGON": {
+		"ID": "DUMB_DRAGON",
+		"name": "Dumb Dragon's help",
+		"spell_type": "Damage",
+		"description": "gain 4 shield damage and deal 2 damage. If played after a damage card, deal X2 damage instead.",
+		"stats": {
+			"damage": 2,
+			"shield": 3,
+			"heal": 0,
+			"mana_cost": 5
+		},
+		"card_art": load("res://assets/card/card_art/dumb_dragon.png") ### to be changed
+	}
+	
 }
+
+func get_dictionary() -> Dictionary:
+	return cards
 
 # Method to get a random card from the dictionary
 func get_random_card() -> Dictionary:

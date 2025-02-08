@@ -1,0 +1,171 @@
+[gd_scene load_steps=12 format=3 uid="uid://diin1lt3nvcex"]
+
+[ext_resource type="Script" path="res://menu/tutorial/tutorial.gd" id="1_ojhuc"]
+[ext_resource type="Texture2D" uid="uid://cdoop3w1a7dew" path="res://menu/tutorial/book asset.png" id="1_v5qwk"]
+[ext_resource type="Texture2D" uid="uid://ddhajvr8f6qps" path="res://menu/tutorial/step1.png" id="2_ccsd5"]
+[ext_resource type="Texture2D" uid="uid://g25y0ur1h27i" path="res://menu/tutorial/step2.png" id="3_1gijr"]
+[ext_resource type="Texture2D" uid="uid://cg1fkyvaa3p2p" path="res://menu/tutorial/step3.png" id="4_r0v0o"]
+[ext_resource type="Texture2D" uid="uid://ch6yyt0tohbv7" path="res://menu/tutorial/step4.png" id="5_r081q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5tvyr"]
+atlas = ExtResource("1_v5qwk")
+region = Rect2(9, 7, 479, 259)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0x1u7"]
+atlas = ExtResource("1_v5qwk")
+region = Rect2(605, 25, 59, 21)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ahkhh"]
+font_size = 27
+font_color = Color(0.4, 0.223529, 0.192157, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_keb5c"]
+atlas = ExtResource("1_v5qwk")
+region = Rect2(605, 52, 59, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ka5na"]
+atlas = ExtResource("1_v5qwk")
+region = Rect2(555, 162, 15, 13)
+
+[node name="Tutorial" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ojhuc")
+
+[node name="BookBackground" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 27.0
+offset_right = 1268.0
+offset_bottom = 700.0
+texture = SubResource("AtlasTexture_5tvyr")
+
+[node name="Page1" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_left = 23.0
+offset_top = 26.0
+offset_right = 1265.0
+offset_bottom = 709.0
+
+[node name="NextButton" type="TextureButton" parent="Page1"]
+layout_mode = 0
+offset_left = 888.0
+offset_top = 543.0
+offset_right = 1073.0
+offset_bottom = 608.0
+texture_normal = SubResource("AtlasTexture_0x1u7")
+stretch_mode = 4
+
+[node name="Step1" type="TextureRect" parent="Page1"]
+layout_mode = 0
+offset_left = 176.0
+offset_top = 62.0
+offset_right = 579.0
+offset_bottom = 340.0
+texture = ExtResource("2_ccsd5")
+stretch_mode = 4
+
+[node name="Step2" type="TextureRect" parent="Page1"]
+layout_mode = 0
+offset_left = 652.0
+offset_top = 57.0
+offset_right = 1090.0
+offset_bottom = 343.0
+texture = ExtResource("3_1gijr")
+stretch_mode = 4
+
+[node name="Label2" type="Label" parent="Page1"]
+offset_left = 650.0
+offset_top = 335.0
+offset_right = 1082.0
+offset_bottom = 384.0
+text = "Click and Drag to Move"
+label_settings = SubResource("LabelSettings_ahkhh")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Page1"]
+layout_mode = 0
+offset_left = 154.0
+offset_top = 337.0
+offset_right = 586.0
+offset_bottom = 386.0
+text = "Click the card to Interact"
+label_settings = SubResource("LabelSettings_ahkhh")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Page2" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 30.0
+offset_top = 33.0
+offset_right = 1270.0
+offset_bottom = 708.0
+
+[node name="BackButton" type="TextureButton" parent="Page2"]
+layout_mode = 0
+offset_left = 151.0
+offset_top = 546.0
+offset_right = 332.0
+offset_bottom = 610.0
+texture_normal = SubResource("AtlasTexture_keb5c")
+stretch_mode = 4
+
+[node name="Step3" type="TextureRect" parent="Page2"]
+layout_mode = 0
+offset_left = 152.0
+offset_top = 56.0
+offset_right = 586.0
+offset_bottom = 297.0
+texture = ExtResource("4_r0v0o")
+stretch_mode = 4
+
+[node name="Step4" type="TextureRect" parent="Page2"]
+layout_mode = 0
+offset_left = 651.0
+offset_top = 48.0
+offset_right = 1082.0
+offset_bottom = 299.0
+texture = ExtResource("5_r081q")
+stretch_mode = 4
+
+[node name="Label2" type="Label" parent="Page2"]
+offset_left = 647.0
+offset_top = 346.0
+offset_right = 1079.0
+offset_bottom = 431.0
+text = "Right Click to show more
+Information"
+label_settings = SubResource("LabelSettings_ahkhh")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Label" type="Label" parent="Page2"]
+offset_left = 144.0
+offset_top = 343.0
+offset_right = 576.0
+offset_bottom = 428.0
+text = "Lets go of the left button
+to Drop the Card"
+label_settings = SubResource("LabelSettings_ahkhh")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ExitButton" type="TextureButton" parent="Page2"]
+layout_mode = 0
+offset_left = 988.0
+offset_top = 524.0
+offset_right = 1070.0
+offset_bottom = 595.0
+texture_normal = SubResource("AtlasTexture_ka5na")
+stretch_mode = 4
+
+[connection signal="pressed" from="Page1/NextButton" to="." method="_on_next_button_pressed"]
+[connection signal="pressed" from="Page2/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="Page2/ExitButton" to="." method="_on_exit_button_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dul103a7w7dga"]
+[gd_scene load_steps=38 format=3 uid="uid://dul103a7w7dga"]
 
 [ext_resource type="Texture2D" uid="uid://dpu07rjwgfb33" path="res://assets/background/menu_backgriund/back.png" id="1_ecdn3"]
 [ext_resource type="FontFile" uid="uid://bjitbo10uldnw" path="res://assets/font/m5x7.ttf" id="1_efcke"]
@@ -14,7 +14,15 @@
 [ext_resource type="Texture2D" uid="uid://bpvkv0at2wngi" path="res://assets/ui/menu_icons/setting_icon.png" id="10_234vi"]
 [ext_resource type="PackedScene" uid="uid://dbp1ev7y2vctp" path="res://menu/pop_ups/level_select.tscn" id="10_dw1or"]
 [ext_resource type="Script" path="res://menu/menu_settings_button.gd" id="12_o33s3"]
+[ext_resource type="Texture2D" uid="uid://cs161wpnbnhte" path="res://assets/card/card_art/pineapple.png" id="14_rogqv"]
+[ext_resource type="Texture2D" uid="uid://dafkejbh7ki0h" path="res://scenes/story_book/assets/book_icon.png" id="14_yb6n4"]
 [ext_resource type="AudioStream" uid="uid://b071gl3jkd78d" path="res://assets/audio/background_music/home_bgm.mp3" id="15_6ksn0"]
+[ext_resource type="Script" path="res://menu/story_book_button.gd" id="15_drjl7"]
+[ext_resource type="Texture2D" uid="uid://by8xs001g4p2m" path="res://menu/tutorial/tutorial button.png" id="16_ymy4o"]
+[ext_resource type="Texture2D" uid="uid://bqgm345yq0312" path="res://menu/tutorial/tutorial button.2.png" id="17_3bksy"]
+[ext_resource type="Script" path="res://menu/tutorial_button.gd" id="18_04tvj"]
+[ext_resource type="PackedScene" uid="uid://dxnmo8nebbnk2" path="res://scenes/story_book/story_book.tscn" id="18_tphhc"]
+[ext_resource type="PackedScene" uid="uid://diin1lt3nvcex" path="res://menu/tutorial/tutorial.tscn" id="22_15atk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nqy7e"]
 atlas = ExtResource("1_ecdn3")
@@ -44,6 +52,8 @@ script/source = "extends TextureButton
 
 func _on_pressed() -> void:
 	$\"..\".hide()
+	$\"../ExitButton\".hide()
+	$\"../MenuSettingsButton\".hide()
 	$\"../../Logo\".hide()
 	$\"../../LevelSelect\".show()
 "
@@ -70,6 +80,18 @@ func _on_pressed() -> void:
 [sub_resource type="AtlasTexture" id="AtlasTexture_vbbn0"]
 atlas = ExtResource("10_234vi")
 region = Rect2(90, 65, 184, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tmm24"]
+atlas = ExtResource("14_yb6n4")
+region = Rect2(4, 3, 22, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgjfi"]
+atlas = ExtResource("16_ymy4o")
+region = Rect2(0, 0, 70, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t1xp2"]
+atlas = ExtResource("17_3bksy")
+region = Rect2(3, 1, 70, 26)
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -135,21 +157,6 @@ texture = ExtResource("5_xwfn1")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
-[node name="MenuSettings" parent="." instance=ExtResource("5_87cn3")]
-visible = false
-z_index = 12
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -372.0
-offset_top = -268.0
-offset_right = -372.0
-offset_bottom = -268.0
-scale = Vector2(1.6, 1.6)
-
 [node name="ExitPopUp" parent="." instance=ExtResource("7_nu8e0")]
 visible = false
 layout_mode = 1
@@ -173,10 +180,10 @@ offset_bottom = 159.0
 [node name="GameStartButton" type="TextureButton" parent="MainButtons"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-offset_left = 410.0
-offset_top = 329.0
-offset_right = 702.0
-offset_bottom = 532.0
+offset_left = 417.0
+offset_top = 322.0
+offset_right = 709.0
+offset_bottom = 430.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_va5i0")
@@ -201,10 +208,10 @@ stretch_mode = 5
 [node name="ExitButton" type="TextureButton" parent="MainButtons"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-offset_left = 866.0
-offset_top = 449.0
-offset_right = 1066.0
-offset_bottom = 588.0
+offset_left = 944.0
+offset_top = 482.0
+offset_right = 1144.0
+offset_bottom = 562.0
 texture_normal = SubResource("AtlasTexture_v7qjl")
 texture_pressed = SubResource("AtlasTexture_bmx8n")
 stretch_mode = 5
@@ -212,23 +219,76 @@ script = SubResource("GDScript_0d2si")
 
 [node name="MenuSettingsButton" type="TextureButton" parent="MainButtons"]
 layout_mode = 0
-offset_left = 1069.0
+offset_left = 1055.0
 offset_top = -112.0
 offset_right = 1469.0
-offset_bottom = 188.0
+offset_bottom = 241.0
 scale = Vector2(0.3, 0.3)
 texture_normal = SubResource("AtlasTexture_vbbn0")
-stretch_mode = 1
+stretch_mode = 5
 script = ExtResource("12_o33s3")
+
+[node name="Pineapple" type="Sprite2D" parent="MainButtons"]
+position = Vector2(-245, 56)
+scale = Vector2(1.564, 1.564)
+texture = ExtResource("14_rogqv")
+
+[node name="StoryBookButton" type="TextureButton" parent="MainButtons"]
+layout_mode = 0
+offset_left = -24.0
+offset_top = 436.0
+offset_right = 84.0
+offset_bottom = 559.0
+texture_normal = SubResource("AtlasTexture_tmm24")
+stretch_mode = 0
+script = ExtResource("15_drjl7")
+
+[node name="TutorialButton" type="TextureButton" parent="MainButtons"]
+layout_mode = 0
+offset_left = 454.0
+offset_top = 475.0
+offset_right = 669.0
+offset_bottom = 555.0
+texture_normal = SubResource("AtlasTexture_vgjfi")
+texture_pressed = SubResource("AtlasTexture_t1xp2")
+stretch_mode = 4
+script = ExtResource("18_04tvj")
+
+[node name="MenuSettings" parent="." instance=ExtResource("5_87cn3")]
+visible = false
+z_index = 12
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -372.0
+offset_top = -268.0
+offset_right = -372.0
+offset_bottom = -268.0
+scale = Vector2(1.6, 1.6)
 
 [node name="LevelSelect" parent="." instance=ExtResource("10_dw1or")]
 visible = false
 layout_mode = 1
-offset_left = 126.0
-offset_top = -12.0
-offset_right = 126.0
-offset_bottom = -12.0
+offset_left = 201.0
+offset_top = 34.0
+offset_right = 201.0
+offset_bottom = 34.0
 scale = Vector2(2, 2)
+
+[node name="StoryBook" parent="." instance=ExtResource("18_tphhc")]
+visible = false
+layout_mode = 1
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 2.0
+offset_bottom = 1.0
+
+[node name="Tutorial" parent="." instance=ExtResource("22_15atk")]
+visible = false
+layout_mode = 1
 
 [node name="AudioStreamBGM" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_6ksn0")
@@ -238,3 +298,5 @@ bus = &"Music"
 [connection signal="pressed" from="MainButtons/GameStartButton" to="MainButtons/GameStartButton" method="_on_pressed"]
 [connection signal="pressed" from="MainButtons/ExitButton" to="MainButtons/ExitButton" method="_on_pressed"]
 [connection signal="pressed" from="MainButtons/MenuSettingsButton" to="MainButtons/MenuSettingsButton" method="_on_pressed"]
+[connection signal="pressed" from="MainButtons/StoryBookButton" to="MainButtons/StoryBookButton" method="_on_pressed"]
+[connection signal="pressed" from="MainButtons/TutorialButton" to="MainButtons/TutorialButton" method="_on_pressed"]

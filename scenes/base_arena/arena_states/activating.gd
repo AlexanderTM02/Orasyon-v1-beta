@@ -1,7 +1,5 @@
 extends BoardState
 
-@export var player_turn: BoardState
-@export var win_loss_check_state: BoardState
 @export var enemy_turn: BoardState
 
 var next_state: bool = false
@@ -9,6 +7,10 @@ var end_sequence: bool = false
 
 @onready var card_placement = $"../../UI/PlacementArea/CardPlacement"
 @onready var player_hand = $"../../UI/PlayerHand"
+@onready var discard_pile: Node = $"../../UI/DiscardPile"
+@onready var draw_pile: Node = $"../../UI/DrawPile"
+
+
 @onready var player = $"../../Entities/PlayerCharacter"
 @onready var enemy = $"../../Entities/EnemyCharacter"
 const WaitAnimation = preload("res://scenes/base_arena/arena_states/wait_animation.gd")
@@ -23,7 +25,8 @@ func enter() -> void:
 
 func exit() -> void:
 	print("exit activation state")
-	clear_child_nodes(card_placement)
+	await Utilities.wait_seconds(1)
+	add_to_discard_pile(card_placement)
 	enable_card_input()
 	next_state = false
 
@@ -67,13 +70,12 @@ func process_card_effects(card, current_card_index):
 			
 		"DAMAGE_BAKUNAWA":
 			enemy.take_damage(card.attack_value)
-			end_sequence = true
 			
 		"DAMAGE_MINOKAWA":
 			var previous_card_index = max(current_card_index - 1, 0)
 			var previous_card = card_placement.get_child(previous_card_index)
 			
-			if current_card_index == previous_card_index:
+			if current_card_index != previous_card_index:
 				if previous_card.spell_type == "Damage":
 					enemy.take_damage(5, true)
 				else:
@@ -86,17 +88,16 @@ func process_card_effects(card, current_card_index):
 			
 		"SHIELD_MARIANG_MAKILING":
 			player.add_shield(card.defense_value)
-			player_hand.draw()
+			draw_pile.draw_card()
 			
 			if current_card_index == 2:
-				player_hand.draw()
+				draw_pile.draw_card()
 			
 		"HEAL_BABAYLAN":
 			player.heal(card.heal_value)
 			
 		"HEAL_MAKILING":
 			player.heal(card.heal_value)
-			end_sequence = true
 			
 		"COPY_IBONG_ADARNA":
 			var previous_card_index = max(current_card_index - 1, 0)
@@ -171,7 +172,7 @@ func process_card_effects(card, current_card_index):
 				print("No next card to modify.")
 				
 			# Draw a card for the player
-			player_hand.draw()
+			draw_pile.draw_card()
 			
 		"MULTI_SAMBAL":
 			# Loop through all the cards played in the current sequence
@@ -201,7 +202,19 @@ func process_card_effects(card, current_card_index):
 		"SIMPLE_DIWATA":
 			player.heal(card.heal_value)
 			pass #put card effects here
+		"DUMB_DRAGON":
+			player.add_shield(card.defense_value)
 			
+			var previous_card_index = max(current_card_index - 1, 0)
+			var previous_card = card_placement.get_child(previous_card_index)
+			
+			if current_card_index != previous_card_index:
+				if previous_card.spell_type == "Damage":
+					enemy.take_damage(card.attack_value * 2, true)
+				else:
+					enemy.take_damage(card.attack_value)
+			else:
+				enemy.take_damage(card.attack_value)
 		_:
 			print(str(card.card_id))
 			print("did not match")
@@ -216,9 +229,9 @@ func process_card_effects(card, current_card_index):
 func check_all_cards_processed():
 	next_state = true
 
-func clear_child_nodes(node):
+func add_to_discard_pile(node):
 	for child in node.get_children():
-		child.queue_free()
+		discard_pile.add_to_discard(child)
 
 func disable_card_input():
 	for card in card_placement.get_children():

@@ -1,6 +1,5 @@
 extends BoardState
 
-@export var activating_state: BoardState
 @export var win_loss_check: BoardState
 
 @onready var next_state: bool = false
@@ -11,7 +10,10 @@ extends BoardState
 const HIT_PUNCH_ = preload("res://assets/audio/sfx/hit(punch).wav")
 
 func enter() -> void:
-	enemy.enemy_attack(player)
+	
+	enemy.play_action()
+	
+	
 	audio_stream_player_sfx.stream = HIT_PUNCH_
 	audio_stream_player_sfx.play()
 	next_state = true

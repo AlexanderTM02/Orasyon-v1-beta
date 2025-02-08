@@ -16,6 +16,7 @@ func change_state(new_state: BoardState) -> void:
 		current_state.exit()
 	
 	current_state = new_state
+	print("curret state: " + str(current_state))
 	current_state.enter()
 
 func process_physics(delta:float) -> void:
